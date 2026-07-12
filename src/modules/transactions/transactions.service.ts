@@ -1,0 +1,138 @@
+import { Injectable, BadRequestException } from '@nestjs/common';
+import { PrismaService } from '@/common/prisma.service';
+import { TransactionType } from '@/generated/prisma/client';
+import { CreateTransactionDto, UpdateTransactionDto } from './dto/transactions.dto';
+
+@Injectable()
+export class TransactionService {
+  constructor(private readonly _prisma: PrismaService) {}
+
+  async findAll(
+    userId: string,
+    query: {
+      page?: number;
+      limit?: number;
+      type?: TransactionType;
+      categoryId?: string;
+      startDate?: string;
+      endDate?: string;
+      minAmount?: number;
+      maxAmount?: number;
+    },
+  ) {
+    const page = Number(query.page) || 1;
+    const limit = Number(query.limit) || 20;
+    const skip = (page - 1) * limit;
+
+    const where: any = { userId };
+
+    if (query.type) {
+      where.type = query.type;
+    }
+    if (query.categoryId) {
+      where.categoryId = query.categoryId;
+    }
+
+    if (query.startDate || query.endDate) {
+      where.createdAt = {};
+      if (query.startDate) {
+        where.createdAt.gte = new Date(query.startDate);
+      }
+      if (query.endDate) {
+        where.createdAt.lte = new Date(query.endDate);
+      }
+    }
+
+    if (query.minAmount !== undefined || query.maxAmount !== undefined) {
+      where.amount = {};
+      if (query.minAmount !== undefined) {
+        where.amount.gte = query.minAmount;
+      }
+      if (query.maxAmount !== undefined) {
+        where.amount.lte = query.maxAmount;
+      }
+    }
+
+    const [transactions, total] = await Promise.all([
+      this._prisma.transaction.findMany({
+        where,
+        include: {
+          category: true,
+        },
+        orderBy: { createdAt: 'desc' },
+        skip,
+        take: limit,
+      }),
+      this._prisma.transaction.count({ where }),
+    ]);
+
+    return {
+      transactions,
+      meta: {
+        total,
+        page,
+        limit,
+        totalPages: Math.ceil(total / limit),
+      },
+    };
+  }
+
+  async create(userId: string, dto: CreateTransactionDto) {
+    const category = await this._prisma.category.findFirst({
+      where: {
+        id: dto.categoryId,
+        userId,
+      },
+    });
+
+    if (!category) {
+      throw new BadRequestException('Category not found or does not belong to user');
+    }
+
+    return this._prisma.transaction.create({
+      data: {
+        amount: dto.amount,
+        type: dto.type,
+        categoryId: dto.categoryId,
+        description: dto.description,
+        userId,
+      },
+    });
+  }
+
+  async update(userId: string, id: string, dto: UpdateTransactionDto) {
+    if (dto.categoryId) {
+      const category = await this._prisma.category.findFirst({
+        where: {
+          id: dto.categoryId,
+          userId,
+        },
+      });
+      if (!category) {
+        throw new BadRequestException('Category not found or does not belong to user');
+      }
+    }
+
+    return this._prisma.transaction.update({
+      where: {
+        id,
+        userId,
+      },
+      data: {
+        amount: dto.amount,
+        type: dto.type,
+        categoryId: dto.categoryId,
+        description: dto.description,
+      },
+    });
+  }
+
+  async delete(userId: string, id: string) {
+    return this._prisma.transaction.delete({
+      where: {
+        id,
+        userId,
+      },
+    });
+  }
+}
