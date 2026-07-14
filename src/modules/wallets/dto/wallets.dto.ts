@@ -2,7 +2,7 @@ import { z } from 'zod';
 import { AccountType } from '@/generated/prisma/client';
 
 export const createWalletSchema = z.object({
-  name: z.string().min(1, 'Wallet name is required'),
+  name: z.string().min(1, 'Tên ví là bắt buộc'),
   type: z.nativeEnum(AccountType),
   initialBalance: z.number().default(0),
 });

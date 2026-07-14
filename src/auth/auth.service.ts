@@ -17,7 +17,11 @@ import { UserRepository } from '@/user/user.repository';
 import { UserModel } from '@/generated/prisma/models';
 import { CategoryService } from '../modules/categories/categories.service';
 import { SessionRepository } from './session.repository';
-import { GoogleSignInDto, type SignUpDto, type SignInDto } from './dto/auth.dto';
+import {
+  GoogleSignInDto,
+  type SignUpDto,
+  type SignInDto,
+} from './dto/auth.dto';
 import { JwtPayload, RequestTracing } from './models';
 
 @Injectable()
@@ -33,7 +37,7 @@ export class AuthService {
   async signUp(dto: SignUpDto, tracing?: RequestTracing) {
     const existingUser = await this._userRepository.findByEmail(dto.email);
     if (existingUser) {
-      throw new BadRequestException('Email already in use');
+      throw new BadRequestException('Email đã được sử dụng');
     }
 
     const hashedPassword = await bcrypt.hash(dto.password, 10);
@@ -52,12 +56,12 @@ export class AuthService {
   async signIn(dto: SignInDto, tracing?: RequestTracing) {
     const user = await this._userRepository.findByEmail(dto.email);
     if (!user) {
-      throw new UnauthorizedException('Invalid credentials');
+      throw new UnauthorizedException('Thông tin đăng nhập không chính xác');
     }
 
     const passwordMatch = await bcrypt.compare(dto.password, user.password);
     if (!passwordMatch) {
-      throw new UnauthorizedException('Invalid credentials');
+      throw new UnauthorizedException('Thông tin đăng nhập không chính xác');
     }
 
     return this._generateTokens(user, tracing);
@@ -71,12 +75,14 @@ export class AuthService {
       if (session) {
         await this._sessionRepository.revoke(hashedToken);
       }
-      throw new UnauthorizedException('Invalid or expired refresh token');
+      throw new UnauthorizedException(
+        'Refresh token không hợp lệ hoặc đã hết hạn',
+      );
     }
 
     const user = await this._userRepository.findById(session.userId);
     if (!user) {
-      throw new UnauthorizedException('User no longer exists');
+      throw new UnauthorizedException('Người dùng không còn tồn tại');
     }
 
     await this._sessionRepository.revoke(hashedToken);
@@ -105,12 +111,12 @@ export class AuthService {
 
       const payload = response.data;
       if (!payload.email) {
-        throw new UnauthorizedException('Invalid Google token payload');
+        throw new UnauthorizedException('Dữ liệu token Google không hợp lệ');
       }
       email = payload.email;
       name = payload.name ?? dto.name;
     } catch (error) {
-      throw new UnauthorizedException('Failed to verify Google token');
+      throw new UnauthorizedException('Xác thực token Google thất bại');
     }
 
     let user = await this._userRepository.findByEmail(email);

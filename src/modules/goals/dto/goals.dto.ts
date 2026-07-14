@@ -1,9 +1,12 @@
 import { z } from 'zod';
 
 export const createGoalSchema = z.object({
-  name: z.string().min(1, 'Goal name is required'),
-  targetAmount: z.number().positive('Target amount must be positive'),
-  savedAmount: z.number().nonnegative('Saved amount cannot be negative').default(0),
+  name: z.string().min(1, 'Tên mục tiêu là bắt buộc'),
+  targetAmount: z.number().positive('Số tiền mục tiêu phải là số dương'),
+  savedAmount: z
+    .number()
+    .nonnegative('Số tiền đã tích lũy không được là số âm')
+    .default(0),
 });
 
 export class CreateGoalDto implements z.infer<typeof createGoalSchema> {
@@ -14,8 +17,14 @@ export class CreateGoalDto implements z.infer<typeof createGoalSchema> {
 
 export const updateGoalSchema = z.object({
   name: z.string().optional(),
-  targetAmount: z.number().positive('Target amount must be positive').optional(),
-  savedAmount: z.number().nonnegative('Saved amount cannot be negative').optional(),
+  targetAmount: z
+    .number()
+    .positive('Số tiền mục tiêu phải là số dương')
+    .optional(),
+  savedAmount: z
+    .number()
+    .nonnegative('Số tiền đã tích lũy không được là số âm')
+    .optional(),
 });
 
 export class UpdateGoalDto implements z.infer<typeof updateGoalSchema> {

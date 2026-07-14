@@ -99,7 +99,7 @@ export class AuthController {
   ) {
     const refreshToken = req.cookies['refreshToken'] as string | undefined;
     if (!refreshToken) {
-      throw new UnauthorizedException('Refresh token missing');
+      throw new UnauthorizedException('Thiếu refresh token');
     }
 
     const tracingData: RequestTracing = {

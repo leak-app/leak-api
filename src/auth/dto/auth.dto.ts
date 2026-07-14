@@ -1,16 +1,16 @@
 import { z } from 'zod';
 
 export const signUpSchema = z.object({
-  email: z.string().email('Invalid email address'),
+  email: z.string().email('Địa chỉ email không hợp lệ'),
   password: z
     .string()
     .min(
       6,
-      'Password must be at least 6 characters long and contain at least one lowercase letter and one uppercase letter',
+      'Mật khẩu phải dài ít nhất 6 ký tự, chứa ít nhất một chữ thường và một chữ hoa',
     )
     .refine((val) => /[a-z]/.test(val) && /[A-Z]/.test(val), {
       message:
-        'Password must be at least 6 characters long and contain at least one lowercase letter and one uppercase letter',
+        'Mật khẩu phải dài ít nhất 6 ký tự, chứa ít nhất một chữ thường và một chữ hoa',
     }),
   name: z.string().optional(),
 });
@@ -22,8 +22,8 @@ export class SignUpDto implements z.infer<typeof signUpSchema> {
 }
 
 export const signInSchema = z.object({
-  email: z.string().email('Invalid email address'),
-  password: z.string().min(1, 'Password is required'),
+  email: z.string().email('Địa chỉ email không hợp lệ'),
+  password: z.string().min(1, 'Mật khẩu là bắt buộc'),
 });
 
 export class SignInDto implements z.infer<typeof signInSchema> {
@@ -32,7 +32,7 @@ export class SignInDto implements z.infer<typeof signInSchema> {
 }
 
 export const googleSignInSchema = z.object({
-  credentialToken: z.string().min(1, 'Credential token is required'),
+  credentialToken: z.string().min(1, 'Mã xác thực với google không hợp lệ'),
   name: z.string().optional(),
 });
 
@@ -40,4 +40,3 @@ export class GoogleSignInDto implements z.infer<typeof googleSignInSchema> {
   credentialToken!: string;
   name?: string;
 }
-

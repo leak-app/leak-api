@@ -50,7 +50,7 @@ export class HttpExceptionFilter implements ExceptionFilter {
     }
 
     const message =
-      exception instanceof Error ? exception.message : 'Internal server error';
+      exception instanceof Error ? exception.message : 'Lỗi máy chủ nội bộ';
 
     return {
       statusCode: HttpStatus.INTERNAL_SERVER_ERROR,

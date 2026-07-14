@@ -1,7 +1,10 @@
 import { Injectable, BadRequestException } from '@nestjs/common';
 import { PrismaService } from '@/common/prisma.service';
 import { TransactionType } from '@/generated/prisma/client';
-import { CreateTransactionDto, UpdateTransactionDto } from './dto/transactions.dto';
+import {
+  CreateTransactionDto,
+  UpdateTransactionDto,
+} from './dto/transactions.dto';
 
 @Injectable()
 export class TransactionService {
@@ -86,7 +89,9 @@ export class TransactionService {
     });
 
     if (!category) {
-      throw new BadRequestException('Category not found or does not belong to user');
+      throw new BadRequestException(
+        'Danh mục không tồn tại hoặc không thuộc về người dùng',
+      );
     }
 
     return this._prisma.transaction.create({
@@ -109,7 +114,9 @@ export class TransactionService {
         },
       });
       if (!category) {
-        throw new BadRequestException('Category not found or does not belong to user');
+        throw new BadRequestException(
+          'Danh mục không tồn tại hoặc không thuộc về người dùng',
+        );
       }
     }
 
