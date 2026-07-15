@@ -36,22 +36,22 @@ export class CategoryService {
   async seedDefaultCategories(userId: string): Promise<void> {
     const defaults = [
       // Income
-      { name: 'Lương', type: CategoryType.INCOME },
-      { name: 'Làm thêm', type: CategoryType.INCOME },
-      { name: 'Quà tặng', type: CategoryType.INCOME },
-      { name: 'Thu nhập khác', type: CategoryType.INCOME },
+      { name: '💼 Lương', type: CategoryType.INCOME },
+      { name: '⏱️ Làm thêm', type: CategoryType.INCOME },
+      { name: '🎁 Quà tặng', type: CategoryType.INCOME },
+      { name: '💵 Thu nhập khác', type: CategoryType.INCOME },
       // Expense
-      { name: 'Ăn uống', type: CategoryType.EXPENSE },
-      { name: 'Di chuyển', type: CategoryType.EXPENSE },
-      { name: 'Nhà cửa & Hóa đơn', type: CategoryType.EXPENSE },
-      { name: 'Giải trí', type: CategoryType.EXPENSE },
-      { name: 'Mua sắm', type: CategoryType.EXPENSE },
-      { name: 'Chi tiêu khác', type: CategoryType.EXPENSE },
+      { name: '🍴 Ăn uống', type: CategoryType.EXPENSE },
+      { name: '🚗 Di chuyển', type: CategoryType.EXPENSE },
+      { name: '🏠 Nhà cửa & Hóa đơn', type: CategoryType.EXPENSE },
+      { name: '🎮 Giải trí', type: CategoryType.EXPENSE },
+      { name: '🛍️ Mua sắm', type: CategoryType.EXPENSE },
+      { name: '💸 Chi tiêu khác', type: CategoryType.EXPENSE },
       // Investment
-      { name: 'Cổ phiếu', type: CategoryType.INVESTMENT },
-      { name: 'Tiền điện tử', type: CategoryType.INVESTMENT },
-      { name: 'Tiết kiệm', type: CategoryType.INVESTMENT },
-      { name: 'Vàng & Bất động sản', type: CategoryType.INVESTMENT },
+      { name: '📈 Cổ phiếu', type: CategoryType.INVESTMENT },
+      { name: '🪙 Tiền điện tử', type: CategoryType.INVESTMENT },
+      { name: '🏦 Tiết kiệm', type: CategoryType.INVESTMENT },
+      { name: '🏡 Vàng & Bất động sản', type: CategoryType.INVESTMENT },
     ];
 
     await this._prisma.category.createMany({

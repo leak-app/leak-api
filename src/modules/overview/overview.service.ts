@@ -40,8 +40,18 @@ export class OverviewService {
       await Promise.all([
         this._getSum(userId, TransactionType.INCOME, todayStart, todayEnd),
         this._getSum(userId, TransactionType.EXPENSE, todayStart, todayEnd),
-        this._getSum(userId, TransactionType.INCOME, yesterdayStart, yesterdayEnd),
-        this._getSum(userId, TransactionType.EXPENSE, yesterdayStart, yesterdayEnd),
+        this._getSum(
+          userId,
+          TransactionType.INCOME,
+          yesterdayStart,
+          yesterdayEnd,
+        ),
+        this._getSum(
+          userId,
+          TransactionType.EXPENSE,
+          yesterdayStart,
+          yesterdayEnd,
+        ),
       ]);
 
     return {
@@ -58,10 +68,30 @@ export class OverviewService {
 
     const [thisWeekIncome, thisWeekExpense, lastWeekIncome, lastWeekExpense] =
       await Promise.all([
-        this._getSum(userId, TransactionType.INCOME, thisWeekStart, thisWeekEnd),
-        this._getSum(userId, TransactionType.EXPENSE, thisWeekStart, thisWeekEnd),
-        this._getSum(userId, TransactionType.INCOME, lastWeekStart, lastWeekEnd),
-        this._getSum(userId, TransactionType.EXPENSE, lastWeekStart, lastWeekEnd),
+        this._getSum(
+          userId,
+          TransactionType.INCOME,
+          thisWeekStart,
+          thisWeekEnd,
+        ),
+        this._getSum(
+          userId,
+          TransactionType.EXPENSE,
+          thisWeekStart,
+          thisWeekEnd,
+        ),
+        this._getSum(
+          userId,
+          TransactionType.INCOME,
+          lastWeekStart,
+          lastWeekEnd,
+        ),
+        this._getSum(
+          userId,
+          TransactionType.EXPENSE,
+          lastWeekStart,
+          lastWeekEnd,
+        ),
       ]);
 
     return {
@@ -73,16 +103,43 @@ export class OverviewService {
   async getMonthlyReport(userId: string) {
     const thisMonthStart = dayjs().startOf('month').toDate();
     const thisMonthEnd = dayjs().endOf('month').toDate();
-    const lastMonthStart = dayjs().subtract(1, 'month').startOf('month').toDate();
+    const lastMonthStart = dayjs()
+      .subtract(1, 'month')
+      .startOf('month')
+      .toDate();
     const lastMonthEnd = dayjs().subtract(1, 'month').endOf('month').toDate();
 
-    const [thisMonthIncome, thisMonthExpense, lastMonthIncome, lastMonthExpense] =
-      await Promise.all([
-        this._getSum(userId, TransactionType.INCOME, thisMonthStart, thisMonthEnd),
-        this._getSum(userId, TransactionType.EXPENSE, thisMonthStart, thisMonthEnd),
-        this._getSum(userId, TransactionType.INCOME, lastMonthStart, lastMonthEnd),
-        this._getSum(userId, TransactionType.EXPENSE, lastMonthStart, lastMonthEnd),
-      ]);
+    const [
+      thisMonthIncome,
+      thisMonthExpense,
+      lastMonthIncome,
+      lastMonthExpense,
+    ] = await Promise.all([
+      this._getSum(
+        userId,
+        TransactionType.INCOME,
+        thisMonthStart,
+        thisMonthEnd,
+      ),
+      this._getSum(
+        userId,
+        TransactionType.EXPENSE,
+        thisMonthStart,
+        thisMonthEnd,
+      ),
+      this._getSum(
+        userId,
+        TransactionType.INCOME,
+        lastMonthStart,
+        lastMonthEnd,
+      ),
+      this._getSum(
+        userId,
+        TransactionType.EXPENSE,
+        lastMonthStart,
+        lastMonthEnd,
+      ),
+    ]);
 
     return {
       currentMonth: { income: thisMonthIncome, expense: thisMonthExpense },

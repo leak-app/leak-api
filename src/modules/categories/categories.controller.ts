@@ -24,10 +24,7 @@ export class CategoryController {
 
   @Post()
   @UsePipes(new ZodValidationPipe(createCategorySchema))
-  async createCategory(
-    @GetUser() user: User,
-    @Body() dto: CreateCategoryDto,
-  ) {
+  async createCategory(@GetUser() user: User, @Body() dto: CreateCategoryDto) {
     return this._categoryService.create(user.id, dto);
   }
 
