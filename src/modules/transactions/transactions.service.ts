@@ -5,6 +5,7 @@ import {
   CreateTransactionDto,
   UpdateTransactionDto,
 } from './dto/transactions.dto';
+import { TransactionWhereInput } from '@/generated/prisma/models';
 
 @Injectable()
 export class TransactionService {
@@ -13,6 +14,7 @@ export class TransactionService {
   async findAll(
     userId: string,
     query: {
+      search?: string;
       page?: number;
       limit?: number;
       type?: TransactionType;
@@ -27,7 +29,15 @@ export class TransactionService {
     const limit = Number(query.limit) || 20;
     const skip = (page - 1) * limit;
 
-    const where: any = { userId };
+    const where: TransactionWhereInput = { userId };
+
+    if (query.search?.trim()) {
+      const searchTerm = query.search.trim();
+      where.OR = [
+        { description: { contains: searchTerm, mode: 'insensitive' } },
+        { category: { name: { contains: searchTerm, mode: 'insensitive' } } },
+      ];
+    }
 
     if (query.type) {
       where.type = query.type;

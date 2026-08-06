@@ -18,6 +18,7 @@ export class CategoryService {
     return this._prisma.category.create({
       data: {
         name: dto.name,
+        emoji: dto.emoji,
         type: dto.type,
         userId,
       },
@@ -36,22 +37,22 @@ export class CategoryService {
   async seedDefaultCategories(userId: string): Promise<void> {
     const defaults = [
       // Income
-      { name: '💼 Lương', type: CategoryType.INCOME },
-      { name: '⏱️ Làm thêm', type: CategoryType.INCOME },
-      { name: '🎁 Quà tặng', type: CategoryType.INCOME },
-      { name: '💵 Thu nhập khác', type: CategoryType.INCOME },
+      { name: 'Lương', emoji: '💼', type: CategoryType.INCOME },
+      { name: 'Làm thêm', emoji: '⏱️', type: CategoryType.INCOME },
+      { name: 'Quà tặng', emoji: '🎁', type: CategoryType.INCOME },
+      { name: 'Thu nhập khác', emoji: '💵', type: CategoryType.INCOME },
       // Expense
-      { name: '🍴 Ăn uống', type: CategoryType.EXPENSE },
-      { name: '🚗 Di chuyển', type: CategoryType.EXPENSE },
-      { name: '🏠 Nhà cửa & Hóa đơn', type: CategoryType.EXPENSE },
-      { name: '🎮 Giải trí', type: CategoryType.EXPENSE },
-      { name: '🛍️ Mua sắm', type: CategoryType.EXPENSE },
-      { name: '💸 Chi tiêu khác', type: CategoryType.EXPENSE },
+      { name: 'Ăn uống', emoji: '🍴', type: CategoryType.EXPENSE },
+      { name: 'Di chuyển', emoji: '🚗', type: CategoryType.EXPENSE },
+      { name: 'Nhà cửa & Hóa đơn', emoji: '🏠', type: CategoryType.EXPENSE },
+      { name: 'Giải trí', emoji: '🎮', type: CategoryType.EXPENSE },
+      { name: 'Mua sắm', emoji: '🛍️', type: CategoryType.EXPENSE },
+      { name: 'Chi tiêu khác', emoji: '💸', type: CategoryType.EXPENSE },
       // Investment
-      { name: '📈 Cổ phiếu', type: CategoryType.INVESTMENT },
-      { name: '🪙 Tiền điện tử', type: CategoryType.INVESTMENT },
-      { name: '🏦 Tiết kiệm', type: CategoryType.INVESTMENT },
-      { name: '🏡 Vàng & Bất động sản', type: CategoryType.INVESTMENT },
+      { name: 'Cổ phiếu', emoji: '📈', type: CategoryType.INVESTMENT },
+      { name: 'Tiền điện tử', emoji: '🪙', type: CategoryType.INVESTMENT },
+      { name: 'Tiết kiệm', emoji: '🏦', type: CategoryType.INVESTMENT },
+      { name: 'Vàng & Bất động sản', emoji: '🏡', type: CategoryType.INVESTMENT },
     ];
 
     await this._prisma.category.createMany({

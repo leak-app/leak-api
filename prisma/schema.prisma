@@ -67,11 +67,13 @@ enum CategoryType {
 model Category {
   id           String        @id @default(cuid())
   name         String
+  emoji        String?
   type         CategoryType
   userId       String        @map("user_id")
   user         User          @relation(fields: [userId], references: [id], onDelete: Cascade)
   createdAt    DateTime      @default(now()) @map("created_at")
   updatedAt    DateTime      @updatedAt @map("updated_at")
+
   
   transactions Transaction[]
 

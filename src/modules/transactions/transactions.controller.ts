@@ -28,6 +28,7 @@ export class TransactionController {
   @Get()
   async getTransactions(
     @GetUser() user: User,
+    @Query('search') search?: string,
     @Query('page') page?: string,
     @Query('limit') limit?: string,
     @Query('type') type?: TransactionType,
@@ -38,6 +39,7 @@ export class TransactionController {
     @Query('maxAmount') maxAmount?: string,
   ) {
     return this._transactionService.findAll(user.id, {
+      search,
       page: page ? Number(page) : undefined,
       limit: limit ? Number(limit) : undefined,
       type,
