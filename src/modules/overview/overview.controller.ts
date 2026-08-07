@@ -7,6 +7,16 @@ import { OverviewService } from './overview.service';
 export class OverviewController {
   constructor(private readonly _overviewService: OverviewService) {}
 
+  @Get('summary')
+  async getOverviewSummary(@GetUser() user: User) {
+    return this._overviewService.getOverviewSummary(user.id);
+  }
+
+  @Get()
+  async getOverview(@GetUser() user: User) {
+    return this._overviewService.getOverviewSummary(user.id);
+  }
+
   @Get('daily')
   async getDailyReport(@GetUser() user: User) {
     return this._overviewService.getDailyReport(user.id);
