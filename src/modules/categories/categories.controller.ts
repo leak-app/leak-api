@@ -4,6 +4,7 @@ import {
   Delete,
   Get,
   Param,
+  Patch,
   Post,
   UsePipes,
 } from '@nestjs/common';
@@ -11,7 +12,12 @@ import { GetUser } from '@/auth/get-user.decorator';
 import type { User } from '@/generated/prisma/client';
 import { ZodValidationPipe } from '@/common/pipes/zod-validation.pipe';
 import { CategoryService } from './categories.service';
-import { CreateCategoryDto, createCategorySchema } from './dto/categories.dto';
+import {
+  CreateCategoryDto,
+  createCategorySchema,
+  UpdateCategoryDto,
+  updateCategorySchema,
+} from './dto/categories.dto';
 
 @Controller('categories')
 export class CategoryController {
@@ -26,6 +32,16 @@ export class CategoryController {
   @UsePipes(new ZodValidationPipe(createCategorySchema))
   async createCategory(@GetUser() user: User, @Body() dto: CreateCategoryDto) {
     return this._categoryService.create(user.id, dto);
+  }
+
+  @Patch(':id')
+  @UsePipes(new ZodValidationPipe(updateCategorySchema))
+  async updateCategory(
+    @GetUser() user: User,
+    @Param('id') id: string,
+    @Body() dto: UpdateCategoryDto,
+  ) {
+    return this._categoryService.update(user.id, id, dto);
   }
 
   @Delete(':id')

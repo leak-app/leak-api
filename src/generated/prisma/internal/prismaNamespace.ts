@@ -938,6 +938,8 @@ export const CategoryScalarFieldEnum = {
   emoji: 'emoji',
   type: 'type',
   userId: 'userId',
+  isDeleted: 'isDeleted',
+  deletedAt: 'deletedAt',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const

@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '@/common/prisma.service';
 import { CategoryType } from '@/generated/prisma/client';
-import { CreateCategoryDto } from './dto/categories.dto';
+import { CreateCategoryDto, UpdateCategoryDto } from './dto/categories.dto';
 
 @Injectable()
 export class CategoryService {
@@ -9,7 +9,7 @@ export class CategoryService {
 
   async findAll(userId: string) {
     return this._prisma.category.findMany({
-      where: { userId },
+      where: { userId, isDeleted: false },
       orderBy: { createdAt: 'asc' },
     });
   }
@@ -25,7 +25,38 @@ export class CategoryService {
     });
   }
 
+  async update(userId: string, id: string, dto: UpdateCategoryDto) {
+    return this._prisma.category.update({
+      where: {
+        id,
+        userId,
+      },
+      data: {
+        ...(dto.name !== undefined && { name: dto.name }),
+        ...(dto.emoji !== undefined && { emoji: dto.emoji }),
+        ...(dto.type !== undefined && { type: dto.type }),
+      },
+    });
+  }
+
   async delete(userId: string, id: string) {
+    const transactionCount = await this._prisma.transaction.count({
+      where: { categoryId: id, userId },
+    });
+
+    if (transactionCount > 0) {
+      return this._prisma.category.update({
+        where: {
+          id,
+          userId,
+        },
+        data: {
+          isDeleted: true,
+          deletedAt: new Date(),
+        },
+      });
+    }
+
     return this._prisma.category.delete({
       where: {
         id,
