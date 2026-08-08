@@ -21,6 +21,7 @@ model User {
   categories   Category[]
   transactions Transaction[]
   goals        Goal[]
+  budgets      Budget[]
 
   @@map("users")
 }
@@ -77,6 +78,7 @@ model Category {
   updatedAt    DateTime      @updatedAt @map("updated_at")
 
   transactions Transaction[]
+  budgets      Budget[]
 
   @@map("categories")
 }
@@ -112,4 +114,20 @@ model Goal {
   updatedAt    DateTime @updatedAt @map("updated_at")
 
   @@map("goals")
+}
+
+model Budget {
+  id         String   @id @default(cuid())
+  amount     Decimal  @db.Decimal(12, 2)
+  month      Int
+  year       Int
+  categoryId String   @map("category_id")
+  category   Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  userId     String   @map("user_id")
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt  DateTime @default(now()) @map("created_at")
+  updatedAt  DateTime @updatedAt @map("updated_at")
+
+  @@unique([userId, categoryId, month, year])
+  @@map("budgets")
 }
