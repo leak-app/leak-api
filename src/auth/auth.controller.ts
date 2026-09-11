@@ -15,8 +15,12 @@ import { setCookie, clearCookie } from '@/utils/cookie.helper';
 
 import { AuthService } from './auth.service';
 import {
+  ForgotPasswordDto,
+  forgotPasswordSchema,
   GoogleSignInDto,
   googleSignInSchema,
+  ResetPasswordDto,
+  resetPasswordSchema,
   SignInDto,
   signInSchema,
   SignUpDto,
@@ -131,5 +135,22 @@ export class AuthController {
     clearCookie(res, 'refreshToken');
 
     return true;
+  }
+
+  @Public()
+  @Post('forgot-password')
+  @UsePipes(new ZodValidationPipe(forgotPasswordSchema))
+  async forgotPassword(@Body() forgotPasswordDto: ForgotPasswordDto) {
+    return this._authService.forgotPassword(forgotPasswordDto.email);
+  }
+
+  @Public()
+  @Post('reset-password')
+  @UsePipes(new ZodValidationPipe(resetPasswordSchema))
+  async resetPassword(@Body() resetPasswordDto: ResetPasswordDto) {
+    return this._authService.resetPassword(
+      resetPasswordDto.token,
+      resetPasswordDto.password,
+    );
   }
 }

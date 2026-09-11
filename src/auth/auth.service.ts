@@ -1,6 +1,7 @@
 import {
   BadRequestException,
   Injectable,
+  Logger,
   UnauthorizedException,
 } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
@@ -8,7 +9,7 @@ import { ConfigService } from '@nestjs/config';
 
 import * as bcrypt from 'bcrypt';
 import axios from 'axios';
-import { createHash } from 'crypto';
+import { createHash, randomBytes } from 'crypto';
 import ms, { StringValue } from 'ms';
 import dayjs from 'dayjs';
 import { v4 as uuidv4 } from 'uuid';
@@ -17,6 +18,7 @@ import { UserRepository } from '@/user/user.repository';
 import { UserModel } from '@/generated/prisma/models';
 import { CategoryService } from '../modules/categories/categories.service';
 import { SessionRepository } from './session.repository';
+import { PasswordResetRepository } from './password-reset.repository';
 import {
   GoogleSignInDto,
   type SignUpDto,
@@ -26,10 +28,13 @@ import { JwtPayload, RequestTracing } from './models';
 
 @Injectable()
 export class AuthService {
+  private readonly _logger = new Logger(AuthService.name);
+
   constructor(
     private readonly _userRepository: UserRepository,
     private readonly _jwtService: JwtService,
     private readonly _sessionRepository: SessionRepository,
+    private readonly _passwordResetRepository: PasswordResetRepository,
     private readonly _configService: ConfigService,
     private readonly _categoryService: CategoryService,
   ) {}
@@ -170,6 +175,70 @@ export class AuthService {
       accessToken,
       refreshToken,
       refreshTokenTtl,
+    };
+  }
+
+  async forgotPassword(email: string): Promise<{ message: string }> {
+    const user = await this._userRepository.findByEmail(email);
+    if (!user) {
+      // Prevent user enumeration
+      return {
+        message:
+          'Nếu email tồn tại trong hệ thống, hướng dẫn đặt lại mật khẩu đã được gửi.',
+      };
+    }
+
+    await this._passwordResetRepository.invalidatePreviousTokens(user.id);
+
+    const token = randomBytes(32).toString('hex');
+    const expiresAt = new Date(Date.now() + 15 * 60 * 1000); // 15 minutes
+
+    await this._passwordResetRepository.create({
+      token,
+      userId: user.id,
+      expiresAt,
+    });
+
+    const resetUrl = `http://localhost:5173/reset-password?token=${token}`;
+    this._logger.log(`[AUTH] Password reset link for ${email}: ${resetUrl}`);
+
+    return {
+      message:
+        'Nếu email tồn tại trong hệ thống, hướng dẫn đặt lại mật khẩu đã được gửi.',
+    };
+  }
+
+  async resetPassword(
+    token: string,
+    newPassword: string,
+  ): Promise<{ message: string }> {
+    const resetToken = await this._passwordResetRepository.findByToken(token);
+
+    if (
+      !resetToken ||
+      resetToken.usedAt !== null ||
+      resetToken.expiresAt < new Date()
+    ) {
+      throw new BadRequestException(
+        'Yêu cầu đặt lại mật khẩu không hợp lệ hoặc đã hết hạn',
+      );
+    }
+
+    const hashedPassword = await bcrypt.hash(newPassword, 10);
+
+    await this._userRepository.update(resetToken.userId, {
+      password: hashedPassword,
+    });
+
+    await this._passwordResetRepository.markAsUsed(resetToken.id);
+
+    await this._sessionRepository.deleteMany({
+      userId: resetToken.userId,
+    });
+
+    return {
+      message:
+        'Đặt lại mật khẩu thành công. Vui lòng đăng nhập với mật khẩu mới.',
     };
   }
 }

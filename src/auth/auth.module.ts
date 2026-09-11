@@ -14,6 +14,7 @@ import { JwtStrategy } from './jwt.strategy';
 
 import { SessionRepository } from './session.repository';
 import { SessionCleanupService } from './session-cleanup.service';
+import { PasswordResetRepository } from './password-reset.repository';
 
 @Module({
   imports: [
@@ -38,7 +39,14 @@ import { SessionCleanupService } from './session-cleanup.service';
     JwtStrategy,
     SessionRepository,
     SessionCleanupService,
+    PasswordResetRepository,
   ],
-  exports: [AuthService, JwtModule, JwtStrategy, SessionRepository],
+  exports: [
+    AuthService,
+    JwtModule,
+    JwtStrategy,
+    SessionRepository,
+    PasswordResetRepository,
+  ],
 })
 export class AuthModule {}
