@@ -23,6 +23,7 @@
     "prisma:migrate:deploy": "prisma migrate deploy"
   },
   "dependencies": {
+    "@nestjs-modules/mailer": "^2.3.7",
     "@nestjs/common": "^11.0.1",
     "@nestjs/config": "^4.0.3",
     "@nestjs/core": "^11.0.1",
@@ -40,6 +41,8 @@
     "cookie-parser": "^1.4.7",
     "dayjs": "^1.11.20",
     "dotenv": "^17.3.1",
+    "handlebars": "^4.7.9",
+    "nodemailer": "^10.0.3",
     "passport": "^0.7.0",
     "passport-jwt": "^4.0.1",
     "pg": "^8.18.0",
@@ -59,6 +62,7 @@
     "@types/express": "^5.0.0",
     "@types/jest": "^30.0.0",
     "@types/node": "^22.10.7",
+    "@types/nodemailer": "^8.0.1",
     "@types/passport-jwt": "^4.0.1",
     "@types/supertest": "^6.0.2",
     "@types/uuid": "^11.0.0",

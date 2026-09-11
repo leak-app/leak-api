@@ -15,6 +15,7 @@ import { TransactionsModule } from './modules/transactions/transactions.module';
 import { GoalsModule } from './modules/goals/goals.module';
 import { OverviewModule } from './modules/overview/overview.module';
 import { BudgetsModule } from './modules/budgets/budgets.module';
+import { MailModule } from './modules/mail/mail.module';
 
 @Module({
   imports: [
@@ -28,6 +29,7 @@ import { BudgetsModule } from './modules/budgets/budgets.module';
     GoalsModule,
     OverviewModule,
     BudgetsModule,
+    MailModule,
   ],
   controllers: [],
   providers: [

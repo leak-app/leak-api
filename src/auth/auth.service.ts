@@ -19,6 +19,7 @@ import { UserModel } from '@/generated/prisma/models';
 import { CategoryService } from '../modules/categories/categories.service';
 import { SessionRepository } from './session.repository';
 import { PasswordResetRepository } from './password-reset.repository';
+import { MailService } from '../modules/mail/mail.service';
 import {
   GoogleSignInDto,
   type SignUpDto,
@@ -37,6 +38,7 @@ export class AuthService {
     private readonly _passwordResetRepository: PasswordResetRepository,
     private readonly _configService: ConfigService,
     private readonly _categoryService: CategoryService,
+    private readonly _mailService: MailService,
   ) {}
 
   async signUp(dto: SignUpDto, tracing?: RequestTracing) {
@@ -199,8 +201,17 @@ export class AuthService {
       expiresAt,
     });
 
-    const resetUrl = `http://localhost:5173/reset-password?token=${token}`;
-    this._logger.log(`[AUTH] Password reset link for ${email}: ${resetUrl}`);
+    const frontendUrl = this._configService.get<string>(
+      'FRONTEND_URL',
+      'http://localhost:5173',
+    );
+    const resetUrl = `${frontendUrl}/reset-password?token=${token}`;
+
+    await this._mailService.sendPasswordResetEmail(
+      user.email,
+      user.name || undefined,
+      resetUrl,
+    );
 
     return {
       message:

@@ -7,6 +7,7 @@ import type { StringValue } from 'ms';
 import { CommonModule } from '../common/common.module';
 import { UserModule } from '../user/user.module';
 import { CategoriesModule } from '../modules/categories/categories.module';
+import { MailModule } from '../modules/mail/mail.module';
 
 import { AuthController } from './auth.controller';
 import { AuthService } from './auth.service';
@@ -21,6 +22,7 @@ import { PasswordResetRepository } from './password-reset.repository';
     CommonModule,
     UserModule,
     CategoriesModule,
+    MailModule,
     PassportModule,
     JwtModule.registerAsync({
       imports: [ConfigModule],
