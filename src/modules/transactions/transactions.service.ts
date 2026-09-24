@@ -49,6 +49,11 @@ export class TransactionService {
 
     if (query.outcome) {
       where.outcome = query.outcome;
+      // The "Chưa đánh giá" filter should only surface expenses: income rows
+      // keep the default outcome (UNREVIEWED) but are never reviewable.
+      if (!query.type) {
+        where.type = TransactionType.EXPENSE;
+      }
     }
 
     if (query.startDate || query.endDate) {

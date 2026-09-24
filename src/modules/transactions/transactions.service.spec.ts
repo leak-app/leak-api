@@ -29,7 +29,26 @@ describe('TransactionService', () => {
     await service.findAll(userId, { outcome: SpendOutcome.LEAK });
     expect(prisma.transaction.findMany).toHaveBeenCalledWith(
       expect.objectContaining({
-        where: { userId, outcome: SpendOutcome.LEAK },
+        where: {
+          userId,
+          outcome: SpendOutcome.LEAK,
+          type: TransactionType.EXPENSE,
+        },
+      }),
+    );
+  });
+
+  it('defaults outcome-filtered queries to expenses only, without overriding an explicit type', async () => {
+    await service.findAll(userId, {
+      outcome: SpendOutcome.UNREVIEWED,
+    });
+    expect(prisma.transaction.findMany).toHaveBeenCalledWith(
+      expect.objectContaining({
+        where: {
+          userId,
+          outcome: SpendOutcome.UNREVIEWED,
+          type: TransactionType.EXPENSE,
+        },
       }),
     );
   });
