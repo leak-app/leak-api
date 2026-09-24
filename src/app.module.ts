@@ -16,6 +16,7 @@ import { GoalsModule } from './modules/goals/goals.module';
 import { OverviewModule } from './modules/overview/overview.module';
 import { BudgetsModule } from './modules/budgets/budgets.module';
 import { MailModule } from './modules/mail/mail.module';
+import { OutcomesModule } from './modules/outcomes/outcomes.module';
 
 @Module({
   imports: [
@@ -30,6 +31,7 @@ import { MailModule } from './modules/mail/mail.module';
     OverviewModule,
     BudgetsModule,
     MailModule,
+    OutcomesModule,
   ],
   controllers: [],
   providers: [
