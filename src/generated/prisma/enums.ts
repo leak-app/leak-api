@@ -32,3 +32,25 @@ export const TransactionType = {
 } as const
 
 export type TransactionType = (typeof TransactionType)[keyof typeof TransactionType]
+
+
+export const SpendOutcome = {
+  UNREVIEWED: 'UNREVIEWED',
+  WORTH_IT: 'WORTH_IT',
+  NEUTRAL: 'NEUTRAL',
+  LEAK: 'LEAK'
+} as const
+
+export type SpendOutcome = (typeof SpendOutcome)[keyof typeof SpendOutcome]
+
+
+export const LeakReason = {
+  IMPULSIVE: 'IMPULSIVE',
+  UNUSED: 'UNUSED',
+  OVERPRICED: 'OVERPRICED',
+  SOCIAL_PRESSURE: 'SOCIAL_PRESSURE',
+  FORGOTTEN_SUB: 'FORGOTTEN_SUB',
+  OTHER: 'OTHER'
+} as const
+
+export type LeakReason = (typeof LeakReason)[keyof typeof LeakReason]

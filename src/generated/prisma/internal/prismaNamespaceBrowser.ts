@@ -152,7 +152,10 @@ export const TransactionScalarFieldEnum = {
   categoryId: 'categoryId',
   userId: 'userId',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  updatedAt: 'updatedAt',
+  outcome: 'outcome',
+  leakReason: 'leakReason',
+  reviewedAt: 'reviewedAt'
 } as const
 
 export type TransactionScalarFieldEnum = (typeof TransactionScalarFieldEnum)[keyof typeof TransactionScalarFieldEnum]

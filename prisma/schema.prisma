@@ -102,6 +102,22 @@ enum TransactionType {
   EXPENSE
 }
 
+enum SpendOutcome {
+  UNREVIEWED // Needs reflection (default)
+  WORTH_IT   // Brought joy, utility or fulfilled a core need
+  NEUTRAL    // Regular, unavoidable maintenance expense
+  LEAK       // Regretted, impulsive or wasted
+}
+
+enum LeakReason {
+  IMPULSIVE
+  UNUSED
+  OVERPRICED
+  SOCIAL_PRESSURE
+  FORGOTTEN_SUB
+  OTHER
+}
+
 model Transaction {
   id          String          @id @default(cuid())
   amount      Decimal         @db.Decimal(12, 2)
@@ -113,7 +129,11 @@ model Transaction {
   user        User            @relation(fields: [userId], references: [id], onDelete: Cascade)
   createdAt   DateTime        @default(now()) @map("created_at")
   updatedAt   DateTime        @updatedAt @map("updated_at")
+  outcome     SpendOutcome    @default(UNREVIEWED)
+  leakReason  LeakReason?     @map("leak_reason")
+  reviewedAt  DateTime?       @map("reviewed_at")
 
+  @@index([userId, outcome, createdAt])
   @@map("transactions")
 }
 

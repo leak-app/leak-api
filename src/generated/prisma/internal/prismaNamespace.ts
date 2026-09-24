@@ -1117,7 +1117,10 @@ export const TransactionScalarFieldEnum = {
   categoryId: 'categoryId',
   userId: 'userId',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  updatedAt: 'updatedAt',
+  outcome: 'outcome',
+  leakReason: 'leakReason',
+  reviewedAt: 'reviewedAt'
 } as const
 
 export type TransactionScalarFieldEnum = (typeof TransactionScalarFieldEnum)[keyof typeof TransactionScalarFieldEnum]
@@ -1282,6 +1285,34 @@ export type EnumTransactionTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$
  * Reference to a field of type 'TransactionType[]'
  */
 export type ListEnumTransactionTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'TransactionType[]'>
+    
+
+
+/**
+ * Reference to a field of type 'SpendOutcome'
+ */
+export type EnumSpendOutcomeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'SpendOutcome'>
+    
+
+
+/**
+ * Reference to a field of type 'SpendOutcome[]'
+ */
+export type ListEnumSpendOutcomeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'SpendOutcome[]'>
+    
+
+
+/**
+ * Reference to a field of type 'LeakReason'
+ */
+export type EnumLeakReasonFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'LeakReason'>
+    
+
+
+/**
+ * Reference to a field of type 'LeakReason[]'
+ */
+export type ListEnumLeakReasonFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'LeakReason[]'>
     
 
 
