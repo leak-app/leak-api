@@ -8,10 +8,13 @@ import { type ZodSchema } from 'zod';
 
 @Injectable()
 export class ZodValidationPipe implements PipeTransform {
-  constructor(private readonly schema: ZodSchema) {}
+  constructor(
+    private readonly schema: ZodSchema,
+    private readonly target: 'body' | 'query' = 'body',
+  ) {}
 
   transform(value: unknown, metadata: ArgumentMetadata) {
-    if (metadata.type !== 'body') {
+    if (metadata.type !== this.target) {
       return value;
     }
     const result = this.schema.safeParse(value);

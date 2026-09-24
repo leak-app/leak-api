@@ -19,3 +19,23 @@ export class ReviewOutcomeDto implements z.infer<typeof reviewOutcomeSchema> {
   outcome!: 'WORTH_IT' | 'NEUTRAL' | 'LEAK';
   leakReason?: LeakReason;
 }
+
+export const leakRateQuerySchema = z.object({
+  month: z.coerce
+    .number({ message: 'Tháng không hợp lệ' })
+    .int('Tháng không hợp lệ')
+    .min(1, 'Tháng không hợp lệ')
+    .max(12, 'Tháng không hợp lệ')
+    .optional(),
+  year: z.coerce
+    .number({ message: 'Năm không hợp lệ' })
+    .int('Năm không hợp lệ')
+    .min(2000, 'Năm không hợp lệ')
+    .max(2100, 'Năm không hợp lệ')
+    .optional(),
+});
+
+export class LeakRateQueryDto implements z.infer<typeof leakRateQuerySchema> {
+  month?: number;
+  year?: number;
+}

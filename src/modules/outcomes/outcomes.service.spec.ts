@@ -150,4 +150,75 @@ describe('OutcomesService', () => {
       );
     });
   });
+
+  describe('getLeakRate', () => {
+    it('queries the requested calendar month and converts Decimal sums', async () => {
+      prisma.transaction.groupBy
+        .mockResolvedValueOnce([
+          {
+            categoryId: 'c1',
+            outcome: SpendOutcome.LEAK,
+            _sum: { amount: '120000.00' },
+            _count: { _all: 2 },
+          },
+        ])
+        .mockResolvedValueOnce([
+          {
+            categoryId: 'c1',
+            leakReason: LeakReason.IMPULSIVE,
+            _sum: { amount: '120000.00' },
+          },
+        ]);
+      prisma.category.findMany.mockResolvedValue([
+        { id: 'c1', name: 'Cà phê', emoji: '☕' },
+      ]);
+
+      const report = await service.getLeakRate(userId, 2, 2026, now);
+
+      const calls = prisma.transaction.groupBy.mock.calls as unknown[];
+      const outcomeCall = calls[0] as unknown[];
+      const reasonCall = calls[1] as unknown[];
+      expect(outcomeCall[0]).toMatchObject({
+        by: ['categoryId', 'outcome'],
+        where: { userId, type: TransactionType.EXPENSE },
+      });
+      const arg0 = outcomeCall[0] as Record<string, Record<string, unknown>>;
+      const where = arg0.where;
+      const createdAt = where.createdAt as Record<string, Date>;
+      const { gte, lte } = createdAt;
+      expect(gte.getFullYear()).toBe(2026);
+      expect(gte.getMonth()).toBe(1); // February
+      expect(gte.getDate()).toBe(1);
+      expect(lte.getMonth()).toBe(1);
+      expect(lte.getDate()).toBe(28);
+      expect(reasonCall[0]).toMatchObject({
+        by: ['categoryId', 'leakReason'],
+        where: { outcome: SpendOutcome.LEAK, leakReason: { not: null } },
+      });
+      expect(prisma.category.findMany).toHaveBeenCalledWith({
+        where: { id: { in: ['c1'] }, userId },
+        select: { id: true, name: true, emoji: true },
+      });
+      expect(report.month).toBe(2);
+      expect(report.categories[0]).toMatchObject({
+        name: 'Cà phê',
+        leakAmount: 120000,
+        topLeakReason: LeakReason.IMPULSIVE,
+      });
+    });
+
+    it('defaults to the current month and skips the category lookup when empty', async () => {
+      prisma.transaction.groupBy.mockResolvedValue([]);
+
+      const report = await service.getLeakRate(
+        userId,
+        undefined,
+        undefined,
+        new Date(2026, 0, 31, 10), // 31 Jan: must not overflow into March
+      );
+
+      expect(report).toMatchObject({ month: 1, year: 2026, categories: [] });
+      expect(prisma.category.findMany).not.toHaveBeenCalled();
+    });
+  });
 });
