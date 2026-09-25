@@ -39,4 +39,16 @@ describe('ZodValidationPipe', () => {
       expect(message[0].startsWith(':')).toBe(false);
     }
   });
+
+  it('validates route params when the target is param', () => {
+    const pipe = new ZodValidationPipe(
+      z.coerce.number().int().positive(),
+      'param',
+    );
+    expect(pipe.transform('7', { type: 'param' })).toBe(7);
+    expect(() => pipe.transform('abc', { type: 'param' })).toThrow(
+      BadRequestException,
+    );
+    expect(pipe.transform({ a: 1 }, { type: 'body' })).toEqual({ a: 1 });
+  });
 });
