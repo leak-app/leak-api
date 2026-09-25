@@ -1729,11 +1729,6 @@
   dependencies:
     uuid "*"
 
-"@types/validator@^13.15.3":
-  version "13.15.10"
-  resolved "https://registry.npmjs.org/@types/validator/-/validator-13.15.10.tgz"
-  integrity sha512-T8L6i7wCuyoK8A/ZeLYt1+q0ty3Zb9+qbSSvrIVitzT3YjZqkTZ40IbRsPanlB4h1QB3JVL1SYCdR6ngtFYcuA==
-
 "@types/yargs-parser@*":
   version "21.0.3"
   resolved "https://registry.npmjs.org/@types/yargs-parser/-/yargs-parser-21.0.3.tgz"
@@ -2717,20 +2712,6 @@ cjs-module-lexer@^2.1.0:
   version "2.2.0"
   resolved "https://registry.npmjs.org/cjs-module-lexer/-/cjs-module-lexer-2.2.0.tgz"
   integrity sha512-4bHTS2YuzUvtoLjdy+98ykbNB5jS0+07EvFNXerqZQJ89F7DI6ET7OQo/HJuW6K0aVsKA9hj9/RVb2kQVOrPDQ==
-
-class-transformer@^0.5.1:
-  version "0.5.1"
-  resolved "https://registry.npmjs.org/class-transformer/-/class-transformer-0.5.1.tgz"
-  integrity sha512-SQa1Ws6hUbfC98vKGxZH3KFY0Y1lm5Zm0SY8XX9zbK7FJCyVEac3ATW0RIpwzW+oOfmHE5PMPufDG9hCfoEOMw==
-
-class-validator@^0.15.1:
-  version "0.15.1"
-  resolved "https://registry.npmjs.org/class-validator/-/class-validator-0.15.1.tgz"
-  integrity sha512-LqoS80HBBSCVhz/3KloUly0ovokxpdOLR++Al3J3+dHXWt9sTKlKd4eYtoxhxyUjoe5+UcIM+5k9MIxyBWnRTw==
-  dependencies:
-    "@types/validator" "^13.15.3"
-    libphonenumber-js "^1.11.1"
-    validator "^13.15.22"
 
 cli-cursor@^3.1.0:
   version "3.1.0"
@@ -5028,11 +5009,6 @@ libmime@5.4.2:
     iconv-lite "0.7.3"
     libbase64 "1.3.0"
     libqp "2.1.1"
-
-libphonenumber-js@^1.11.1:
-  version "1.13.8"
-  resolved "https://registry.npmjs.org/libphonenumber-js/-/libphonenumber-js-1.13.8.tgz"
-  integrity sha512-80xal1m93rADejw2pMp2MSzFhHCPLEspjHxnH2UtqI+DgAmElsbmLMiqk9niwH9NWAfjsRtaJI+qBrOEmRx9nQ==
 
 libqp@2.1.1:
   version "2.1.1"
@@ -7667,11 +7643,6 @@ valid-data-url@^3.0.0:
   version "3.0.1"
   resolved "https://registry.npmjs.org/valid-data-url/-/valid-data-url-3.0.1.tgz"
   integrity sha512-jOWVmzVceKlVVdwjNSenT4PbGghU0SBIizAev8ofZVgivk/TVHXSbNL8LP6M3spZvkR9/QolkyJavGSX5Cs0UA==
-
-validator@^13.15.22:
-  version "13.15.35"
-  resolved "https://registry.npmjs.org/validator/-/validator-13.15.35.tgz"
-  integrity sha512-TQ5pAGhd5whStmqWvYF4OjQROlmv9SMFVt37qoCBdqRffuuklWYQlCNnEs2ZaIBD1kZRNnikiZOS1eqgkar0iw==
 
 vary@^1, vary@^1.1.2:
   version "1.1.2"
