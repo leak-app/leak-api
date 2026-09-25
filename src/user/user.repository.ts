@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 
 import { PrismaService } from '@/common/prisma.service';
+import { AccountType } from '@/generated/prisma/client';
 import type {
   UserCreateInput,
   UserModel,
@@ -23,9 +24,20 @@ export class UserRepository {
     });
   }
 
+  /** Every user starts with a cash wallet so transactions always have a wallet to land in. */
   async create(data: UserCreateInput): Promise<UserModel> {
     return this._prisma.user.create({
-      data,
+      data: {
+        ...data,
+        accounts: {
+          create: {
+            name: 'Tiền mặt',
+            type: AccountType.LIQUID,
+            initialBalance: 0,
+            currentBalance: 0,
+          },
+        },
+      },
     });
   }
 

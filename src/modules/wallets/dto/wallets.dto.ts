@@ -14,11 +14,11 @@ export class CreateWalletDto implements z.infer<typeof createWalletSchema> {
 }
 
 export const updateWalletSchema = z.object({
-  name: z.string().optional(),
-  currentBalance: z.number().optional(),
+  name: z.string().min(1, 'Tên ví là bắt buộc').optional(),
+  initialBalance: z.number().optional(),
 });
 
 export class UpdateWalletDto implements z.infer<typeof updateWalletSchema> {
   name?: string;
-  currentBalance?: number;
+  initialBalance?: number;
 }

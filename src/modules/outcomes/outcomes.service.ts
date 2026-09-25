@@ -21,6 +21,7 @@ export class OutcomesService {
   async getQueue(userId: string, now: Date = new Date()) {
     const where = {
       userId,
+      isDeleted: false,
       type: TransactionType.EXPENSE,
       outcome: SpendOutcome.UNREVIEWED,
       createdAt: {
@@ -49,7 +50,7 @@ export class OutcomesService {
     now: Date = new Date(),
   ) {
     const transaction = await this._prisma.transaction.findFirst({
-      where: { id: transactionId, userId },
+      where: { id: transactionId, userId, isDeleted: false },
     });
 
     // Same message for "missing" and "not yours" so ownership is not revealed.
@@ -90,6 +91,7 @@ export class OutcomesService {
 
     const where = {
       userId,
+      isDeleted: false,
       type: TransactionType.EXPENSE,
       createdAt: { gte: start.toDate(), lte: end.toDate() },
     };

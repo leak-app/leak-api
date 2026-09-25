@@ -157,6 +157,7 @@ export class BudgetsService {
       by: ['categoryId'],
       where: {
         userId,
+        isDeleted: false,
         type: TransactionType.EXPENSE,
         createdAt: {
           gte: startDate,
