@@ -9,20 +9,21 @@ datasource db {
 }
 
 model User {
-  id        String    @id @default(cuid())
-  email     String    @unique
-  password  String    // Will store a hashed password
+  id        String   @id @default(cuid())
+  email     String   @unique
+  password  String // Will store a hashed password
   name      String?
-  createdAt DateTime  @default(now()) @map("created_at")
-  updatedAt DateTime  @updatedAt @map("updated_at")
-  
-  sessions     Session[]
-  accounts     Account[]
-  categories   Category[]
-  transactions Transaction[]
-  goals        Goal[]
-  budgets      Budget[]
-  resetTokens  PasswordResetToken[]
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  sessions          Session[]
+  accounts          Account[]
+  categories        Category[]
+  transactions      Transaction[]
+  goals             Goal[]
+  goalContributions GoalContribution[]
+  budgets           Budget[]
+  resetTokens       PasswordResetToken[]
 
   @@map("users")
 }
@@ -60,19 +61,20 @@ enum AccountType {
 }
 
 model Account {
-  id             String        @id @default(cuid())
+  id             String      @id @default(cuid())
   name           String
   type           AccountType
-  initialBalance Decimal       @db.Decimal(12, 2) @map("initial_balance")
-  currentBalance Decimal       @db.Decimal(12, 2) @map("current_balance")
-  userId         String        @map("user_id")
-  user           User          @relation(fields: [userId], references: [id], onDelete: Cascade)
-  isDeleted      Boolean       @default(false) @map("is_deleted")
-  deletedAt      DateTime?     @map("deleted_at")
-  createdAt      DateTime      @default(now()) @map("created_at")
-  updatedAt      DateTime      @updatedAt @map("updated_at")
+  initialBalance Decimal     @map("initial_balance") @db.Decimal(12, 2)
+  currentBalance Decimal     @map("current_balance") @db.Decimal(12, 2)
+  userId         String      @map("user_id")
+  user           User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  isDeleted      Boolean     @default(false) @map("is_deleted")
+  deletedAt      DateTime?   @map("deleted_at")
+  createdAt      DateTime    @default(now()) @map("created_at")
+  updatedAt      DateTime    @updatedAt @map("updated_at")
 
-  transactions   Transaction[]
+  transactions      Transaction[]
+  goalContributions GoalContribution[]
 
   @@index([userId, isDeleted])
   @@map("accounts")
@@ -85,16 +87,16 @@ enum CategoryType {
 }
 
 model Category {
-  id           String        @id @default(cuid())
-  name         String
-  emoji        String?
-  type         CategoryType
-  userId       String        @map("user_id")
-  user         User          @relation(fields: [userId], references: [id], onDelete: Cascade)
-  isDeleted    Boolean       @default(false) @map("is_deleted")
-  deletedAt    DateTime?     @map("deleted_at")
-  createdAt    DateTime      @default(now()) @map("created_at")
-  updatedAt    DateTime      @updatedAt @map("updated_at")
+  id        String       @id @default(cuid())
+  name      String
+  emoji     String?
+  type      CategoryType
+  userId    String       @map("user_id")
+  user      User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  isDeleted Boolean      @default(false) @map("is_deleted")
+  deletedAt DateTime?    @map("deleted_at")
+  createdAt DateTime     @default(now()) @map("created_at")
+  updatedAt DateTime     @updatedAt @map("updated_at")
 
   transactions Transaction[]
   budgets      Budget[]
@@ -109,9 +111,9 @@ enum TransactionType {
 
 enum SpendOutcome {
   UNREVIEWED // Needs reflection (default)
-  WORTH_IT   // Brought joy, utility or fulfilled a core need
-  NEUTRAL    // Regular, unavoidable maintenance expense
-  LEAK       // Regretted, impulsive or wasted
+  WORTH_IT // Brought joy, utility or fulfilled a core need
+  NEUTRAL // Regular, unavoidable maintenance expense
+  LEAK // Regretted, impulsive or wasted
 }
 
 enum LeakReason {
@@ -127,7 +129,7 @@ model Transaction {
   id          String          @id @default(cuid())
   amount      Decimal         @db.Decimal(12, 2)
   type        TransactionType
-  description String?         // Nullable from day one to support Phase 2 AI parsing
+  description String? // Nullable from day one to support Phase 2 AI parsing
   categoryId  String          @map("category_id")
   category    Category        @relation(fields: [categoryId], references: [id], onDelete: Restrict)
   accountId   String          @map("account_id")
@@ -148,17 +150,52 @@ model Transaction {
   @@map("transactions")
 }
 
-model Goal {
-  id           String   @id @default(cuid())
-  name         String
-  targetAmount Decimal  @db.Decimal(12, 2)
-  savedAmount  Decimal  @db.Decimal(12, 2)
-  userId       String   @map("user_id")
-  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  createdAt    DateTime @default(now()) @map("created_at")
-  updatedAt    DateTime @updatedAt @map("updated_at")
+enum GoalContributionType {
+  OPENING
+  DEPOSIT
+  WITHDRAWAL
+}
 
+enum GoalContributionSource {
+  MANUAL
+}
+
+model Goal {
+  id            String             @id @default(cuid())
+  name          String
+  emoji         String?
+  targetAmount  Decimal            @map("target_amount") @db.Decimal(12, 2)
+  savedAmount   Decimal            @default(0) @map("saved_amount") @db.Decimal(12, 2)
+  targetDate    DateTime?          @map("target_date") @db.Date
+  userId        String             @map("user_id")
+  user          User               @relation(fields: [userId], references: [id], onDelete: Cascade)
+  isDeleted     Boolean            @default(false) @map("is_deleted")
+  deletedAt     DateTime?          @map("deleted_at")
+  createdAt     DateTime           @default(now()) @map("created_at")
+  updatedAt     DateTime           @updatedAt @map("updated_at")
+  contributions GoalContribution[]
+
+  @@index([userId, isDeleted])
   @@map("goals")
+}
+
+model GoalContribution {
+  id        String                 @id @default(cuid())
+  goalId    String                 @map("goal_id")
+  goal      Goal                   @relation(fields: [goalId], references: [id], onDelete: Restrict)
+  accountId String?                @map("account_id") // null only for OPENING
+  account   Account?               @relation(fields: [accountId], references: [id], onDelete: Restrict)
+  userId    String                 @map("user_id")
+  user      User                   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  type      GoalContributionType
+  source    GoalContributionSource @default(MANUAL)
+  amount    Decimal                @db.Decimal(12, 2) // always positive; direction comes from type
+  note      String?
+  createdAt DateTime               @default(now()) @map("created_at")
+
+  @@index([goalId, createdAt])
+  @@index([accountId])
+  @@map("goal_contributions")
 }
 
 model Budget {

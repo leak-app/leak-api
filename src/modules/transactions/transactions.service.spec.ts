@@ -8,6 +8,7 @@ import {
   TransactionType,
 } from '@/generated/prisma/client';
 import { TransactionService } from './transactions.service';
+import { WalletResolver } from './wallet-resolver.service';
 import type { LedgerService } from './ledger.service';
 import type { BalanceChange } from './ledger.calculator';
 import { outcomeFilterSchema } from './dto/transactions.dto';
@@ -81,6 +82,7 @@ describe('TransactionService', () => {
     service = new TransactionService(
       prisma as unknown as PrismaService,
       ledger as unknown as LedgerService,
+      new WalletResolver(),
     );
   });
 

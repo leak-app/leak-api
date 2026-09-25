@@ -1,4 +1,8 @@
-import { Prisma, TransactionType } from '@/generated/prisma/client';
+import {
+  GoalContributionType,
+  Prisma,
+  TransactionType,
+} from '@/generated/prisma/client';
 
 export type LedgerEntry = {
   accountId: string;
@@ -36,4 +40,20 @@ export function planBalanceChanges(
   return [...deltas]
     .filter(([, delta]) => !delta.isZero())
     .map(([accountId, delta]) => ({ accountId, delta }));
+}
+
+export type ContributionEntry = {
+  accountId: string | null;
+  type: GoalContributionType;
+  amount: Prisma.Decimal | number | string;
+};
+
+/** Deposits leave a wallet, withdrawals return to it, openings touch no wallet. */
+export function planContributionChanges(c: ContributionEntry): BalanceChange[] {
+  if (c.type === GoalContributionType.OPENING) return [];
+  if (!c.accountId) throw new Error(`${c.type} needs a wallet`);
+  const amount = new Prisma.Decimal(c.amount);
+  const delta =
+    c.type === GoalContributionType.DEPOSIT ? amount.negated() : amount;
+  return [{ accountId: c.accountId, delta }];
 }

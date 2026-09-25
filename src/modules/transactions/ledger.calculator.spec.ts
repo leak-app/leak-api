@@ -1,8 +1,13 @@
-import { Prisma, TransactionType } from '@/generated/prisma/client';
+import {
+  GoalContributionType,
+  Prisma,
+  TransactionType,
+} from '@/generated/prisma/client';
 import {
   type BalanceChange,
   type LedgerEntry,
   planBalanceChanges,
+  planContributionChanges,
   signedAmount,
 } from './ledger.calculator';
 
@@ -180,5 +185,53 @@ describe('planBalanceChanges', () => {
         .reduce((sum, e) => sum.plus(signedAmount(e)), initial[wallet]);
       expect(balances[wallet].toString()).toBe(expected.toString());
     }
+  });
+});
+
+describe('planContributionChanges', () => {
+  const { DEPOSIT, WITHDRAWAL, OPENING } = GoalContributionType;
+
+  it('a deposit takes money out of the wallet', () => {
+    expect(
+      plain(
+        planContributionChanges({
+          accountId: 'w',
+          type: DEPOSIT,
+          amount: new D('500000.50'),
+        }),
+      ),
+    ).toEqual([{ accountId: 'w', delta: '-500000.5' }]);
+  });
+
+  it('a withdrawal puts money back into the wallet', () => {
+    expect(
+      plain(
+        planContributionChanges({
+          accountId: 'w',
+          type: WITHDRAWAL,
+          amount: new D(200000),
+        }),
+      ),
+    ).toEqual([{ accountId: 'w', delta: '200000' }]);
+  });
+
+  it('an opening balance touches no wallet', () => {
+    expect(
+      planContributionChanges({
+        accountId: null,
+        type: OPENING,
+        amount: new D(1),
+      }),
+    ).toEqual([]);
+  });
+
+  it('rejects a deposit or withdrawal without a wallet', () => {
+    expect(() =>
+      planContributionChanges({
+        accountId: null,
+        type: DEPOSIT,
+        amount: new D(1),
+      }),
+    ).toThrow('DEPOSIT needs a wallet');
   });
 });
