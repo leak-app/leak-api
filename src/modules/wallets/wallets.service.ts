@@ -36,6 +36,9 @@ export class WalletService {
 
   async update(userId: string, id: string, dto: UpdateWalletDto) {
     return this._prisma.$transaction(async (tx) => {
+      // Lock the row before reading it, so a concurrent update can't read the same
+      // stale initialBalance and compute an overlapping delta.
+      await tx.$queryRaw`SELECT id FROM accounts WHERE id = ${id} AND user_id = ${userId} FOR UPDATE`;
       const wallet = await this._findActive(tx, userId, id);
 
       if (dto.initialBalance !== undefined) {
@@ -58,8 +61,9 @@ export class WalletService {
     return this._prisma.$transaction(async (tx) => {
       await this._findActive(tx, userId, id);
 
-      // Lock the user's wallets so two concurrent archives cannot both pass the guard.
-      await tx.$queryRaw`SELECT id FROM accounts WHERE user_id = ${userId} FOR UPDATE`;
+      // Lock the user's wallets, in a stable order, so two concurrent archives
+      // cannot both pass the guard and cannot deadlock against each other.
+      await tx.$queryRaw`SELECT id FROM accounts WHERE user_id = ${userId} ORDER BY id FOR UPDATE`;
       const otherActive = await tx.account.count({
         where: { userId, isDeleted: false, id: { not: id } },
       });

@@ -13,7 +13,12 @@ export class LedgerService {
     tx: Prisma.TransactionClient,
     changes: BalanceChange[],
   ): Promise<void> {
-    for (const { accountId, delta } of changes) {
+    // Lock accounts in a consistent order (sorted by id) rather than insertion
+    // order, so two concurrent opposite-direction transfers can't deadlock.
+    const ordered = [...changes].sort((a, b) =>
+      a.accountId.localeCompare(b.accountId),
+    );
+    for (const { accountId, delta } of ordered) {
       await tx.account.update({
         where: { id: accountId },
         data: { currentBalance: { increment: delta } },

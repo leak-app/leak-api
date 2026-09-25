@@ -12,7 +12,7 @@ describe('LedgerService', () => {
 
   const asTx = () => tx as unknown as Prisma.TransactionClient;
 
-  it('apply increments each wallet by its delta', async () => {
+  it('apply increments each wallet by its delta, in a stable (sorted) order', async () => {
     await ledger.apply(asTx(), [
       { accountId: 'cash', delta: new Prisma.Decimal(50000) },
       { accountId: 'bank', delta: new Prisma.Decimal(-50000) },
@@ -20,13 +20,33 @@ describe('LedgerService', () => {
 
     expect(tx.account.update).toHaveBeenCalledTimes(2);
     expect(tx.account.update).toHaveBeenNthCalledWith(1, {
-      where: { id: 'cash' },
-      data: { currentBalance: { increment: new Prisma.Decimal(50000) } },
-    });
-    expect(tx.account.update).toHaveBeenNthCalledWith(2, {
       where: { id: 'bank' },
       data: { currentBalance: { increment: new Prisma.Decimal(-50000) } },
     });
+    expect(tx.account.update).toHaveBeenNthCalledWith(2, {
+      where: { id: 'cash' },
+      data: { currentBalance: { increment: new Prisma.Decimal(50000) } },
+    });
+  });
+
+  it('apply locks accounts in a stable order (sorted by accountId) to avoid deadlocks, without mutating the input', async () => {
+    const changes = [
+      { accountId: 'z', delta: new Prisma.Decimal(10) },
+      { accountId: 'a', delta: new Prisma.Decimal(-10) },
+    ];
+    const snapshot = [...changes];
+
+    await ledger.apply(asTx(), changes);
+
+    expect(tx.account.update).toHaveBeenNthCalledWith(1, {
+      where: { id: 'a' },
+      data: { currentBalance: { increment: new Prisma.Decimal(-10) } },
+    });
+    expect(tx.account.update).toHaveBeenNthCalledWith(2, {
+      where: { id: 'z' },
+      data: { currentBalance: { increment: new Prisma.Decimal(10) } },
+    });
+    expect(changes).toEqual(snapshot);
   });
 
   it('apply with no changes writes nothing', async () => {

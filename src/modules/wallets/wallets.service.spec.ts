@@ -67,6 +67,15 @@ describe('WalletService', () => {
       expect((delta as Prisma.Decimal).toString()).toBe('20000');
     });
 
+    it('locks the wallet row before reading it, so the delta is computed from a fresh balance', async () => {
+      await service.update(userId, 'cash', { initialBalance: 120000 });
+
+      expect(prisma.$queryRaw).toHaveBeenCalled();
+      expect(prisma.$queryRaw.mock.invocationCallOrder[0]).toBeLessThan(
+        prisma.account.findFirst.mock.invocationCallOrder[0],
+      );
+    });
+
     it('renames without touching balances', async () => {
       await service.update(userId, 'cash', { name: 'Ví chính' });
 
