@@ -63,8 +63,8 @@ model Account {
   id             String        @id @default(cuid())
   name           String
   type           AccountType
-  initialBalance Decimal       @db.Decimal(12, 2)
-  currentBalance Decimal       @db.Decimal(12, 2)
+  initialBalance Decimal       @db.Decimal(12, 2) @map("initial_balance")
+  currentBalance Decimal       @db.Decimal(12, 2) @map("current_balance")
   userId         String        @map("user_id")
   user           User          @relation(fields: [userId], references: [id], onDelete: Cascade)
   isDeleted      Boolean       @default(false) @map("is_deleted")
