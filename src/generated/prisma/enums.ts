@@ -54,3 +54,19 @@ export const LeakReason = {
 } as const
 
 export type LeakReason = (typeof LeakReason)[keyof typeof LeakReason]
+
+
+export const GoalContributionType = {
+  OPENING: 'OPENING',
+  DEPOSIT: 'DEPOSIT',
+  WITHDRAWAL: 'WITHDRAWAL'
+} as const
+
+export type GoalContributionType = (typeof GoalContributionType)[keyof typeof GoalContributionType]
+
+
+export const GoalContributionSource = {
+  MANUAL: 'MANUAL'
+} as const
+
+export type GoalContributionSource = (typeof GoalContributionSource)[keyof typeof GoalContributionSource]

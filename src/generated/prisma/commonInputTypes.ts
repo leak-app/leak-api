@@ -287,6 +287,40 @@ export type EnumLeakReasonNullableWithAggregatesFilter<$PrismaModel = never> = {
   _max?: Prisma.NestedEnumLeakReasonNullableFilter<$PrismaModel>
 }
 
+export type EnumGoalContributionTypeFilter<$PrismaModel = never> = {
+  equals?: $Enums.GoalContributionType | Prisma.EnumGoalContributionTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.GoalContributionType[] | Prisma.ListEnumGoalContributionTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.GoalContributionType[] | Prisma.ListEnumGoalContributionTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumGoalContributionTypeFilter<$PrismaModel> | $Enums.GoalContributionType
+}
+
+export type EnumGoalContributionSourceFilter<$PrismaModel = never> = {
+  equals?: $Enums.GoalContributionSource | Prisma.EnumGoalContributionSourceFieldRefInput<$PrismaModel>
+  in?: $Enums.GoalContributionSource[] | Prisma.ListEnumGoalContributionSourceFieldRefInput<$PrismaModel>
+  notIn?: $Enums.GoalContributionSource[] | Prisma.ListEnumGoalContributionSourceFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumGoalContributionSourceFilter<$PrismaModel> | $Enums.GoalContributionSource
+}
+
+export type EnumGoalContributionTypeWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.GoalContributionType | Prisma.EnumGoalContributionTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.GoalContributionType[] | Prisma.ListEnumGoalContributionTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.GoalContributionType[] | Prisma.ListEnumGoalContributionTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumGoalContributionTypeWithAggregatesFilter<$PrismaModel> | $Enums.GoalContributionType
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumGoalContributionTypeFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumGoalContributionTypeFilter<$PrismaModel>
+}
+
+export type EnumGoalContributionSourceWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.GoalContributionSource | Prisma.EnumGoalContributionSourceFieldRefInput<$PrismaModel>
+  in?: $Enums.GoalContributionSource[] | Prisma.ListEnumGoalContributionSourceFieldRefInput<$PrismaModel>
+  notIn?: $Enums.GoalContributionSource[] | Prisma.ListEnumGoalContributionSourceFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumGoalContributionSourceWithAggregatesFilter<$PrismaModel> | $Enums.GoalContributionSource
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumGoalContributionSourceFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumGoalContributionSourceFilter<$PrismaModel>
+}
+
 export type NestedStringFilter<$PrismaModel = never> = {
   equals?: string | Prisma.StringFieldRefInput<$PrismaModel>
   in?: string[] | Prisma.ListStringFieldRefInput<$PrismaModel>
@@ -571,6 +605,40 @@ export type NestedEnumLeakReasonNullableWithAggregatesFilter<$PrismaModel = neve
   _count?: Prisma.NestedIntNullableFilter<$PrismaModel>
   _min?: Prisma.NestedEnumLeakReasonNullableFilter<$PrismaModel>
   _max?: Prisma.NestedEnumLeakReasonNullableFilter<$PrismaModel>
+}
+
+export type NestedEnumGoalContributionTypeFilter<$PrismaModel = never> = {
+  equals?: $Enums.GoalContributionType | Prisma.EnumGoalContributionTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.GoalContributionType[] | Prisma.ListEnumGoalContributionTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.GoalContributionType[] | Prisma.ListEnumGoalContributionTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumGoalContributionTypeFilter<$PrismaModel> | $Enums.GoalContributionType
+}
+
+export type NestedEnumGoalContributionSourceFilter<$PrismaModel = never> = {
+  equals?: $Enums.GoalContributionSource | Prisma.EnumGoalContributionSourceFieldRefInput<$PrismaModel>
+  in?: $Enums.GoalContributionSource[] | Prisma.ListEnumGoalContributionSourceFieldRefInput<$PrismaModel>
+  notIn?: $Enums.GoalContributionSource[] | Prisma.ListEnumGoalContributionSourceFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumGoalContributionSourceFilter<$PrismaModel> | $Enums.GoalContributionSource
+}
+
+export type NestedEnumGoalContributionTypeWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.GoalContributionType | Prisma.EnumGoalContributionTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.GoalContributionType[] | Prisma.ListEnumGoalContributionTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.GoalContributionType[] | Prisma.ListEnumGoalContributionTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumGoalContributionTypeWithAggregatesFilter<$PrismaModel> | $Enums.GoalContributionType
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumGoalContributionTypeFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumGoalContributionTypeFilter<$PrismaModel>
+}
+
+export type NestedEnumGoalContributionSourceWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.GoalContributionSource | Prisma.EnumGoalContributionSourceFieldRefInput<$PrismaModel>
+  in?: $Enums.GoalContributionSource[] | Prisma.ListEnumGoalContributionSourceFieldRefInput<$PrismaModel>
+  notIn?: $Enums.GoalContributionSource[] | Prisma.ListEnumGoalContributionSourceFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumGoalContributionSourceWithAggregatesFilter<$PrismaModel> | $Enums.GoalContributionSource
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumGoalContributionSourceFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumGoalContributionSourceFilter<$PrismaModel>
 }
 
 
