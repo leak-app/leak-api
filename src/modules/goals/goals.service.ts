@@ -18,7 +18,6 @@ export class GoalService {
       data: {
         name: dto.name,
         targetAmount: dto.targetAmount,
-        savedAmount: dto.savedAmount,
         userId,
       },
     });
@@ -33,7 +32,6 @@ export class GoalService {
       data: {
         name: dto.name,
         targetAmount: dto.targetAmount,
-        savedAmount: dto.savedAmount,
       },
     });
   }
