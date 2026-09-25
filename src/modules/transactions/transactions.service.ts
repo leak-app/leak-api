@@ -1,15 +1,35 @@
-import { Injectable, BadRequestException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { PrismaService } from '@/common/prisma.service';
-import { SpendOutcome, TransactionType } from '@/generated/prisma/client';
+import {
+  AccountType,
+  CategoryType,
+  Prisma,
+  SpendOutcome,
+  TransactionType,
+} from '@/generated/prisma/client';
 import {
   CreateTransactionDto,
   UpdateTransactionDto,
 } from './dto/transactions.dto';
 import { TransactionWhereInput } from '@/generated/prisma/models';
+import { LedgerService } from './ledger.service';
+import { planBalanceChanges } from './ledger.calculator';
+
+const ALLOWED_CATEGORY_TYPES: Record<TransactionType, CategoryType[]> = {
+  [TransactionType.INCOME]: [CategoryType.INCOME],
+  [TransactionType.EXPENSE]: [CategoryType.EXPENSE, CategoryType.INVESTMENT],
+};
 
 @Injectable()
 export class TransactionService {
-  constructor(private readonly _prisma: PrismaService) {}
+  constructor(
+    private readonly _prisma: PrismaService,
+    private readonly _ledger: LedgerService,
+  ) {}
 
   async findAll(
     userId: string,
@@ -30,7 +50,7 @@ export class TransactionService {
     const limit = Number(query.limit) || 20;
     const skip = (page - 1) * limit;
 
-    const where: TransactionWhereInput = { userId };
+    const where: TransactionWhereInput = { userId, isDeleted: false };
 
     if (query.search?.trim()) {
       const searchTerm = query.search.trim();
@@ -81,6 +101,7 @@ export class TransactionService {
         where,
         include: {
           category: true,
+          account: { select: { id: true, name: true } },
         },
         orderBy: { createdAt: 'desc' },
         skip,
@@ -101,76 +122,172 @@ export class TransactionService {
   }
 
   async create(userId: string, dto: CreateTransactionDto) {
-    const category = await this._prisma.category.findFirst({
-      where: {
-        id: dto.categoryId,
-        userId,
-      },
-    });
+    return this._prisma.$transaction(async (tx) => {
+      await this._assertCategory(tx, userId, dto.categoryId, dto.type);
+      const accountId = dto.accountId
+        ? await this._resolveAccount(tx, userId, dto.accountId)
+        : await this._defaultAccount(tx, userId);
 
+      const created = await tx.transaction.create({
+        data: {
+          amount: dto.amount,
+          type: dto.type,
+          categoryId: dto.categoryId,
+          accountId,
+          description: dto.description,
+          userId,
+        },
+      });
+
+      await this._ledger.apply(tx, planBalanceChanges(null, created));
+      return created;
+    });
+  }
+
+  async update(userId: string, id: string, dto: UpdateTransactionDto) {
+    return this._prisma.$transaction(async (tx) => {
+      const existing = await this._lockActive(tx, userId, id);
+
+      if (dto.type !== undefined || dto.categoryId !== undefined) {
+        await this._assertCategory(
+          tx,
+          userId,
+          dto.categoryId ?? existing.categoryId,
+          dto.type ?? existing.type,
+        );
+      }
+
+      // Only a *change* of wallet is validated, so rows in an archived wallet stay editable.
+      const accountId =
+        dto.accountId !== undefined && dto.accountId !== existing.accountId
+          ? await this._resolveAccount(tx, userId, dto.accountId)
+          : existing.accountId;
+
+      // Income is never reviewed, so an expense turned into income loses its outcome.
+      const outcomeReset =
+        dto.type === TransactionType.INCOME
+          ? {
+              outcome: SpendOutcome.UNREVIEWED,
+              leakReason: null,
+              reviewedAt: null,
+            }
+          : {};
+
+      const updated = await tx.transaction.update({
+        where: {
+          id,
+          userId,
+        },
+        data: {
+          amount: dto.amount,
+          type: dto.type,
+          categoryId: dto.categoryId,
+          accountId,
+          description: dto.description,
+          ...outcomeReset,
+        },
+      });
+
+      await this._ledger.apply(tx, planBalanceChanges(existing, updated));
+      return updated;
+    });
+  }
+
+  async delete(userId: string, id: string) {
+    return this._prisma.$transaction(async (tx) => {
+      const existing = await this._lockActive(tx, userId, id);
+
+      const deleted = await tx.transaction.update({
+        where: { id, userId },
+        data: { isDeleted: true, deletedAt: new Date() },
+      });
+
+      await this._ledger.apply(tx, planBalanceChanges(existing, null));
+      return deleted;
+    });
+  }
+
+  /**
+   * Locks the row, then reads it. The lock makes concurrent edits or deletes of
+   * the same transaction run one after another, so each sees the other's result
+   * and a balance is never moved twice.
+   */
+  private async _lockActive(
+    tx: Prisma.TransactionClient,
+    userId: string,
+    id: string,
+  ) {
+    await tx.$queryRaw`SELECT id FROM transactions WHERE id = ${id} AND user_id = ${userId} FOR UPDATE`;
+    const existing = await tx.transaction.findFirst({
+      where: { id, userId, isDeleted: false },
+    });
+    if (!existing) {
+      throw new NotFoundException('Không tìm thấy giao dịch');
+    }
+    return existing;
+  }
+
+  private async _assertCategory(
+    tx: Prisma.TransactionClient,
+    userId: string,
+    categoryId: string,
+    type: TransactionType,
+  ) {
+    const category = await tx.category.findFirst({
+      where: { id: categoryId, userId, isDeleted: false },
+    });
     if (!category) {
       throw new BadRequestException(
         'Danh mục không tồn tại hoặc không thuộc về người dùng',
       );
     }
-
-    return this._prisma.transaction.create({
-      data: {
-        amount: dto.amount,
-        type: dto.type,
-        categoryId: dto.categoryId,
-        description: dto.description,
-        userId,
-      },
-    });
-  }
-
-  async update(userId: string, id: string, dto: UpdateTransactionDto) {
-    if (dto.categoryId) {
-      const category = await this._prisma.category.findFirst({
-        where: {
-          id: dto.categoryId,
-          userId,
-        },
-      });
-      if (!category) {
-        throw new BadRequestException(
-          'Danh mục không tồn tại hoặc không thuộc về người dùng',
-        );
-      }
+    if (!ALLOWED_CATEGORY_TYPES[type].includes(category.type)) {
+      throw new BadRequestException(
+        'Loại danh mục không khớp với loại giao dịch',
+      );
     }
-
-    // Income is never reviewed, so an expense turned into income loses its outcome.
-    const outcomeReset =
-      dto.type === TransactionType.INCOME
-        ? {
-            outcome: SpendOutcome.UNREVIEWED,
-            leakReason: null,
-            reviewedAt: null,
-          }
-        : {};
-
-    return this._prisma.transaction.update({
-      where: {
-        id,
-        userId,
-      },
-      data: {
-        amount: dto.amount,
-        type: dto.type,
-        categoryId: dto.categoryId,
-        description: dto.description,
-        ...outcomeReset,
-      },
-    });
   }
 
-  async delete(userId: string, id: string) {
-    return this._prisma.transaction.delete({
-      where: {
-        id,
-        userId,
-      },
+  private async _resolveAccount(
+    tx: Prisma.TransactionClient,
+    userId: string,
+    accountId: string,
+  ): Promise<string> {
+    const account = await tx.account.findFirst({
+      where: { id: accountId, userId, isDeleted: false },
+      select: { id: true },
     });
+    if (!account) {
+      throw new BadRequestException(
+        'Ví không tồn tại hoặc không thuộc về người dùng',
+      );
+    }
+    return account.id;
+  }
+
+  /** Oldest active LIQUID wallet, else the oldest active wallet of any type. */
+  private async _defaultAccount(
+    tx: Prisma.TransactionClient,
+    userId: string,
+  ): Promise<string> {
+    const liquid = await tx.account.findFirst({
+      where: { userId, isDeleted: false, type: AccountType.LIQUID },
+      orderBy: { createdAt: 'asc' },
+      select: { id: true },
+    });
+    if (liquid) return liquid.id;
+
+    // The last-wallet guard in WalletService guarantees at least one active wallet.
+    const any = await tx.account.findFirst({
+      where: { userId, isDeleted: false },
+      orderBy: { createdAt: 'asc' },
+      select: { id: true },
+    });
+    if (!any) {
+      throw new BadRequestException(
+        'Ví không tồn tại hoặc không thuộc về người dùng',
+      );
+    }
+    return any.id;
   }
 }
