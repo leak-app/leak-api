@@ -1,6 +1,6 @@
 import { Injectable, BadRequestException } from '@nestjs/common';
 import { PrismaService } from '@/common/prisma.service';
-import { TransactionType } from '@/generated/prisma/client';
+import { SpendOutcome, TransactionType } from '@/generated/prisma/client';
 import {
   CreateTransactionDto,
   UpdateTransactionDto,
@@ -19,6 +19,7 @@ export class TransactionService {
       limit?: number;
       type?: TransactionType;
       categoryId?: string;
+      outcome?: SpendOutcome;
       startDate?: string;
       endDate?: string;
       minAmount?: number;
@@ -44,6 +45,15 @@ export class TransactionService {
     }
     if (query.categoryId) {
       where.categoryId = query.categoryId;
+    }
+
+    if (query.outcome) {
+      where.outcome = query.outcome;
+      // The "Chưa đánh giá" filter should only surface expenses: income rows
+      // keep the default outcome (UNREVIEWED) but are never reviewable.
+      if (!query.type) {
+        where.type = TransactionType.EXPENSE;
+      }
     }
 
     if (query.startDate || query.endDate) {
@@ -130,6 +140,16 @@ export class TransactionService {
       }
     }
 
+    // Income is never reviewed, so an expense turned into income loses its outcome.
+    const outcomeReset =
+      dto.type === TransactionType.INCOME
+        ? {
+            outcome: SpendOutcome.UNREVIEWED,
+            leakReason: null,
+            reviewedAt: null,
+          }
+        : {};
+
     return this._prisma.transaction.update({
       where: {
         id,
@@ -140,6 +160,7 @@ export class TransactionService {
         type: dto.type,
         categoryId: dto.categoryId,
         description: dto.description,
+        ...outcomeReset,
       },
     });
   }

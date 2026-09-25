@@ -43,6 +43,9 @@ export type TransactionMinAggregateOutputType = {
   userId: string | null
   createdAt: Date | null
   updatedAt: Date | null
+  outcome: $Enums.SpendOutcome | null
+  leakReason: $Enums.LeakReason | null
+  reviewedAt: Date | null
 }
 
 export type TransactionMaxAggregateOutputType = {
@@ -54,6 +57,9 @@ export type TransactionMaxAggregateOutputType = {
   userId: string | null
   createdAt: Date | null
   updatedAt: Date | null
+  outcome: $Enums.SpendOutcome | null
+  leakReason: $Enums.LeakReason | null
+  reviewedAt: Date | null
 }
 
 export type TransactionCountAggregateOutputType = {
@@ -65,6 +71,9 @@ export type TransactionCountAggregateOutputType = {
   userId: number
   createdAt: number
   updatedAt: number
+  outcome: number
+  leakReason: number
+  reviewedAt: number
   _all: number
 }
 
@@ -86,6 +95,9 @@ export type TransactionMinAggregateInputType = {
   userId?: true
   createdAt?: true
   updatedAt?: true
+  outcome?: true
+  leakReason?: true
+  reviewedAt?: true
 }
 
 export type TransactionMaxAggregateInputType = {
@@ -97,6 +109,9 @@ export type TransactionMaxAggregateInputType = {
   userId?: true
   createdAt?: true
   updatedAt?: true
+  outcome?: true
+  leakReason?: true
+  reviewedAt?: true
 }
 
 export type TransactionCountAggregateInputType = {
@@ -108,6 +123,9 @@ export type TransactionCountAggregateInputType = {
   userId?: true
   createdAt?: true
   updatedAt?: true
+  outcome?: true
+  leakReason?: true
+  reviewedAt?: true
   _all?: true
 }
 
@@ -206,6 +224,9 @@ export type TransactionGroupByOutputType = {
   userId: string
   createdAt: Date
   updatedAt: Date
+  outcome: $Enums.SpendOutcome
+  leakReason: $Enums.LeakReason | null
+  reviewedAt: Date | null
   _count: TransactionCountAggregateOutputType | null
   _avg: TransactionAvgAggregateOutputType | null
   _sum: TransactionSumAggregateOutputType | null
@@ -240,6 +261,9 @@ export type TransactionWhereInput = {
   userId?: Prisma.StringFilter<"Transaction"> | string
   createdAt?: Prisma.DateTimeFilter<"Transaction"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Transaction"> | Date | string
+  outcome?: Prisma.EnumSpendOutcomeFilter<"Transaction"> | $Enums.SpendOutcome
+  leakReason?: Prisma.EnumLeakReasonNullableFilter<"Transaction"> | $Enums.LeakReason | null
+  reviewedAt?: Prisma.DateTimeNullableFilter<"Transaction"> | Date | string | null
   category?: Prisma.XOR<Prisma.CategoryScalarRelationFilter, Prisma.CategoryWhereInput>
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
 }
@@ -253,6 +277,9 @@ export type TransactionOrderByWithRelationInput = {
   userId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  outcome?: Prisma.SortOrder
+  leakReason?: Prisma.SortOrderInput | Prisma.SortOrder
+  reviewedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   category?: Prisma.CategoryOrderByWithRelationInput
   user?: Prisma.UserOrderByWithRelationInput
 }
@@ -269,6 +296,9 @@ export type TransactionWhereUniqueInput = Prisma.AtLeast<{
   userId?: Prisma.StringFilter<"Transaction"> | string
   createdAt?: Prisma.DateTimeFilter<"Transaction"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Transaction"> | Date | string
+  outcome?: Prisma.EnumSpendOutcomeFilter<"Transaction"> | $Enums.SpendOutcome
+  leakReason?: Prisma.EnumLeakReasonNullableFilter<"Transaction"> | $Enums.LeakReason | null
+  reviewedAt?: Prisma.DateTimeNullableFilter<"Transaction"> | Date | string | null
   category?: Prisma.XOR<Prisma.CategoryScalarRelationFilter, Prisma.CategoryWhereInput>
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
 }, "id">
@@ -282,6 +312,9 @@ export type TransactionOrderByWithAggregationInput = {
   userId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  outcome?: Prisma.SortOrder
+  leakReason?: Prisma.SortOrderInput | Prisma.SortOrder
+  reviewedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.TransactionCountOrderByAggregateInput
   _avg?: Prisma.TransactionAvgOrderByAggregateInput
   _max?: Prisma.TransactionMaxOrderByAggregateInput
@@ -301,6 +334,9 @@ export type TransactionScalarWhereWithAggregatesInput = {
   userId?: Prisma.StringWithAggregatesFilter<"Transaction"> | string
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Transaction"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Transaction"> | Date | string
+  outcome?: Prisma.EnumSpendOutcomeWithAggregatesFilter<"Transaction"> | $Enums.SpendOutcome
+  leakReason?: Prisma.EnumLeakReasonNullableWithAggregatesFilter<"Transaction"> | $Enums.LeakReason | null
+  reviewedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Transaction"> | Date | string | null
 }
 
 export type TransactionCreateInput = {
@@ -310,6 +346,9 @@ export type TransactionCreateInput = {
   description?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  outcome?: $Enums.SpendOutcome
+  leakReason?: $Enums.LeakReason | null
+  reviewedAt?: Date | string | null
   category: Prisma.CategoryCreateNestedOneWithoutTransactionsInput
   user: Prisma.UserCreateNestedOneWithoutTransactionsInput
 }
@@ -323,6 +362,9 @@ export type TransactionUncheckedCreateInput = {
   userId: string
   createdAt?: Date | string
   updatedAt?: Date | string
+  outcome?: $Enums.SpendOutcome
+  leakReason?: $Enums.LeakReason | null
+  reviewedAt?: Date | string | null
 }
 
 export type TransactionUpdateInput = {
@@ -332,6 +374,9 @@ export type TransactionUpdateInput = {
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  outcome?: Prisma.EnumSpendOutcomeFieldUpdateOperationsInput | $Enums.SpendOutcome
+  leakReason?: Prisma.NullableEnumLeakReasonFieldUpdateOperationsInput | $Enums.LeakReason | null
+  reviewedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   category?: Prisma.CategoryUpdateOneRequiredWithoutTransactionsNestedInput
   user?: Prisma.UserUpdateOneRequiredWithoutTransactionsNestedInput
 }
@@ -345,6 +390,9 @@ export type TransactionUncheckedUpdateInput = {
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  outcome?: Prisma.EnumSpendOutcomeFieldUpdateOperationsInput | $Enums.SpendOutcome
+  leakReason?: Prisma.NullableEnumLeakReasonFieldUpdateOperationsInput | $Enums.LeakReason | null
+  reviewedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type TransactionCreateManyInput = {
@@ -356,6 +404,9 @@ export type TransactionCreateManyInput = {
   userId: string
   createdAt?: Date | string
   updatedAt?: Date | string
+  outcome?: $Enums.SpendOutcome
+  leakReason?: $Enums.LeakReason | null
+  reviewedAt?: Date | string | null
 }
 
 export type TransactionUpdateManyMutationInput = {
@@ -365,6 +416,9 @@ export type TransactionUpdateManyMutationInput = {
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  outcome?: Prisma.EnumSpendOutcomeFieldUpdateOperationsInput | $Enums.SpendOutcome
+  leakReason?: Prisma.NullableEnumLeakReasonFieldUpdateOperationsInput | $Enums.LeakReason | null
+  reviewedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type TransactionUncheckedUpdateManyInput = {
@@ -376,6 +430,9 @@ export type TransactionUncheckedUpdateManyInput = {
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  outcome?: Prisma.EnumSpendOutcomeFieldUpdateOperationsInput | $Enums.SpendOutcome
+  leakReason?: Prisma.NullableEnumLeakReasonFieldUpdateOperationsInput | $Enums.LeakReason | null
+  reviewedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type TransactionListRelationFilter = {
@@ -397,6 +454,9 @@ export type TransactionCountOrderByAggregateInput = {
   userId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  outcome?: Prisma.SortOrder
+  leakReason?: Prisma.SortOrder
+  reviewedAt?: Prisma.SortOrder
 }
 
 export type TransactionAvgOrderByAggregateInput = {
@@ -412,6 +472,9 @@ export type TransactionMaxOrderByAggregateInput = {
   userId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  outcome?: Prisma.SortOrder
+  leakReason?: Prisma.SortOrder
+  reviewedAt?: Prisma.SortOrder
 }
 
 export type TransactionMinOrderByAggregateInput = {
@@ -423,6 +486,9 @@ export type TransactionMinOrderByAggregateInput = {
   userId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  outcome?: Prisma.SortOrder
+  leakReason?: Prisma.SortOrder
+  reviewedAt?: Prisma.SortOrder
 }
 
 export type TransactionSumOrderByAggregateInput = {
@@ -517,6 +583,14 @@ export type EnumTransactionTypeFieldUpdateOperationsInput = {
   set?: $Enums.TransactionType
 }
 
+export type EnumSpendOutcomeFieldUpdateOperationsInput = {
+  set?: $Enums.SpendOutcome
+}
+
+export type NullableEnumLeakReasonFieldUpdateOperationsInput = {
+  set?: $Enums.LeakReason | null
+}
+
 export type TransactionCreateWithoutUserInput = {
   id?: string
   amount: runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -524,6 +598,9 @@ export type TransactionCreateWithoutUserInput = {
   description?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  outcome?: $Enums.SpendOutcome
+  leakReason?: $Enums.LeakReason | null
+  reviewedAt?: Date | string | null
   category: Prisma.CategoryCreateNestedOneWithoutTransactionsInput
 }
 
@@ -535,6 +612,9 @@ export type TransactionUncheckedCreateWithoutUserInput = {
   categoryId: string
   createdAt?: Date | string
   updatedAt?: Date | string
+  outcome?: $Enums.SpendOutcome
+  leakReason?: $Enums.LeakReason | null
+  reviewedAt?: Date | string | null
 }
 
 export type TransactionCreateOrConnectWithoutUserInput = {
@@ -575,6 +655,9 @@ export type TransactionScalarWhereInput = {
   userId?: Prisma.StringFilter<"Transaction"> | string
   createdAt?: Prisma.DateTimeFilter<"Transaction"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Transaction"> | Date | string
+  outcome?: Prisma.EnumSpendOutcomeFilter<"Transaction"> | $Enums.SpendOutcome
+  leakReason?: Prisma.EnumLeakReasonNullableFilter<"Transaction"> | $Enums.LeakReason | null
+  reviewedAt?: Prisma.DateTimeNullableFilter<"Transaction"> | Date | string | null
 }
 
 export type TransactionCreateWithoutCategoryInput = {
@@ -584,6 +667,9 @@ export type TransactionCreateWithoutCategoryInput = {
   description?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  outcome?: $Enums.SpendOutcome
+  leakReason?: $Enums.LeakReason | null
+  reviewedAt?: Date | string | null
   user: Prisma.UserCreateNestedOneWithoutTransactionsInput
 }
 
@@ -595,6 +681,9 @@ export type TransactionUncheckedCreateWithoutCategoryInput = {
   userId: string
   createdAt?: Date | string
   updatedAt?: Date | string
+  outcome?: $Enums.SpendOutcome
+  leakReason?: $Enums.LeakReason | null
+  reviewedAt?: Date | string | null
 }
 
 export type TransactionCreateOrConnectWithoutCategoryInput = {
@@ -631,6 +720,9 @@ export type TransactionCreateManyUserInput = {
   categoryId: string
   createdAt?: Date | string
   updatedAt?: Date | string
+  outcome?: $Enums.SpendOutcome
+  leakReason?: $Enums.LeakReason | null
+  reviewedAt?: Date | string | null
 }
 
 export type TransactionUpdateWithoutUserInput = {
@@ -640,6 +732,9 @@ export type TransactionUpdateWithoutUserInput = {
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  outcome?: Prisma.EnumSpendOutcomeFieldUpdateOperationsInput | $Enums.SpendOutcome
+  leakReason?: Prisma.NullableEnumLeakReasonFieldUpdateOperationsInput | $Enums.LeakReason | null
+  reviewedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   category?: Prisma.CategoryUpdateOneRequiredWithoutTransactionsNestedInput
 }
 
@@ -651,6 +746,9 @@ export type TransactionUncheckedUpdateWithoutUserInput = {
   categoryId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  outcome?: Prisma.EnumSpendOutcomeFieldUpdateOperationsInput | $Enums.SpendOutcome
+  leakReason?: Prisma.NullableEnumLeakReasonFieldUpdateOperationsInput | $Enums.LeakReason | null
+  reviewedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type TransactionUncheckedUpdateManyWithoutUserInput = {
@@ -661,6 +759,9 @@ export type TransactionUncheckedUpdateManyWithoutUserInput = {
   categoryId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  outcome?: Prisma.EnumSpendOutcomeFieldUpdateOperationsInput | $Enums.SpendOutcome
+  leakReason?: Prisma.NullableEnumLeakReasonFieldUpdateOperationsInput | $Enums.LeakReason | null
+  reviewedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type TransactionCreateManyCategoryInput = {
@@ -671,6 +772,9 @@ export type TransactionCreateManyCategoryInput = {
   userId: string
   createdAt?: Date | string
   updatedAt?: Date | string
+  outcome?: $Enums.SpendOutcome
+  leakReason?: $Enums.LeakReason | null
+  reviewedAt?: Date | string | null
 }
 
 export type TransactionUpdateWithoutCategoryInput = {
@@ -680,6 +784,9 @@ export type TransactionUpdateWithoutCategoryInput = {
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  outcome?: Prisma.EnumSpendOutcomeFieldUpdateOperationsInput | $Enums.SpendOutcome
+  leakReason?: Prisma.NullableEnumLeakReasonFieldUpdateOperationsInput | $Enums.LeakReason | null
+  reviewedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   user?: Prisma.UserUpdateOneRequiredWithoutTransactionsNestedInput
 }
 
@@ -691,6 +798,9 @@ export type TransactionUncheckedUpdateWithoutCategoryInput = {
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  outcome?: Prisma.EnumSpendOutcomeFieldUpdateOperationsInput | $Enums.SpendOutcome
+  leakReason?: Prisma.NullableEnumLeakReasonFieldUpdateOperationsInput | $Enums.LeakReason | null
+  reviewedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type TransactionUncheckedUpdateManyWithoutCategoryInput = {
@@ -701,6 +811,9 @@ export type TransactionUncheckedUpdateManyWithoutCategoryInput = {
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  outcome?: Prisma.EnumSpendOutcomeFieldUpdateOperationsInput | $Enums.SpendOutcome
+  leakReason?: Prisma.NullableEnumLeakReasonFieldUpdateOperationsInput | $Enums.LeakReason | null
+  reviewedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 
@@ -714,6 +827,9 @@ export type TransactionSelect<ExtArgs extends runtime.Types.Extensions.InternalA
   userId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  outcome?: boolean
+  leakReason?: boolean
+  reviewedAt?: boolean
   category?: boolean | Prisma.CategoryDefaultArgs<ExtArgs>
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["transaction"]>
@@ -727,6 +843,9 @@ export type TransactionSelectCreateManyAndReturn<ExtArgs extends runtime.Types.E
   userId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  outcome?: boolean
+  leakReason?: boolean
+  reviewedAt?: boolean
   category?: boolean | Prisma.CategoryDefaultArgs<ExtArgs>
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["transaction"]>
@@ -740,6 +859,9 @@ export type TransactionSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.E
   userId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  outcome?: boolean
+  leakReason?: boolean
+  reviewedAt?: boolean
   category?: boolean | Prisma.CategoryDefaultArgs<ExtArgs>
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["transaction"]>
@@ -753,9 +875,12 @@ export type TransactionSelectScalar = {
   userId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  outcome?: boolean
+  leakReason?: boolean
+  reviewedAt?: boolean
 }
 
-export type TransactionOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "amount" | "type" | "description" | "categoryId" | "userId" | "createdAt" | "updatedAt", ExtArgs["result"]["transaction"]>
+export type TransactionOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "amount" | "type" | "description" | "categoryId" | "userId" | "createdAt" | "updatedAt" | "outcome" | "leakReason" | "reviewedAt", ExtArgs["result"]["transaction"]>
 export type TransactionInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   category?: boolean | Prisma.CategoryDefaultArgs<ExtArgs>
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -784,6 +909,9 @@ export type $TransactionPayload<ExtArgs extends runtime.Types.Extensions.Interna
     userId: string
     createdAt: Date
     updatedAt: Date
+    outcome: $Enums.SpendOutcome
+    leakReason: $Enums.LeakReason | null
+    reviewedAt: Date | null
   }, ExtArgs["result"]["transaction"]>
   composites: {}
 }
@@ -1217,6 +1345,9 @@ export interface TransactionFieldRefs {
   readonly userId: Prisma.FieldRef<"Transaction", 'String'>
   readonly createdAt: Prisma.FieldRef<"Transaction", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Transaction", 'DateTime'>
+  readonly outcome: Prisma.FieldRef<"Transaction", 'SpendOutcome'>
+  readonly leakReason: Prisma.FieldRef<"Transaction", 'LeakReason'>
+  readonly reviewedAt: Prisma.FieldRef<"Transaction", 'DateTime'>
 }
     
 

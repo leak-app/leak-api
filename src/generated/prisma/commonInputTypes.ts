@@ -243,6 +243,20 @@ export type EnumTransactionTypeFilter<$PrismaModel = never> = {
   not?: Prisma.NestedEnumTransactionTypeFilter<$PrismaModel> | $Enums.TransactionType
 }
 
+export type EnumSpendOutcomeFilter<$PrismaModel = never> = {
+  equals?: $Enums.SpendOutcome | Prisma.EnumSpendOutcomeFieldRefInput<$PrismaModel>
+  in?: $Enums.SpendOutcome[] | Prisma.ListEnumSpendOutcomeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.SpendOutcome[] | Prisma.ListEnumSpendOutcomeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumSpendOutcomeFilter<$PrismaModel> | $Enums.SpendOutcome
+}
+
+export type EnumLeakReasonNullableFilter<$PrismaModel = never> = {
+  equals?: $Enums.LeakReason | Prisma.EnumLeakReasonFieldRefInput<$PrismaModel> | null
+  in?: $Enums.LeakReason[] | Prisma.ListEnumLeakReasonFieldRefInput<$PrismaModel> | null
+  notIn?: $Enums.LeakReason[] | Prisma.ListEnumLeakReasonFieldRefInput<$PrismaModel> | null
+  not?: Prisma.NestedEnumLeakReasonNullableFilter<$PrismaModel> | $Enums.LeakReason | null
+}
+
 export type EnumTransactionTypeWithAggregatesFilter<$PrismaModel = never> = {
   equals?: $Enums.TransactionType | Prisma.EnumTransactionTypeFieldRefInput<$PrismaModel>
   in?: $Enums.TransactionType[] | Prisma.ListEnumTransactionTypeFieldRefInput<$PrismaModel>
@@ -251,6 +265,26 @@ export type EnumTransactionTypeWithAggregatesFilter<$PrismaModel = never> = {
   _count?: Prisma.NestedIntFilter<$PrismaModel>
   _min?: Prisma.NestedEnumTransactionTypeFilter<$PrismaModel>
   _max?: Prisma.NestedEnumTransactionTypeFilter<$PrismaModel>
+}
+
+export type EnumSpendOutcomeWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.SpendOutcome | Prisma.EnumSpendOutcomeFieldRefInput<$PrismaModel>
+  in?: $Enums.SpendOutcome[] | Prisma.ListEnumSpendOutcomeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.SpendOutcome[] | Prisma.ListEnumSpendOutcomeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumSpendOutcomeWithAggregatesFilter<$PrismaModel> | $Enums.SpendOutcome
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumSpendOutcomeFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumSpendOutcomeFilter<$PrismaModel>
+}
+
+export type EnumLeakReasonNullableWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.LeakReason | Prisma.EnumLeakReasonFieldRefInput<$PrismaModel> | null
+  in?: $Enums.LeakReason[] | Prisma.ListEnumLeakReasonFieldRefInput<$PrismaModel> | null
+  notIn?: $Enums.LeakReason[] | Prisma.ListEnumLeakReasonFieldRefInput<$PrismaModel> | null
+  not?: Prisma.NestedEnumLeakReasonNullableWithAggregatesFilter<$PrismaModel> | $Enums.LeakReason | null
+  _count?: Prisma.NestedIntNullableFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumLeakReasonNullableFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumLeakReasonNullableFilter<$PrismaModel>
 }
 
 export type NestedStringFilter<$PrismaModel = never> = {
@@ -495,6 +529,20 @@ export type NestedEnumTransactionTypeFilter<$PrismaModel = never> = {
   not?: Prisma.NestedEnumTransactionTypeFilter<$PrismaModel> | $Enums.TransactionType
 }
 
+export type NestedEnumSpendOutcomeFilter<$PrismaModel = never> = {
+  equals?: $Enums.SpendOutcome | Prisma.EnumSpendOutcomeFieldRefInput<$PrismaModel>
+  in?: $Enums.SpendOutcome[] | Prisma.ListEnumSpendOutcomeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.SpendOutcome[] | Prisma.ListEnumSpendOutcomeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumSpendOutcomeFilter<$PrismaModel> | $Enums.SpendOutcome
+}
+
+export type NestedEnumLeakReasonNullableFilter<$PrismaModel = never> = {
+  equals?: $Enums.LeakReason | Prisma.EnumLeakReasonFieldRefInput<$PrismaModel> | null
+  in?: $Enums.LeakReason[] | Prisma.ListEnumLeakReasonFieldRefInput<$PrismaModel> | null
+  notIn?: $Enums.LeakReason[] | Prisma.ListEnumLeakReasonFieldRefInput<$PrismaModel> | null
+  not?: Prisma.NestedEnumLeakReasonNullableFilter<$PrismaModel> | $Enums.LeakReason | null
+}
+
 export type NestedEnumTransactionTypeWithAggregatesFilter<$PrismaModel = never> = {
   equals?: $Enums.TransactionType | Prisma.EnumTransactionTypeFieldRefInput<$PrismaModel>
   in?: $Enums.TransactionType[] | Prisma.ListEnumTransactionTypeFieldRefInput<$PrismaModel>
@@ -503,6 +551,26 @@ export type NestedEnumTransactionTypeWithAggregatesFilter<$PrismaModel = never> 
   _count?: Prisma.NestedIntFilter<$PrismaModel>
   _min?: Prisma.NestedEnumTransactionTypeFilter<$PrismaModel>
   _max?: Prisma.NestedEnumTransactionTypeFilter<$PrismaModel>
+}
+
+export type NestedEnumSpendOutcomeWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.SpendOutcome | Prisma.EnumSpendOutcomeFieldRefInput<$PrismaModel>
+  in?: $Enums.SpendOutcome[] | Prisma.ListEnumSpendOutcomeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.SpendOutcome[] | Prisma.ListEnumSpendOutcomeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumSpendOutcomeWithAggregatesFilter<$PrismaModel> | $Enums.SpendOutcome
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumSpendOutcomeFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumSpendOutcomeFilter<$PrismaModel>
+}
+
+export type NestedEnumLeakReasonNullableWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.LeakReason | Prisma.EnumLeakReasonFieldRefInput<$PrismaModel> | null
+  in?: $Enums.LeakReason[] | Prisma.ListEnumLeakReasonFieldRefInput<$PrismaModel> | null
+  notIn?: $Enums.LeakReason[] | Prisma.ListEnumLeakReasonFieldRefInput<$PrismaModel> | null
+  not?: Prisma.NestedEnumLeakReasonNullableWithAggregatesFilter<$PrismaModel> | $Enums.LeakReason | null
+  _count?: Prisma.NestedIntNullableFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumLeakReasonNullableFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumLeakReasonNullableFilter<$PrismaModel>
 }
 
 

@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { TransactionType } from '@/generated/prisma/client';
+import { SpendOutcome, TransactionType } from '@/generated/prisma/client';
 
 export const createTransactionSchema = z.object({
   amount: z.number().positive('Số tiền phải là số dương'),
@@ -32,3 +32,9 @@ export class UpdateTransactionDto implements z.infer<
   categoryId?: string;
   description?: string;
 }
+
+export const outcomeFilterSchema = z
+  .nativeEnum(SpendOutcome, {
+    message: 'Bộ lọc kết quả đánh giá không hợp lệ',
+  })
+  .optional();

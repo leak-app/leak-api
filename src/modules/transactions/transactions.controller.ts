@@ -11,12 +11,13 @@ import {
 } from '@nestjs/common';
 import { GetUser } from '@/auth/get-user.decorator';
 import type { User } from '@/generated/prisma/client';
-import { TransactionType } from '@/generated/prisma/client';
+import { SpendOutcome, TransactionType } from '@/generated/prisma/client';
 import { ZodValidationPipe } from '@/common/pipes/zod-validation.pipe';
 import { TransactionService } from './transactions.service';
 import {
   CreateTransactionDto,
   createTransactionSchema,
+  outcomeFilterSchema,
   UpdateTransactionDto,
   updateTransactionSchema,
 } from './dto/transactions.dto';
@@ -37,6 +38,8 @@ export class TransactionController {
     @Query('endDate') endDate?: string,
     @Query('minAmount') minAmount?: string,
     @Query('maxAmount') maxAmount?: string,
+    @Query('outcome', new ZodValidationPipe(outcomeFilterSchema, 'query'))
+    outcome?: SpendOutcome,
   ) {
     return this._transactionService.findAll(user.id, {
       search,
@@ -44,6 +47,7 @@ export class TransactionController {
       limit: limit ? Number(limit) : undefined,
       type,
       categoryId,
+      outcome,
       startDate,
       endDate,
       minAmount: minAmount ? Number(minAmount) : undefined,
