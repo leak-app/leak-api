@@ -5,7 +5,6 @@ import {
 } from '@nestjs/common';
 import { PrismaService } from '@/common/prisma.service';
 import {
-  AccountType,
   CategoryType,
   Prisma,
   SpendOutcome,
@@ -18,6 +17,7 @@ import {
 import { TransactionWhereInput } from '@/generated/prisma/models';
 import { LedgerService } from './ledger.service';
 import { planBalanceChanges } from './ledger.calculator';
+import { WalletResolver } from './wallet-resolver.service';
 
 const ALLOWED_CATEGORY_TYPES: Record<TransactionType, CategoryType[]> = {
   [TransactionType.INCOME]: [CategoryType.INCOME],
@@ -29,6 +29,7 @@ export class TransactionService {
   constructor(
     private readonly _prisma: PrismaService,
     private readonly _ledger: LedgerService,
+    private readonly _wallets: WalletResolver,
   ) {}
 
   async findAll(
@@ -128,9 +129,7 @@ export class TransactionService {
   async create(userId: string, dto: CreateTransactionDto) {
     return this._prisma.$transaction(async (tx) => {
       await this._assertCategory(tx, userId, dto.categoryId, dto.type);
-      const accountId = dto.accountId
-        ? await this._resolveAccount(tx, userId, dto.accountId)
-        : await this._defaultAccount(tx, userId);
+      const accountId = await this._wallets.resolve(tx, userId, dto.accountId);
 
       const created = await tx.transaction.create({
         data: {
@@ -164,7 +163,7 @@ export class TransactionService {
       // Only a *change* of wallet is validated, so rows in an archived wallet stay editable.
       const accountId =
         dto.accountId !== undefined && dto.accountId !== existing.accountId
-          ? await this._resolveAccount(tx, userId, dto.accountId)
+          ? await this._wallets.resolveExplicit(tx, userId, dto.accountId)
           : existing.accountId;
 
       // Income is never reviewed, so an expense turned into income loses its outcome.
@@ -250,67 +249,5 @@ export class TransactionService {
         'Loại danh mục không khớp với loại giao dịch',
       );
     }
-  }
-
-  private async _resolveAccount(
-    tx: Prisma.TransactionClient,
-    userId: string,
-    accountId: string,
-  ): Promise<string> {
-    const account = await tx.account.findFirst({
-      where: { id: accountId, userId, isDeleted: false },
-      select: { id: true },
-    });
-    if (!account || !(await this._lockIfActive(tx, account.id))) {
-      throw new BadRequestException(
-        'Ví không tồn tại hoặc không thuộc về người dùng',
-      );
-    }
-    return account.id;
-  }
-
-  /**
-   * Oldest active LIQUID wallet, else the oldest active wallet of any type.
-   * Picks again once if the first pick is archived before it can be locked.
-   */
-  private async _defaultAccount(
-    tx: Prisma.TransactionClient,
-    userId: string,
-  ): Promise<string> {
-    for (let attempt = 0; attempt < 2; attempt++) {
-      const pick =
-        (await tx.account.findFirst({
-          where: { userId, isDeleted: false, type: AccountType.LIQUID },
-          orderBy: { createdAt: 'asc' },
-          select: { id: true },
-        })) ??
-        // The last-wallet guard in WalletService guarantees at least one active wallet.
-        (await tx.account.findFirst({
-          where: { userId, isDeleted: false },
-          orderBy: { createdAt: 'asc' },
-          select: { id: true },
-        }));
-      if (!pick) break;
-      if (await this._lockIfActive(tx, pick.id)) return pick.id;
-    }
-    throw new BadRequestException(
-      'Ví không tồn tại hoặc không thuộc về người dùng',
-    );
-  }
-
-  /**
-   * Key-share locks the wallet if it is still active. This waits for a
-   * concurrent archive (which holds FOR UPDATE) and then re-checks is_deleted,
-   * so a transaction never lands in a wallet archived at the same moment.
-   * KEY SHARE (not SHARE) does not conflict with the balance increment that
-   * follows, so two transactions on the same wallet cannot deadlock.
-   */
-  private async _lockIfActive(
-    tx: Prisma.TransactionClient,
-    accountId: string,
-  ): Promise<boolean> {
-    const rows = await tx.$queryRaw<{ id: string }[]>`
-      SELECT id FROM accounts WHERE id = ${accountId} AND is_deleted = false FOR KEY SHARE`;
-    return rows.length > 0;
   }
 }
