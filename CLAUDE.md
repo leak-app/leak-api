@@ -30,7 +30,7 @@ npx prisma studio         # Launch Prisma Studio GUI
 ```
 src/
 ├── common/               # Global guards, interceptors, pipes, decorators, filters
-│   ├── decorators/       # @CurrentUser(), @Public(), etc.
+│   ├── decorators/       # @Public(), etc. (@GetUser() lives in src/auth)
 │   ├── interceptors/     # ResponseInterceptor, LoggingInterceptor
 │   └── pipes/            # ValidationPipe configuration
 ├── config/               # App configuration & environment validation
@@ -52,7 +52,7 @@ src/
 
 ### 1. Domain Feature Boundaries & Thin Controllers
 - Every domain has its own module under `src/modules/<feature>` (`.module.ts`, `.controller.ts`, `.service.ts`, `.dto.ts`).
-- **Controllers must remain thin**: Extract request context (`@CurrentUser()`, params, query, body) and delegate all business logic, calculations, and data fetching to domain Services.
+- **Controllers must remain thin**: Extract request context (`@GetUser()`, params, query, body) and delegate all business logic, calculations, and data fetching to domain Services.
 - Sibling domain communication should happen via service injection across modules, not by direct database queries across boundaries.
 
 ### 2. Prisma ORM & Database Rules
@@ -65,22 +65,21 @@ src/
   - Use `onDelete: Restrict` on critical relations (transactions, wallets) to prevent accidental cascade deletion.
 
 ### 3. Standardized Response Envelope & DTOs
-- All responses are wrapped in a unified structure via `ResponseInterceptor`:
+- Successful responses are wrapped by `ResponseInterceptor` (`src/common/interfaces/response.interface.ts`):
   ```json
-  {
-    "statusCode": 200,
-    "message": "Success",
-    "data": { ... },
-    "meta": { ... }
-  }
+  { "success": true, "data": { ... }, "meta": { ... } }
   ```
-- **DTO Validation**: Every request payload (body, query, param) must have an explicit DTO class with `class-validator` and `class-transformer` decorators.
-- Strip unknown properties globally with `whitelist: true, forbidNonWhitelisted: true`.
+- Errors are shaped by `HttpExceptionFilter`:
+  ```json
+  { "success": false, "data": null, "error": { "statusCode": 400, "message": "…", "error": "Bad Request" } }
+  ```
+- **DTO Validation**: Every request body and query has a **zod** schema plus a DTO class that `implements z.infer<typeof schema>`, validated with `ZodValidationPipe` (`@UsePipes(new ZodValidationPipe(schema))`, or `new ZodValidationPipe(schema, 'query')` for queries). Validation messages are Vietnamese.
+- zod strips unknown keys by default. Use `.strict()` where silently dropping a field would hide a client bug (e.g. wallet DTOs).
 
 ### 4. Authentication & Security
 - `JwtAuthGuard` is enabled globally by default. Mark unauthenticated endpoints with the `@Public()` decorator.
-- Use the `@CurrentUser()` custom decorator to retrieve the authenticated user payload.
-- Never expose sensitive fields (passwords, salts, tokens, external secrets) in response DTOs or log outputs. Use `@Exclude()` from `class-transformer`.
+- Use the `@GetUser()` custom decorator (`src/auth/get-user.decorator.ts`) to retrieve the authenticated user.
+- Never expose sensitive fields (passwords, salts, tokens, external secrets) in responses or log outputs. Select or omit them explicitly in the query or service before returning.
 
 ### 5. Background Sync (Google Sheets)
 - Scheduled via NestJS Schedule (`@Cron('0 0 * * *')`).

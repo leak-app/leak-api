@@ -67,4 +67,3 @@ export class ResetPasswordDto implements z.infer<typeof resetPasswordSchema> {
   token!: string;
   password!: string;
 }
-

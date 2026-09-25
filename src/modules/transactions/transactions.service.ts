@@ -257,7 +257,7 @@ export class TransactionService {
       where: { id: accountId, userId, isDeleted: false },
       select: { id: true },
     });
-    if (!account) {
+    if (!account || !(await this._lockIfActive(tx, account.id))) {
       throw new BadRequestException(
         'Ví không tồn tại hoặc không thuộc về người dùng',
       );
@@ -265,29 +265,48 @@ export class TransactionService {
     return account.id;
   }
 
-  /** Oldest active LIQUID wallet, else the oldest active wallet of any type. */
+  /**
+   * Oldest active LIQUID wallet, else the oldest active wallet of any type.
+   * Picks again once if the first pick is archived before it can be locked.
+   */
   private async _defaultAccount(
     tx: Prisma.TransactionClient,
     userId: string,
   ): Promise<string> {
-    const liquid = await tx.account.findFirst({
-      where: { userId, isDeleted: false, type: AccountType.LIQUID },
-      orderBy: { createdAt: 'asc' },
-      select: { id: true },
-    });
-    if (liquid) return liquid.id;
-
-    // The last-wallet guard in WalletService guarantees at least one active wallet.
-    const any = await tx.account.findFirst({
-      where: { userId, isDeleted: false },
-      orderBy: { createdAt: 'asc' },
-      select: { id: true },
-    });
-    if (!any) {
-      throw new BadRequestException(
-        'Ví không tồn tại hoặc không thuộc về người dùng',
-      );
+    for (let attempt = 0; attempt < 2; attempt++) {
+      const pick =
+        (await tx.account.findFirst({
+          where: { userId, isDeleted: false, type: AccountType.LIQUID },
+          orderBy: { createdAt: 'asc' },
+          select: { id: true },
+        })) ??
+        // The last-wallet guard in WalletService guarantees at least one active wallet.
+        (await tx.account.findFirst({
+          where: { userId, isDeleted: false },
+          orderBy: { createdAt: 'asc' },
+          select: { id: true },
+        }));
+      if (!pick) break;
+      if (await this._lockIfActive(tx, pick.id)) return pick.id;
     }
-    return any.id;
+    throw new BadRequestException(
+      'Ví không tồn tại hoặc không thuộc về người dùng',
+    );
+  }
+
+  /**
+   * Key-share locks the wallet if it is still active. This waits for a
+   * concurrent archive (which holds FOR UPDATE) and then re-checks is_deleted,
+   * so a transaction never lands in a wallet archived at the same moment.
+   * KEY SHARE (not SHARE) does not conflict with the balance increment that
+   * follows, so two transactions on the same wallet cannot deadlock.
+   */
+  private async _lockIfActive(
+    tx: Prisma.TransactionClient,
+    accountId: string,
+  ): Promise<boolean> {
+    const rows = await tx.$queryRaw<{ id: string }[]>`
+      SELECT id FROM accounts WHERE id = ${accountId} AND is_deleted = false FOR KEY SHARE`;
+    return rows.length > 0;
   }
 }

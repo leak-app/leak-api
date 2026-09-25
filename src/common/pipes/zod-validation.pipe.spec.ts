@@ -24,4 +24,19 @@ describe('ZodValidationPipe', () => {
       BadRequestException,
     );
   });
+
+  it('omits the empty path prefix for object-level issues', () => {
+    const pipe = new ZodValidationPipe(z.strictObject({ a: z.string() }));
+    try {
+      pipe.transform({ a: 'x', b: 1 }, { type: 'body' });
+      throw new Error('expected a BadRequestException');
+    } catch (error) {
+      expect(error).toBeInstanceOf(BadRequestException);
+      const { message } = (error as BadRequestException).getResponse() as {
+        message: string[];
+      };
+      expect(message).toHaveLength(1);
+      expect(message[0].startsWith(':')).toBe(false);
+    }
+  });
 });

@@ -1,0 +1,3 @@
+yarn -s lint-staged || { echo "❌ Please check your code format!"; exit 1; }
+yarn -s typecheck || { echo "❌ Type errors found!"; exit 1; }
+echo "✅ Lint-staged and typecheck passed!"
