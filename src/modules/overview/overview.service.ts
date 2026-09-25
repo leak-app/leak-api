@@ -149,15 +149,21 @@ export class OverviewService {
   }
 
   private async _getTotalBalanceAndGrowth(userId: string) {
-    const accounts = await this._prisma.account.findMany({
-      where: { userId, isDeleted: false },
-    });
+    const [accounts, goalSum] = await Promise.all([
+      this._prisma.account.findMany({ where: { userId, isDeleted: false } }),
+      this._prisma.goal.aggregate({
+        where: { userId, isDeleted: false },
+        _sum: { savedAmount: true },
+      }),
+    ]);
     const accountsCount = accounts.length;
-    // Every transaction moves a wallet balance, so active wallets are the whole net worth.
-    const totalBalance = accounts.reduce(
+    const walletsBalance = accounts.reduce(
       (sum, acc) => sum + Number(acc.currentBalance),
       0,
     );
+    // Goal money left a wallet through the ledger, so it is still the user's money.
+    const goalsBalance = Number(goalSum._sum.savedAmount ?? 0);
+    const totalBalance = walletsBalance + goalsBalance;
 
     // Income growth percentage vs previous month
     const thisMonthStart = dayjs().startOf('month').toDate();
@@ -194,7 +200,13 @@ export class OverviewService {
           )
         : 0;
 
-    return { totalBalance, growthPercentage, accountsCount };
+    return {
+      totalBalance,
+      walletsBalance,
+      goalsBalance,
+      growthPercentage,
+      accountsCount,
+    };
   }
 
   private async _getWeeklyExpenseSummary(userId: string) {
@@ -260,7 +272,7 @@ export class OverviewService {
 
   private async _getBudgetGoals(userId: string) {
     const goals = await this._prisma.goal.findMany({
-      where: { userId },
+      where: { userId, isDeleted: false },
     });
 
     return goals.map((g) => {
