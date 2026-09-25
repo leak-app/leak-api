@@ -30,7 +30,7 @@ const existing = {
 function createPrismaMock() {
   const prisma = {
     $transaction: jest.fn(),
-    $queryRaw: jest.fn().mockResolvedValue([]),
+    $queryRaw: jest.fn().mockResolvedValue([{ id: 'locked' }]),
     transaction: {
       findMany: jest.fn().mockResolvedValue([]),
       count: jest.fn().mockResolvedValue(0),
@@ -59,6 +59,10 @@ function createPrismaMock() {
   );
   return prisma;
 }
+
+/** SQL text of every `$queryRaw` tagged-template call, in call order. */
+const rawSql = (mock: jest.Mock) =>
+  mock.mock.calls.map((call) => (call[0] as string[]).join('?'));
 
 describe('TransactionService', () => {
   let prisma: ReturnType<typeof createPrismaMock>;
@@ -233,6 +237,66 @@ describe('TransactionService', () => {
       });
       await expect(service.create(userId, dto)).resolves.toBeDefined();
     });
+    it('key-share locks the chosen wallet before inserting', async () => {
+      await service.create(userId, {
+        amount: 50000,
+        type: TransactionType.EXPENSE,
+        categoryId: 'c1',
+      });
+
+      const lockIndex = rawSql(prisma.$queryRaw).findIndex((sql) =>
+        sql.includes('FOR KEY SHARE'),
+      );
+      expect(lockIndex).toBeGreaterThanOrEqual(0);
+      expect(prisma.$queryRaw.mock.calls[lockIndex][1]).toBe('cash');
+      expect(prisma.$queryRaw.mock.invocationCallOrder[lockIndex]).toBeLessThan(
+        prisma.transaction.create.mock.invocationCallOrder[0],
+      );
+    });
+
+    it('rejects a given wallet that was archived between the check and the lock', async () => {
+      prisma.account.findFirst.mockResolvedValue({ id: 'bank' });
+      prisma.$queryRaw.mockResolvedValue([]);
+
+      await expect(
+        service.create(userId, {
+          amount: 50000,
+          type: TransactionType.EXPENSE,
+          categoryId: 'c1',
+          accountId: 'bank',
+        }),
+      ).rejects.toThrow(
+        new BadRequestException(
+          'Ví không tồn tại hoặc không thuộc về người dùng',
+        ),
+      );
+      expect(prisma.transaction.create).not.toHaveBeenCalled();
+      expect(ledger.apply).not.toHaveBeenCalled();
+    });
+
+    it('picks the default wallet again when the first pick was just archived', async () => {
+      prisma.account.findFirst
+        .mockResolvedValueOnce({ id: 'cash' })
+        .mockResolvedValueOnce({ id: 'bank' });
+      prisma.$queryRaw
+        .mockResolvedValueOnce([])
+        .mockResolvedValueOnce([{ id: 'bank' }]);
+
+      await service.create(userId, {
+        amount: 50000,
+        type: TransactionType.EXPENSE,
+        categoryId: 'c1',
+      });
+
+      expect(prisma.transaction.create).toHaveBeenCalledWith(
+        expect.objectContaining({
+          data: expect.objectContaining({ accountId: 'bank' }),
+        }),
+      );
+      expect(appliedChanges()).toEqual([
+        { accountId: 'bank', delta: '-50000' },
+      ]);
+    });
   });
 
   describe('update', () => {
@@ -343,6 +407,17 @@ describe('TransactionService', () => {
       expect(data).not.toHaveProperty('outcome');
       expect(prisma.category.findFirst).not.toHaveBeenCalled();
       expect(ledger.apply).toHaveBeenCalledWith(prisma, []);
+    });
+    it('key-share locks the destination wallet when moving a transaction', async () => {
+      prisma.account.findFirst.mockResolvedValue({ id: 'bank' });
+
+      await service.update(userId, 't1', { accountId: 'bank' });
+
+      const lockIndex = rawSql(prisma.$queryRaw).findIndex((sql) =>
+        sql.includes('FOR KEY SHARE'),
+      );
+      expect(lockIndex).toBeGreaterThanOrEqual(0);
+      expect(prisma.$queryRaw.mock.calls[lockIndex][1]).toBe('bank');
     });
   });
 
