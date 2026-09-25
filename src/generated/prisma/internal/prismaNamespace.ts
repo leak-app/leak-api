@@ -1087,6 +1087,8 @@ export const AccountScalarFieldEnum = {
   initialBalance: 'initialBalance',
   currentBalance: 'currentBalance',
   userId: 'userId',
+  isDeleted: 'isDeleted',
+  deletedAt: 'deletedAt',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -1115,7 +1117,10 @@ export const TransactionScalarFieldEnum = {
   type: 'type',
   description: 'description',
   categoryId: 'categoryId',
+  accountId: 'accountId',
   userId: 'userId',
+  isDeleted: 'isDeleted',
+  deletedAt: 'deletedAt',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
   outcome: 'outcome',
