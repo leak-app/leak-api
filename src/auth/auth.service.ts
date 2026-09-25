@@ -9,7 +9,7 @@ import { ConfigService } from '@nestjs/config';
 
 import * as bcrypt from 'bcrypt';
 import axios from 'axios';
-import { createHash, randomBytes } from 'crypto';
+import { randomBytes } from 'crypto';
 import ms, { StringValue } from 'ms';
 import dayjs from 'dayjs';
 import { v4 as uuidv4 } from 'uuid';
@@ -18,6 +18,7 @@ import { UserRepository } from '@/user/user.repository';
 import { UserModel } from '@/generated/prisma/models';
 import { CategoryService } from '../modules/categories/categories.service';
 import { SessionRepository } from './session.repository';
+import { hashToken } from './token-hash';
 import { PasswordResetRepository } from './password-reset.repository';
 import { MailService } from '../modules/mail/mail.service';
 import {
@@ -75,7 +76,7 @@ export class AuthService {
   }
 
   async refresh(token: string, tracing?: RequestTracing) {
-    const hashedToken = createHash('sha256').update(token).digest('hex');
+    const hashedToken = hashToken(token);
     const session = await this._sessionRepository.findByToken(hashedToken);
 
     if (!session || session.isRevoked || session.expiresAt < new Date()) {
@@ -97,7 +98,7 @@ export class AuthService {
   }
 
   async signOut(token: string) {
-    const hashedToken = createHash('sha256').update(token).digest('hex');
+    const hashedToken = hashToken(token);
     await this._sessionRepository.revoke(hashedToken);
 
     return true;
@@ -161,9 +162,7 @@ export class AuthService {
       this._configService.get<StringValue>('JWT_REFRESH_TTL', '30d'),
     );
 
-    const hashedRefreshToken = createHash('sha256')
-      .update(refreshToken)
-      .digest('hex');
+    const hashedRefreshToken = hashToken(refreshToken);
 
     await this._sessionRepository.create({
       token: hashedRefreshToken,
