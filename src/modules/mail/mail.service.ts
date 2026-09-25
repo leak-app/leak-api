@@ -42,7 +42,10 @@ export class MailService {
       });
       this._logger.log(`Password reset email sent to ${to}`);
     } catch (error) {
-      this._logger.error(`Failed to send password reset email to ${to}:`, error);
+      this._logger.error(
+        `Failed to send password reset email to ${to}:`,
+        error,
+      );
       // Non-blocking resilience: do not throw to crash auth flow
     }
   }

@@ -1,15 +1,7 @@
 import { Injectable } from '@nestjs/common';
 
 import { PrismaService } from '@/common/prisma.service';
-
-export interface PasswordResetTokenModel {
-  id: string;
-  token: string;
-  userId: string;
-  expiresAt: Date;
-  usedAt: Date | null;
-  createdAt: Date;
-}
+import type { PasswordResetTokenModel } from '@/generated/prisma/models';
 
 @Injectable()
 export class PasswordResetRepository {
@@ -20,26 +12,26 @@ export class PasswordResetRepository {
     userId: string;
     expiresAt: Date;
   }): Promise<PasswordResetTokenModel> {
-    return (this._prisma as any).passwordResetToken.create({
+    return this._prisma.passwordResetToken.create({
       data,
     });
   }
 
   async findByToken(token: string): Promise<PasswordResetTokenModel | null> {
-    return (this._prisma as any).passwordResetToken.findUnique({
+    return this._prisma.passwordResetToken.findUnique({
       where: { token },
     });
   }
 
   async invalidatePreviousTokens(userId: string): Promise<void> {
-    await (this._prisma as any).passwordResetToken.updateMany({
+    await this._prisma.passwordResetToken.updateMany({
       where: { userId, usedAt: null },
       data: { usedAt: new Date() },
     });
   }
 
   async markAsUsed(id: string): Promise<void> {
-    await (this._prisma as any).passwordResetToken.update({
+    await this._prisma.passwordResetToken.update({
       where: { id },
       data: { usedAt: new Date() },
     });

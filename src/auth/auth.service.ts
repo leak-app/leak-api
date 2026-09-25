@@ -122,7 +122,7 @@ export class AuthService {
       }
       email = payload.email;
       name = payload.name ?? dto.name;
-    } catch (error) {
+    } catch {
       throw new UnauthorizedException('Xác thực token Google thất bại');
     }
 

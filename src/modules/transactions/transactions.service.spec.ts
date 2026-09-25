@@ -36,7 +36,7 @@ function createPrismaMock() {
       count: jest.fn().mockResolvedValue(0),
       findFirst: jest.fn().mockResolvedValue(existing),
       create: jest.fn(({ data }) => Promise.resolve({ id: 'new', ...data })),
-      update: jest.fn(({ data }) =>
+      update: jest.fn(({ data }: { data: Record<string, unknown> }) =>
         Promise.resolve({
           ...existing,
           ...Object.fromEntries(
