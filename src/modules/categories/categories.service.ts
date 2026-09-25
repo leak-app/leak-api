@@ -40,6 +40,8 @@ export class CategoryService {
   }
 
   async delete(userId: string, id: string) {
+    // Counts soft-deleted transactions on purpose: the Restrict FK blocks a hard
+    // delete while any transaction row, deleted or not, still references the category.
     const transactionCount = await this._prisma.transaction.count({
       where: { categoryId: id, userId },
     });
@@ -83,7 +85,11 @@ export class CategoryService {
       { name: 'Cổ phiếu', emoji: '📈', type: CategoryType.INVESTMENT },
       { name: 'Tiền điện tử', emoji: '🪙', type: CategoryType.INVESTMENT },
       { name: 'Tiết kiệm', emoji: '🏦', type: CategoryType.INVESTMENT },
-      { name: 'Vàng & Bất động sản', emoji: '🏡', type: CategoryType.INVESTMENT },
+      {
+        name: 'Vàng & Bất động sản',
+        emoji: '🏡',
+        type: CategoryType.INVESTMENT,
+      },
     ];
 
     await this._prisma.category.createMany({

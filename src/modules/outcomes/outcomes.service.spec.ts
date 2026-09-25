@@ -40,6 +40,7 @@ describe('OutcomesService', () => {
 
       const expectedWhere = {
         userId,
+        isDeleted: false,
         type: TransactionType.EXPENSE,
         outcome: SpendOutcome.UNREVIEWED,
         createdAt: {
@@ -61,14 +62,14 @@ describe('OutcomesService', () => {
   });
 
   describe('review', () => {
-    it('throws NotFound when the transaction is missing or not owned', async () => {
+    it('throws NotFound when the transaction is missing, deleted or not owned', async () => {
       prisma.transaction.findFirst.mockResolvedValue(null);
 
       await expect(
         service.review(userId, 'missing', { outcome: 'WORTH_IT' }, now),
       ).rejects.toThrow(NotFoundException);
       expect(prisma.transaction.findFirst).toHaveBeenCalledWith({
-        where: { id: 'missing', userId },
+        where: { id: 'missing', userId, isDeleted: false },
       });
       expect(prisma.transaction.update).not.toHaveBeenCalled();
     });
@@ -180,7 +181,7 @@ describe('OutcomesService', () => {
       const reasonCall = calls[1] as unknown[];
       expect(outcomeCall[0]).toMatchObject({
         by: ['categoryId', 'outcome'],
-        where: { userId, type: TransactionType.EXPENSE },
+        where: { userId, type: TransactionType.EXPENSE, isDeleted: false },
       });
       const arg0 = outcomeCall[0] as Record<string, Record<string, unknown>>;
       const where = arg0.where;
@@ -194,6 +195,9 @@ describe('OutcomesService', () => {
       expect(reasonCall[0]).toMatchObject({
         by: ['categoryId', 'leakReason'],
         where: { outcome: SpendOutcome.LEAK, leakReason: { not: null } },
+      });
+      expect(reasonCall[0]).toMatchObject({
+        where: { userId, isDeleted: false, outcome: SpendOutcome.LEAK },
       });
       expect(prisma.category.findMany).toHaveBeenCalledWith({
         where: { id: { in: ['c1'] }, userId },

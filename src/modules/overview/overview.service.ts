@@ -17,6 +17,7 @@ export class OverviewService {
       where: {
         userId,
         type,
+        isDeleted: false,
         createdAt: {
           gte: startDate,
           lte: endDate,
@@ -149,30 +150,14 @@ export class OverviewService {
 
   private async _getTotalBalanceAndGrowth(userId: string) {
     const accounts = await this._prisma.account.findMany({
-      where: { userId },
+      where: { userId, isDeleted: false },
     });
     const accountsCount = accounts.length;
-    const totalAccountBalance = accounts.reduce(
+    // Every transaction moves a wallet balance, so active wallets are the whole net worth.
+    const totalBalance = accounts.reduce(
       (sum, acc) => sum + Number(acc.currentBalance),
       0,
     );
-
-    const [allIncomeResult, allExpenseResult] = await Promise.all([
-      this._prisma.transaction.aggregate({
-        where: { userId, type: TransactionType.INCOME },
-        _sum: { amount: true },
-      }),
-      this._prisma.transaction.aggregate({
-        where: { userId, type: TransactionType.EXPENSE },
-        _sum: { amount: true },
-      }),
-    ]);
-    const totalIncome = Number(allIncomeResult._sum.amount || 0);
-    const totalExpense = Number(allExpenseResult._sum.amount || 0);
-    const netTransactionBalance = totalIncome - totalExpense;
-
-    const totalBalance =
-      totalAccountBalance > 0 ? totalAccountBalance : netTransactionBalance;
 
     // Income growth percentage vs previous month
     const thisMonthStart = dayjs().startOf('month').toDate();
@@ -253,7 +238,7 @@ export class OverviewService {
 
   private async _getRecentExpenses(userId: string, limit = 3) {
     const recentTx = await this._prisma.transaction.findMany({
-      where: { userId, type: TransactionType.EXPENSE },
+      where: { userId, type: TransactionType.EXPENSE, isDeleted: false },
       include: { category: true },
       orderBy: { createdAt: 'desc' },
       take: limit,
