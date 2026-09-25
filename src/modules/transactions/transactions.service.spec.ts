@@ -92,12 +92,24 @@ describe('TransactionService', () => {
           where: { userId, isDeleted: false },
           include: {
             category: true,
-            account: { select: { id: true, name: true } },
+            account: { select: { id: true, name: true, type: true } },
           },
         }),
       );
       expect(prisma.transaction.count).toHaveBeenCalledWith({
         where: { userId, isDeleted: false },
+      });
+    });
+
+    it('filters by wallet inside the user scope', async () => {
+      await service.findAll(userId, { accountId: 'wallet-2' });
+      expect(prisma.transaction.findMany).toHaveBeenCalledWith(
+        expect.objectContaining({
+          where: { userId, isDeleted: false, accountId: 'wallet-2' },
+        }),
+      );
+      expect(prisma.transaction.count).toHaveBeenCalledWith({
+        where: { userId, isDeleted: false, accountId: 'wallet-2' },
       });
     });
 

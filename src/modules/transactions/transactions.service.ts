@@ -39,6 +39,7 @@ export class TransactionService {
       limit?: number;
       type?: TransactionType;
       categoryId?: string;
+      accountId?: string;
       outcome?: SpendOutcome;
       startDate?: string;
       endDate?: string;
@@ -65,6 +66,9 @@ export class TransactionService {
     }
     if (query.categoryId) {
       where.categoryId = query.categoryId;
+    }
+    if (query.accountId) {
+      where.accountId = query.accountId;
     }
 
     if (query.outcome) {
@@ -101,7 +105,7 @@ export class TransactionService {
         where,
         include: {
           category: true,
-          account: { select: { id: true, name: true } },
+          account: { select: { id: true, name: true, type: true } },
         },
         orderBy: { createdAt: 'desc' },
         skip,
