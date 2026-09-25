@@ -14,6 +14,7 @@ import { AuthService } from './auth.service';
 import { JwtStrategy } from './jwt.strategy';
 
 import { SessionRepository } from './session.repository';
+import { SessionService } from './session.service';
 import { SessionCleanupService } from './session-cleanup.service';
 import { PasswordResetRepository } from './password-reset.repository';
 
@@ -40,6 +41,7 @@ import { PasswordResetRepository } from './password-reset.repository';
     AuthService,
     JwtStrategy,
     SessionRepository,
+    SessionService,
     SessionCleanupService,
     PasswordResetRepository,
   ],

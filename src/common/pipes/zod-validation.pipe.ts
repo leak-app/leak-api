@@ -10,7 +10,7 @@ import { type ZodSchema } from 'zod';
 export class ZodValidationPipe implements PipeTransform {
   constructor(
     private readonly schema: ZodSchema,
-    private readonly target: 'body' | 'query' = 'body',
+    private readonly target: 'body' | 'query' | 'param' = 'body',
   ) {}
 
   transform(value: unknown, metadata: ArgumentMetadata) {

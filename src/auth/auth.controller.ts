@@ -1,6 +1,9 @@
 import {
   Body,
   Controller,
+  Delete,
+  Get,
+  Param,
   Post,
   Req,
   Res,
@@ -10,10 +13,14 @@ import {
 import type { Request, Response } from 'express';
 
 import { Public } from '@/common/decorators/public.decorator';
+import type { User } from '@/generated/prisma/client';
 import { ZodValidationPipe } from '@/common/pipes/zod-validation.pipe';
 import { setCookie, clearCookie } from '@/utils/cookie.helper';
 
 import { AuthService } from './auth.service';
+import { sessionIdParamSchema } from './dto/session.dto';
+import { GetUser } from './get-user.decorator';
+import { SessionService } from './session.service';
 import {
   ForgotPasswordDto,
   forgotPasswordSchema,
@@ -30,7 +37,10 @@ import { RequestTracing } from './models';
 
 @Controller('auth')
 export class AuthController {
-  constructor(private readonly _authService: AuthService) {}
+  constructor(
+    private readonly _authService: AuthService,
+    private readonly _sessionService: SessionService,
+  ) {}
 
   @Public()
   @Post('sign-up')
@@ -151,6 +161,37 @@ export class AuthController {
     return this._authService.resetPassword(
       resetPasswordDto.token,
       resetPasswordDto.password,
+    );
+  }
+
+  @Get('sessions')
+  async listSessions(@GetUser() user: User, @Req() req: Request) {
+    return this._sessionService.list(
+      user.id,
+      req.cookies['refreshToken'] as string | undefined,
+    );
+  }
+
+  // Declared before 'sessions/:id' so "revoke-others" is never read as an id.
+  @Post('sessions/revoke-others')
+  async revokeOtherSessions(@GetUser() user: User, @Req() req: Request) {
+    return this._sessionService.revokeOthers(
+      user.id,
+      req.cookies['refreshToken'] as string | undefined,
+    );
+  }
+
+  @Delete('sessions/:id')
+  async revokeSession(
+    @GetUser() user: User,
+    @Param('id', new ZodValidationPipe(sessionIdParamSchema, 'param'))
+    id: number,
+    @Req() req: Request,
+  ) {
+    return this._sessionService.revoke(
+      user.id,
+      id,
+      req.cookies['refreshToken'] as string | undefined,
     );
   }
 }
