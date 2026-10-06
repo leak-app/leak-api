@@ -4,10 +4,10 @@ FROM node:22-alpine AS builder
 WORKDIR /usr/src/app
 
 # Copy package descriptors
-COPY package*.json ./
+COPY package.json yarn.lock ./
 
 # Install all dependencies (including devDependencies)
-RUN npm ci
+RUN yarn install --frozen-lockfile --network-timeout 600000
 
 # Copy source code and Prisma configuration
 COPY . .
@@ -21,14 +21,20 @@ RUN npx prisma generate
 # Build the production NestJS application
 RUN npm run build
 
+# Migration stage: reuses the builder (Prisma CLI + migrations) and applies
+# pending migrations once; used by the one-shot `migrate` service in compose.
+FROM builder AS migrator
+
+CMD ["npx", "prisma", "migrate", "deploy"]
+
 # Stage 2: Install production dependencies only
 FROM node:22-alpine AS dependencies
 
 WORKDIR /usr/src/app
 
-COPY package*.json ./
+COPY package.json yarn.lock ./
 
-RUN npm ci --only=production
+RUN yarn install --production --frozen-lockfile --network-timeout 600000
 
 # Stage 3: Run the production image
 FROM node:22-alpine AS runner
