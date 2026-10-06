@@ -59,6 +59,7 @@ export const ModelName = {
   Transaction: 'Transaction',
   Goal: 'Goal',
   GoalContribution: 'GoalContribution',
+  LeakReclaim: 'LeakReclaim',
   Budget: 'Budget'
 } as const
 
@@ -197,6 +198,21 @@ export const GoalContributionScalarFieldEnum = {
 } as const
 
 export type GoalContributionScalarFieldEnum = (typeof GoalContributionScalarFieldEnum)[keyof typeof GoalContributionScalarFieldEnum]
+
+
+export const LeakReclaimScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  year: 'year',
+  month: 'month',
+  computedAmount: 'computedAmount',
+  transferAmount: 'transferAmount',
+  status: 'status',
+  contributionId: 'contributionId',
+  createdAt: 'createdAt'
+} as const
+
+export type LeakReclaimScalarFieldEnum = (typeof LeakReclaimScalarFieldEnum)[keyof typeof LeakReclaimScalarFieldEnum]
 
 
 export const BudgetScalarFieldEnum = {

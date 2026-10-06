@@ -392,6 +392,7 @@ export const ModelName = {
   Transaction: 'Transaction',
   Goal: 'Goal',
   GoalContribution: 'GoalContribution',
+  LeakReclaim: 'LeakReclaim',
   Budget: 'Budget'
 } as const
 
@@ -408,7 +409,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "session" | "passwordResetToken" | "account" | "category" | "transaction" | "goal" | "goalContribution" | "budget"
+    modelProps: "user" | "session" | "passwordResetToken" | "account" | "category" | "transaction" | "goal" | "goalContribution" | "leakReclaim" | "budget"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -1004,6 +1005,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    LeakReclaim: {
+      payload: Prisma.$LeakReclaimPayload<ExtArgs>
+      fields: Prisma.LeakReclaimFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.LeakReclaimFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LeakReclaimPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.LeakReclaimFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LeakReclaimPayload>
+        }
+        findFirst: {
+          args: Prisma.LeakReclaimFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LeakReclaimPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.LeakReclaimFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LeakReclaimPayload>
+        }
+        findMany: {
+          args: Prisma.LeakReclaimFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LeakReclaimPayload>[]
+        }
+        create: {
+          args: Prisma.LeakReclaimCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LeakReclaimPayload>
+        }
+        createMany: {
+          args: Prisma.LeakReclaimCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.LeakReclaimCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LeakReclaimPayload>[]
+        }
+        delete: {
+          args: Prisma.LeakReclaimDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LeakReclaimPayload>
+        }
+        update: {
+          args: Prisma.LeakReclaimUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LeakReclaimPayload>
+        }
+        deleteMany: {
+          args: Prisma.LeakReclaimDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.LeakReclaimUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.LeakReclaimUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LeakReclaimPayload>[]
+        }
+        upsert: {
+          args: Prisma.LeakReclaimUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LeakReclaimPayload>
+        }
+        aggregate: {
+          args: Prisma.LeakReclaimAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateLeakReclaim>
+        }
+        groupBy: {
+          args: Prisma.LeakReclaimGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.LeakReclaimGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.LeakReclaimCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.LeakReclaimCountAggregateOutputType> | number
+        }
+      }
+    }
     Budget: {
       payload: Prisma.$BudgetPayload<ExtArgs>
       fields: Prisma.BudgetFieldRefs
@@ -1238,6 +1313,21 @@ export const GoalContributionScalarFieldEnum = {
 export type GoalContributionScalarFieldEnum = (typeof GoalContributionScalarFieldEnum)[keyof typeof GoalContributionScalarFieldEnum]
 
 
+export const LeakReclaimScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  year: 'year',
+  month: 'month',
+  computedAmount: 'computedAmount',
+  transferAmount: 'transferAmount',
+  status: 'status',
+  contributionId: 'contributionId',
+  createdAt: 'createdAt'
+} as const
+
+export type LeakReclaimScalarFieldEnum = (typeof LeakReclaimScalarFieldEnum)[keyof typeof LeakReclaimScalarFieldEnum]
+
+
 export const BudgetScalarFieldEnum = {
   id: 'id',
   amount: 'amount',
@@ -1444,6 +1534,20 @@ export type ListEnumGoalContributionSourceFieldRefInput<$PrismaModel> = FieldRef
 
 
 /**
+ * Reference to a field of type 'LeakReclaimStatus'
+ */
+export type EnumLeakReclaimStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'LeakReclaimStatus'>
+    
+
+
+/**
+ * Reference to a field of type 'LeakReclaimStatus[]'
+ */
+export type ListEnumLeakReclaimStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'LeakReclaimStatus[]'>
+    
+
+
+/**
  * Reference to a field of type 'Float'
  */
 export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
@@ -1559,6 +1663,7 @@ export type GlobalOmitConfig = {
   transaction?: Prisma.TransactionOmit
   goal?: Prisma.GoalOmit
   goalContribution?: Prisma.GoalContributionOmit
+  leakReclaim?: Prisma.LeakReclaimOmit
   budget?: Prisma.BudgetOmit
 }
 

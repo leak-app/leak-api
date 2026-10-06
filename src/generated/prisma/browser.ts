@@ -58,6 +58,11 @@ export type Goal = Prisma.GoalModel
  */
 export type GoalContribution = Prisma.GoalContributionModel
 /**
+ * Model LeakReclaim
+ * 
+ */
+export type LeakReclaim = Prisma.LeakReclaimModel
+/**
  * Model Budget
  * 
  */

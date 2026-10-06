@@ -251,6 +251,7 @@ export type GoalContributionWhereInput = {
   goal?: Prisma.XOR<Prisma.GoalScalarRelationFilter, Prisma.GoalWhereInput>
   account?: Prisma.XOR<Prisma.AccountNullableScalarRelationFilter, Prisma.AccountWhereInput> | null
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
+  leakReclaim?: Prisma.XOR<Prisma.LeakReclaimNullableScalarRelationFilter, Prisma.LeakReclaimWhereInput> | null
 }
 
 export type GoalContributionOrderByWithRelationInput = {
@@ -266,6 +267,7 @@ export type GoalContributionOrderByWithRelationInput = {
   goal?: Prisma.GoalOrderByWithRelationInput
   account?: Prisma.AccountOrderByWithRelationInput
   user?: Prisma.UserOrderByWithRelationInput
+  leakReclaim?: Prisma.LeakReclaimOrderByWithRelationInput
 }
 
 export type GoalContributionWhereUniqueInput = Prisma.AtLeast<{
@@ -284,6 +286,7 @@ export type GoalContributionWhereUniqueInput = Prisma.AtLeast<{
   goal?: Prisma.XOR<Prisma.GoalScalarRelationFilter, Prisma.GoalWhereInput>
   account?: Prisma.XOR<Prisma.AccountNullableScalarRelationFilter, Prisma.AccountWhereInput> | null
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
+  leakReclaim?: Prisma.XOR<Prisma.LeakReclaimNullableScalarRelationFilter, Prisma.LeakReclaimWhereInput> | null
 }, "id">
 
 export type GoalContributionOrderByWithAggregationInput = {
@@ -328,6 +331,7 @@ export type GoalContributionCreateInput = {
   goal: Prisma.GoalCreateNestedOneWithoutContributionsInput
   account?: Prisma.AccountCreateNestedOneWithoutGoalContributionsInput
   user: Prisma.UserCreateNestedOneWithoutGoalContributionsInput
+  leakReclaim?: Prisma.LeakReclaimCreateNestedOneWithoutContributionInput
 }
 
 export type GoalContributionUncheckedCreateInput = {
@@ -340,6 +344,7 @@ export type GoalContributionUncheckedCreateInput = {
   amount: runtime.Decimal | runtime.DecimalJsLike | number | string
   note?: string | null
   createdAt?: Date | string
+  leakReclaim?: Prisma.LeakReclaimUncheckedCreateNestedOneWithoutContributionInput
 }
 
 export type GoalContributionUpdateInput = {
@@ -352,6 +357,7 @@ export type GoalContributionUpdateInput = {
   goal?: Prisma.GoalUpdateOneRequiredWithoutContributionsNestedInput
   account?: Prisma.AccountUpdateOneWithoutGoalContributionsNestedInput
   user?: Prisma.UserUpdateOneRequiredWithoutGoalContributionsNestedInput
+  leakReclaim?: Prisma.LeakReclaimUpdateOneWithoutContributionNestedInput
 }
 
 export type GoalContributionUncheckedUpdateInput = {
@@ -364,6 +370,7 @@ export type GoalContributionUncheckedUpdateInput = {
   amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  leakReclaim?: Prisma.LeakReclaimUncheckedUpdateOneWithoutContributionNestedInput
 }
 
 export type GoalContributionCreateManyInput = {
@@ -451,6 +458,11 @@ export type GoalContributionMinOrderByAggregateInput = {
 
 export type GoalContributionSumOrderByAggregateInput = {
   amount?: Prisma.SortOrder
+}
+
+export type GoalContributionNullableScalarRelationFilter = {
+  is?: Prisma.GoalContributionWhereInput | null
+  isNot?: Prisma.GoalContributionWhereInput | null
 }
 
 export type GoalContributionCreateNestedManyWithoutUserInput = {
@@ -587,6 +599,22 @@ export type EnumGoalContributionSourceFieldUpdateOperationsInput = {
   set?: $Enums.GoalContributionSource
 }
 
+export type GoalContributionCreateNestedOneWithoutLeakReclaimInput = {
+  create?: Prisma.XOR<Prisma.GoalContributionCreateWithoutLeakReclaimInput, Prisma.GoalContributionUncheckedCreateWithoutLeakReclaimInput>
+  connectOrCreate?: Prisma.GoalContributionCreateOrConnectWithoutLeakReclaimInput
+  connect?: Prisma.GoalContributionWhereUniqueInput
+}
+
+export type GoalContributionUpdateOneWithoutLeakReclaimNestedInput = {
+  create?: Prisma.XOR<Prisma.GoalContributionCreateWithoutLeakReclaimInput, Prisma.GoalContributionUncheckedCreateWithoutLeakReclaimInput>
+  connectOrCreate?: Prisma.GoalContributionCreateOrConnectWithoutLeakReclaimInput
+  upsert?: Prisma.GoalContributionUpsertWithoutLeakReclaimInput
+  disconnect?: Prisma.GoalContributionWhereInput | boolean
+  delete?: Prisma.GoalContributionWhereInput | boolean
+  connect?: Prisma.GoalContributionWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.GoalContributionUpdateToOneWithWhereWithoutLeakReclaimInput, Prisma.GoalContributionUpdateWithoutLeakReclaimInput>, Prisma.GoalContributionUncheckedUpdateWithoutLeakReclaimInput>
+}
+
 export type GoalContributionCreateWithoutUserInput = {
   id?: string
   type: $Enums.GoalContributionType
@@ -596,6 +624,7 @@ export type GoalContributionCreateWithoutUserInput = {
   createdAt?: Date | string
   goal: Prisma.GoalCreateNestedOneWithoutContributionsInput
   account?: Prisma.AccountCreateNestedOneWithoutGoalContributionsInput
+  leakReclaim?: Prisma.LeakReclaimCreateNestedOneWithoutContributionInput
 }
 
 export type GoalContributionUncheckedCreateWithoutUserInput = {
@@ -607,6 +636,7 @@ export type GoalContributionUncheckedCreateWithoutUserInput = {
   amount: runtime.Decimal | runtime.DecimalJsLike | number | string
   note?: string | null
   createdAt?: Date | string
+  leakReclaim?: Prisma.LeakReclaimUncheckedCreateNestedOneWithoutContributionInput
 }
 
 export type GoalContributionCreateOrConnectWithoutUserInput = {
@@ -659,6 +689,7 @@ export type GoalContributionCreateWithoutAccountInput = {
   createdAt?: Date | string
   goal: Prisma.GoalCreateNestedOneWithoutContributionsInput
   user: Prisma.UserCreateNestedOneWithoutGoalContributionsInput
+  leakReclaim?: Prisma.LeakReclaimCreateNestedOneWithoutContributionInput
 }
 
 export type GoalContributionUncheckedCreateWithoutAccountInput = {
@@ -670,6 +701,7 @@ export type GoalContributionUncheckedCreateWithoutAccountInput = {
   amount: runtime.Decimal | runtime.DecimalJsLike | number | string
   note?: string | null
   createdAt?: Date | string
+  leakReclaim?: Prisma.LeakReclaimUncheckedCreateNestedOneWithoutContributionInput
 }
 
 export type GoalContributionCreateOrConnectWithoutAccountInput = {
@@ -707,6 +739,7 @@ export type GoalContributionCreateWithoutGoalInput = {
   createdAt?: Date | string
   account?: Prisma.AccountCreateNestedOneWithoutGoalContributionsInput
   user: Prisma.UserCreateNestedOneWithoutGoalContributionsInput
+  leakReclaim?: Prisma.LeakReclaimCreateNestedOneWithoutContributionInput
 }
 
 export type GoalContributionUncheckedCreateWithoutGoalInput = {
@@ -718,6 +751,7 @@ export type GoalContributionUncheckedCreateWithoutGoalInput = {
   amount: runtime.Decimal | runtime.DecimalJsLike | number | string
   note?: string | null
   createdAt?: Date | string
+  leakReclaim?: Prisma.LeakReclaimUncheckedCreateNestedOneWithoutContributionInput
 }
 
 export type GoalContributionCreateOrConnectWithoutGoalInput = {
@@ -746,6 +780,70 @@ export type GoalContributionUpdateManyWithWhereWithoutGoalInput = {
   data: Prisma.XOR<Prisma.GoalContributionUpdateManyMutationInput, Prisma.GoalContributionUncheckedUpdateManyWithoutGoalInput>
 }
 
+export type GoalContributionCreateWithoutLeakReclaimInput = {
+  id?: string
+  type: $Enums.GoalContributionType
+  source?: $Enums.GoalContributionSource
+  amount: runtime.Decimal | runtime.DecimalJsLike | number | string
+  note?: string | null
+  createdAt?: Date | string
+  goal: Prisma.GoalCreateNestedOneWithoutContributionsInput
+  account?: Prisma.AccountCreateNestedOneWithoutGoalContributionsInput
+  user: Prisma.UserCreateNestedOneWithoutGoalContributionsInput
+}
+
+export type GoalContributionUncheckedCreateWithoutLeakReclaimInput = {
+  id?: string
+  goalId: string
+  accountId?: string | null
+  userId: string
+  type: $Enums.GoalContributionType
+  source?: $Enums.GoalContributionSource
+  amount: runtime.Decimal | runtime.DecimalJsLike | number | string
+  note?: string | null
+  createdAt?: Date | string
+}
+
+export type GoalContributionCreateOrConnectWithoutLeakReclaimInput = {
+  where: Prisma.GoalContributionWhereUniqueInput
+  create: Prisma.XOR<Prisma.GoalContributionCreateWithoutLeakReclaimInput, Prisma.GoalContributionUncheckedCreateWithoutLeakReclaimInput>
+}
+
+export type GoalContributionUpsertWithoutLeakReclaimInput = {
+  update: Prisma.XOR<Prisma.GoalContributionUpdateWithoutLeakReclaimInput, Prisma.GoalContributionUncheckedUpdateWithoutLeakReclaimInput>
+  create: Prisma.XOR<Prisma.GoalContributionCreateWithoutLeakReclaimInput, Prisma.GoalContributionUncheckedCreateWithoutLeakReclaimInput>
+  where?: Prisma.GoalContributionWhereInput
+}
+
+export type GoalContributionUpdateToOneWithWhereWithoutLeakReclaimInput = {
+  where?: Prisma.GoalContributionWhereInput
+  data: Prisma.XOR<Prisma.GoalContributionUpdateWithoutLeakReclaimInput, Prisma.GoalContributionUncheckedUpdateWithoutLeakReclaimInput>
+}
+
+export type GoalContributionUpdateWithoutLeakReclaimInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  type?: Prisma.EnumGoalContributionTypeFieldUpdateOperationsInput | $Enums.GoalContributionType
+  source?: Prisma.EnumGoalContributionSourceFieldUpdateOperationsInput | $Enums.GoalContributionSource
+  amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  goal?: Prisma.GoalUpdateOneRequiredWithoutContributionsNestedInput
+  account?: Prisma.AccountUpdateOneWithoutGoalContributionsNestedInput
+  user?: Prisma.UserUpdateOneRequiredWithoutGoalContributionsNestedInput
+}
+
+export type GoalContributionUncheckedUpdateWithoutLeakReclaimInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  goalId?: Prisma.StringFieldUpdateOperationsInput | string
+  accountId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  userId?: Prisma.StringFieldUpdateOperationsInput | string
+  type?: Prisma.EnumGoalContributionTypeFieldUpdateOperationsInput | $Enums.GoalContributionType
+  source?: Prisma.EnumGoalContributionSourceFieldUpdateOperationsInput | $Enums.GoalContributionSource
+  amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
 export type GoalContributionCreateManyUserInput = {
   id?: string
   goalId: string
@@ -766,6 +864,7 @@ export type GoalContributionUpdateWithoutUserInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   goal?: Prisma.GoalUpdateOneRequiredWithoutContributionsNestedInput
   account?: Prisma.AccountUpdateOneWithoutGoalContributionsNestedInput
+  leakReclaim?: Prisma.LeakReclaimUpdateOneWithoutContributionNestedInput
 }
 
 export type GoalContributionUncheckedUpdateWithoutUserInput = {
@@ -777,6 +876,7 @@ export type GoalContributionUncheckedUpdateWithoutUserInput = {
   amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  leakReclaim?: Prisma.LeakReclaimUncheckedUpdateOneWithoutContributionNestedInput
 }
 
 export type GoalContributionUncheckedUpdateManyWithoutUserInput = {
@@ -810,6 +910,7 @@ export type GoalContributionUpdateWithoutAccountInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   goal?: Prisma.GoalUpdateOneRequiredWithoutContributionsNestedInput
   user?: Prisma.UserUpdateOneRequiredWithoutGoalContributionsNestedInput
+  leakReclaim?: Prisma.LeakReclaimUpdateOneWithoutContributionNestedInput
 }
 
 export type GoalContributionUncheckedUpdateWithoutAccountInput = {
@@ -821,6 +922,7 @@ export type GoalContributionUncheckedUpdateWithoutAccountInput = {
   amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  leakReclaim?: Prisma.LeakReclaimUncheckedUpdateOneWithoutContributionNestedInput
 }
 
 export type GoalContributionUncheckedUpdateManyWithoutAccountInput = {
@@ -854,6 +956,7 @@ export type GoalContributionUpdateWithoutGoalInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   account?: Prisma.AccountUpdateOneWithoutGoalContributionsNestedInput
   user?: Prisma.UserUpdateOneRequiredWithoutGoalContributionsNestedInput
+  leakReclaim?: Prisma.LeakReclaimUpdateOneWithoutContributionNestedInput
 }
 
 export type GoalContributionUncheckedUpdateWithoutGoalInput = {
@@ -865,6 +968,7 @@ export type GoalContributionUncheckedUpdateWithoutGoalInput = {
   amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  leakReclaim?: Prisma.LeakReclaimUncheckedUpdateOneWithoutContributionNestedInput
 }
 
 export type GoalContributionUncheckedUpdateManyWithoutGoalInput = {
@@ -893,6 +997,7 @@ export type GoalContributionSelect<ExtArgs extends runtime.Types.Extensions.Inte
   goal?: boolean | Prisma.GoalDefaultArgs<ExtArgs>
   account?: boolean | Prisma.GoalContribution$accountArgs<ExtArgs>
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  leakReclaim?: boolean | Prisma.GoalContribution$leakReclaimArgs<ExtArgs>
 }, ExtArgs["result"]["goalContribution"]>
 
 export type GoalContributionSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -942,6 +1047,7 @@ export type GoalContributionInclude<ExtArgs extends runtime.Types.Extensions.Int
   goal?: boolean | Prisma.GoalDefaultArgs<ExtArgs>
   account?: boolean | Prisma.GoalContribution$accountArgs<ExtArgs>
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  leakReclaim?: boolean | Prisma.GoalContribution$leakReclaimArgs<ExtArgs>
 }
 export type GoalContributionIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   goal?: boolean | Prisma.GoalDefaultArgs<ExtArgs>
@@ -960,6 +1066,7 @@ export type $GoalContributionPayload<ExtArgs extends runtime.Types.Extensions.In
     goal: Prisma.$GoalPayload<ExtArgs>
     account: Prisma.$AccountPayload<ExtArgs> | null
     user: Prisma.$UserPayload<ExtArgs>
+    leakReclaim: Prisma.$LeakReclaimPayload<ExtArgs> | null
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1368,6 +1475,7 @@ export interface Prisma__GoalContributionClient<T, Null = never, ExtArgs extends
   goal<T extends Prisma.GoalDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.GoalDefaultArgs<ExtArgs>>): Prisma.Prisma__GoalClient<runtime.Types.Result.GetResult<Prisma.$GoalPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   account<T extends Prisma.GoalContribution$accountArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.GoalContribution$accountArgs<ExtArgs>>): Prisma.Prisma__AccountClient<runtime.Types.Result.GetResult<Prisma.$AccountPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   user<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  leakReclaim<T extends Prisma.GoalContribution$leakReclaimArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.GoalContribution$leakReclaimArgs<ExtArgs>>): Prisma.Prisma__LeakReclaimClient<runtime.Types.Result.GetResult<Prisma.$LeakReclaimPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1818,6 +1926,25 @@ export type GoalContribution$accountArgs<ExtArgs extends runtime.Types.Extension
    */
   include?: Prisma.AccountInclude<ExtArgs> | null
   where?: Prisma.AccountWhereInput
+}
+
+/**
+ * GoalContribution.leakReclaim
+ */
+export type GoalContribution$leakReclaimArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the LeakReclaim
+   */
+  select?: Prisma.LeakReclaimSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the LeakReclaim
+   */
+  omit?: Prisma.LeakReclaimOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.LeakReclaimInclude<ExtArgs> | null
+  where?: Prisma.LeakReclaimWhereInput
 }
 
 /**

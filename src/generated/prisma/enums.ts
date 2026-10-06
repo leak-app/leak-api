@@ -66,7 +66,16 @@ export type GoalContributionType = (typeof GoalContributionType)[keyof typeof Go
 
 
 export const GoalContributionSource = {
-  MANUAL: 'MANUAL'
+  MANUAL: 'MANUAL',
+  LEAK_RECLAIM: 'LEAK_RECLAIM'
 } as const
 
 export type GoalContributionSource = (typeof GoalContributionSource)[keyof typeof GoalContributionSource]
+
+
+export const LeakReclaimStatus = {
+  TRANSFERRED: 'TRANSFERRED',
+  DISMISSED: 'DISMISSED'
+} as const
+
+export type LeakReclaimStatus = (typeof LeakReclaimStatus)[keyof typeof LeakReclaimStatus]

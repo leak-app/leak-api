@@ -198,6 +198,7 @@ export type UserWhereInput = {
   goalContributions?: Prisma.GoalContributionListRelationFilter
   budgets?: Prisma.BudgetListRelationFilter
   resetTokens?: Prisma.PasswordResetTokenListRelationFilter
+  leakReclaims?: Prisma.LeakReclaimListRelationFilter
 }
 
 export type UserOrderByWithRelationInput = {
@@ -215,6 +216,7 @@ export type UserOrderByWithRelationInput = {
   goalContributions?: Prisma.GoalContributionOrderByRelationAggregateInput
   budgets?: Prisma.BudgetOrderByRelationAggregateInput
   resetTokens?: Prisma.PasswordResetTokenOrderByRelationAggregateInput
+  leakReclaims?: Prisma.LeakReclaimOrderByRelationAggregateInput
 }
 
 export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -235,6 +237,7 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   goalContributions?: Prisma.GoalContributionListRelationFilter
   budgets?: Prisma.BudgetListRelationFilter
   resetTokens?: Prisma.PasswordResetTokenListRelationFilter
+  leakReclaims?: Prisma.LeakReclaimListRelationFilter
 }, "id" | "email">
 
 export type UserOrderByWithAggregationInput = {
@@ -276,6 +279,7 @@ export type UserCreateInput = {
   goalContributions?: Prisma.GoalContributionCreateNestedManyWithoutUserInput
   budgets?: Prisma.BudgetCreateNestedManyWithoutUserInput
   resetTokens?: Prisma.PasswordResetTokenCreateNestedManyWithoutUserInput
+  leakReclaims?: Prisma.LeakReclaimCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateInput = {
@@ -293,6 +297,7 @@ export type UserUncheckedCreateInput = {
   goalContributions?: Prisma.GoalContributionUncheckedCreateNestedManyWithoutUserInput
   budgets?: Prisma.BudgetUncheckedCreateNestedManyWithoutUserInput
   resetTokens?: Prisma.PasswordResetTokenUncheckedCreateNestedManyWithoutUserInput
+  leakReclaims?: Prisma.LeakReclaimUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserUpdateInput = {
@@ -310,6 +315,7 @@ export type UserUpdateInput = {
   goalContributions?: Prisma.GoalContributionUpdateManyWithoutUserNestedInput
   budgets?: Prisma.BudgetUpdateManyWithoutUserNestedInput
   resetTokens?: Prisma.PasswordResetTokenUpdateManyWithoutUserNestedInput
+  leakReclaims?: Prisma.LeakReclaimUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateInput = {
@@ -327,6 +333,7 @@ export type UserUncheckedUpdateInput = {
   goalContributions?: Prisma.GoalContributionUncheckedUpdateManyWithoutUserNestedInput
   budgets?: Prisma.BudgetUncheckedUpdateManyWithoutUserNestedInput
   resetTokens?: Prisma.PasswordResetTokenUncheckedUpdateManyWithoutUserNestedInput
+  leakReclaims?: Prisma.LeakReclaimUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateManyInput = {
@@ -498,6 +505,20 @@ export type UserUpdateOneRequiredWithoutGoalContributionsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutGoalContributionsInput, Prisma.UserUpdateWithoutGoalContributionsInput>, Prisma.UserUncheckedUpdateWithoutGoalContributionsInput>
 }
 
+export type UserCreateNestedOneWithoutLeakReclaimsInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutLeakReclaimsInput, Prisma.UserUncheckedCreateWithoutLeakReclaimsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutLeakReclaimsInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutLeakReclaimsNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutLeakReclaimsInput, Prisma.UserUncheckedCreateWithoutLeakReclaimsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutLeakReclaimsInput
+  upsert?: Prisma.UserUpsertWithoutLeakReclaimsInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutLeakReclaimsInput, Prisma.UserUpdateWithoutLeakReclaimsInput>, Prisma.UserUncheckedUpdateWithoutLeakReclaimsInput>
+}
+
 export type UserCreateNestedOneWithoutBudgetsInput = {
   create?: Prisma.XOR<Prisma.UserCreateWithoutBudgetsInput, Prisma.UserUncheckedCreateWithoutBudgetsInput>
   connectOrCreate?: Prisma.UserCreateOrConnectWithoutBudgetsInput
@@ -526,6 +547,7 @@ export type UserCreateWithoutSessionsInput = {
   goalContributions?: Prisma.GoalContributionCreateNestedManyWithoutUserInput
   budgets?: Prisma.BudgetCreateNestedManyWithoutUserInput
   resetTokens?: Prisma.PasswordResetTokenCreateNestedManyWithoutUserInput
+  leakReclaims?: Prisma.LeakReclaimCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutSessionsInput = {
@@ -542,6 +564,7 @@ export type UserUncheckedCreateWithoutSessionsInput = {
   goalContributions?: Prisma.GoalContributionUncheckedCreateNestedManyWithoutUserInput
   budgets?: Prisma.BudgetUncheckedCreateNestedManyWithoutUserInput
   resetTokens?: Prisma.PasswordResetTokenUncheckedCreateNestedManyWithoutUserInput
+  leakReclaims?: Prisma.LeakReclaimUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutSessionsInput = {
@@ -574,6 +597,7 @@ export type UserUpdateWithoutSessionsInput = {
   goalContributions?: Prisma.GoalContributionUpdateManyWithoutUserNestedInput
   budgets?: Prisma.BudgetUpdateManyWithoutUserNestedInput
   resetTokens?: Prisma.PasswordResetTokenUpdateManyWithoutUserNestedInput
+  leakReclaims?: Prisma.LeakReclaimUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutSessionsInput = {
@@ -590,6 +614,7 @@ export type UserUncheckedUpdateWithoutSessionsInput = {
   goalContributions?: Prisma.GoalContributionUncheckedUpdateManyWithoutUserNestedInput
   budgets?: Prisma.BudgetUncheckedUpdateManyWithoutUserNestedInput
   resetTokens?: Prisma.PasswordResetTokenUncheckedUpdateManyWithoutUserNestedInput
+  leakReclaims?: Prisma.LeakReclaimUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutResetTokensInput = {
@@ -606,6 +631,7 @@ export type UserCreateWithoutResetTokensInput = {
   goals?: Prisma.GoalCreateNestedManyWithoutUserInput
   goalContributions?: Prisma.GoalContributionCreateNestedManyWithoutUserInput
   budgets?: Prisma.BudgetCreateNestedManyWithoutUserInput
+  leakReclaims?: Prisma.LeakReclaimCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutResetTokensInput = {
@@ -622,6 +648,7 @@ export type UserUncheckedCreateWithoutResetTokensInput = {
   goals?: Prisma.GoalUncheckedCreateNestedManyWithoutUserInput
   goalContributions?: Prisma.GoalContributionUncheckedCreateNestedManyWithoutUserInput
   budgets?: Prisma.BudgetUncheckedCreateNestedManyWithoutUserInput
+  leakReclaims?: Prisma.LeakReclaimUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutResetTokensInput = {
@@ -654,6 +681,7 @@ export type UserUpdateWithoutResetTokensInput = {
   goals?: Prisma.GoalUpdateManyWithoutUserNestedInput
   goalContributions?: Prisma.GoalContributionUpdateManyWithoutUserNestedInput
   budgets?: Prisma.BudgetUpdateManyWithoutUserNestedInput
+  leakReclaims?: Prisma.LeakReclaimUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutResetTokensInput = {
@@ -670,6 +698,7 @@ export type UserUncheckedUpdateWithoutResetTokensInput = {
   goals?: Prisma.GoalUncheckedUpdateManyWithoutUserNestedInput
   goalContributions?: Prisma.GoalContributionUncheckedUpdateManyWithoutUserNestedInput
   budgets?: Prisma.BudgetUncheckedUpdateManyWithoutUserNestedInput
+  leakReclaims?: Prisma.LeakReclaimUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutAccountsInput = {
@@ -686,6 +715,7 @@ export type UserCreateWithoutAccountsInput = {
   goalContributions?: Prisma.GoalContributionCreateNestedManyWithoutUserInput
   budgets?: Prisma.BudgetCreateNestedManyWithoutUserInput
   resetTokens?: Prisma.PasswordResetTokenCreateNestedManyWithoutUserInput
+  leakReclaims?: Prisma.LeakReclaimCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutAccountsInput = {
@@ -702,6 +732,7 @@ export type UserUncheckedCreateWithoutAccountsInput = {
   goalContributions?: Prisma.GoalContributionUncheckedCreateNestedManyWithoutUserInput
   budgets?: Prisma.BudgetUncheckedCreateNestedManyWithoutUserInput
   resetTokens?: Prisma.PasswordResetTokenUncheckedCreateNestedManyWithoutUserInput
+  leakReclaims?: Prisma.LeakReclaimUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutAccountsInput = {
@@ -734,6 +765,7 @@ export type UserUpdateWithoutAccountsInput = {
   goalContributions?: Prisma.GoalContributionUpdateManyWithoutUserNestedInput
   budgets?: Prisma.BudgetUpdateManyWithoutUserNestedInput
   resetTokens?: Prisma.PasswordResetTokenUpdateManyWithoutUserNestedInput
+  leakReclaims?: Prisma.LeakReclaimUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutAccountsInput = {
@@ -750,6 +782,7 @@ export type UserUncheckedUpdateWithoutAccountsInput = {
   goalContributions?: Prisma.GoalContributionUncheckedUpdateManyWithoutUserNestedInput
   budgets?: Prisma.BudgetUncheckedUpdateManyWithoutUserNestedInput
   resetTokens?: Prisma.PasswordResetTokenUncheckedUpdateManyWithoutUserNestedInput
+  leakReclaims?: Prisma.LeakReclaimUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutCategoriesInput = {
@@ -766,6 +799,7 @@ export type UserCreateWithoutCategoriesInput = {
   goalContributions?: Prisma.GoalContributionCreateNestedManyWithoutUserInput
   budgets?: Prisma.BudgetCreateNestedManyWithoutUserInput
   resetTokens?: Prisma.PasswordResetTokenCreateNestedManyWithoutUserInput
+  leakReclaims?: Prisma.LeakReclaimCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutCategoriesInput = {
@@ -782,6 +816,7 @@ export type UserUncheckedCreateWithoutCategoriesInput = {
   goalContributions?: Prisma.GoalContributionUncheckedCreateNestedManyWithoutUserInput
   budgets?: Prisma.BudgetUncheckedCreateNestedManyWithoutUserInput
   resetTokens?: Prisma.PasswordResetTokenUncheckedCreateNestedManyWithoutUserInput
+  leakReclaims?: Prisma.LeakReclaimUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutCategoriesInput = {
@@ -814,6 +849,7 @@ export type UserUpdateWithoutCategoriesInput = {
   goalContributions?: Prisma.GoalContributionUpdateManyWithoutUserNestedInput
   budgets?: Prisma.BudgetUpdateManyWithoutUserNestedInput
   resetTokens?: Prisma.PasswordResetTokenUpdateManyWithoutUserNestedInput
+  leakReclaims?: Prisma.LeakReclaimUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCategoriesInput = {
@@ -830,6 +866,7 @@ export type UserUncheckedUpdateWithoutCategoriesInput = {
   goalContributions?: Prisma.GoalContributionUncheckedUpdateManyWithoutUserNestedInput
   budgets?: Prisma.BudgetUncheckedUpdateManyWithoutUserNestedInput
   resetTokens?: Prisma.PasswordResetTokenUncheckedUpdateManyWithoutUserNestedInput
+  leakReclaims?: Prisma.LeakReclaimUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutTransactionsInput = {
@@ -846,6 +883,7 @@ export type UserCreateWithoutTransactionsInput = {
   goalContributions?: Prisma.GoalContributionCreateNestedManyWithoutUserInput
   budgets?: Prisma.BudgetCreateNestedManyWithoutUserInput
   resetTokens?: Prisma.PasswordResetTokenCreateNestedManyWithoutUserInput
+  leakReclaims?: Prisma.LeakReclaimCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutTransactionsInput = {
@@ -862,6 +900,7 @@ export type UserUncheckedCreateWithoutTransactionsInput = {
   goalContributions?: Prisma.GoalContributionUncheckedCreateNestedManyWithoutUserInput
   budgets?: Prisma.BudgetUncheckedCreateNestedManyWithoutUserInput
   resetTokens?: Prisma.PasswordResetTokenUncheckedCreateNestedManyWithoutUserInput
+  leakReclaims?: Prisma.LeakReclaimUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutTransactionsInput = {
@@ -894,6 +933,7 @@ export type UserUpdateWithoutTransactionsInput = {
   goalContributions?: Prisma.GoalContributionUpdateManyWithoutUserNestedInput
   budgets?: Prisma.BudgetUpdateManyWithoutUserNestedInput
   resetTokens?: Prisma.PasswordResetTokenUpdateManyWithoutUserNestedInput
+  leakReclaims?: Prisma.LeakReclaimUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutTransactionsInput = {
@@ -910,6 +950,7 @@ export type UserUncheckedUpdateWithoutTransactionsInput = {
   goalContributions?: Prisma.GoalContributionUncheckedUpdateManyWithoutUserNestedInput
   budgets?: Prisma.BudgetUncheckedUpdateManyWithoutUserNestedInput
   resetTokens?: Prisma.PasswordResetTokenUncheckedUpdateManyWithoutUserNestedInput
+  leakReclaims?: Prisma.LeakReclaimUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutGoalsInput = {
@@ -926,6 +967,7 @@ export type UserCreateWithoutGoalsInput = {
   goalContributions?: Prisma.GoalContributionCreateNestedManyWithoutUserInput
   budgets?: Prisma.BudgetCreateNestedManyWithoutUserInput
   resetTokens?: Prisma.PasswordResetTokenCreateNestedManyWithoutUserInput
+  leakReclaims?: Prisma.LeakReclaimCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutGoalsInput = {
@@ -942,6 +984,7 @@ export type UserUncheckedCreateWithoutGoalsInput = {
   goalContributions?: Prisma.GoalContributionUncheckedCreateNestedManyWithoutUserInput
   budgets?: Prisma.BudgetUncheckedCreateNestedManyWithoutUserInput
   resetTokens?: Prisma.PasswordResetTokenUncheckedCreateNestedManyWithoutUserInput
+  leakReclaims?: Prisma.LeakReclaimUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutGoalsInput = {
@@ -974,6 +1017,7 @@ export type UserUpdateWithoutGoalsInput = {
   goalContributions?: Prisma.GoalContributionUpdateManyWithoutUserNestedInput
   budgets?: Prisma.BudgetUpdateManyWithoutUserNestedInput
   resetTokens?: Prisma.PasswordResetTokenUpdateManyWithoutUserNestedInput
+  leakReclaims?: Prisma.LeakReclaimUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutGoalsInput = {
@@ -990,6 +1034,7 @@ export type UserUncheckedUpdateWithoutGoalsInput = {
   goalContributions?: Prisma.GoalContributionUncheckedUpdateManyWithoutUserNestedInput
   budgets?: Prisma.BudgetUncheckedUpdateManyWithoutUserNestedInput
   resetTokens?: Prisma.PasswordResetTokenUncheckedUpdateManyWithoutUserNestedInput
+  leakReclaims?: Prisma.LeakReclaimUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutGoalContributionsInput = {
@@ -1006,6 +1051,7 @@ export type UserCreateWithoutGoalContributionsInput = {
   goals?: Prisma.GoalCreateNestedManyWithoutUserInput
   budgets?: Prisma.BudgetCreateNestedManyWithoutUserInput
   resetTokens?: Prisma.PasswordResetTokenCreateNestedManyWithoutUserInput
+  leakReclaims?: Prisma.LeakReclaimCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutGoalContributionsInput = {
@@ -1022,6 +1068,7 @@ export type UserUncheckedCreateWithoutGoalContributionsInput = {
   goals?: Prisma.GoalUncheckedCreateNestedManyWithoutUserInput
   budgets?: Prisma.BudgetUncheckedCreateNestedManyWithoutUserInput
   resetTokens?: Prisma.PasswordResetTokenUncheckedCreateNestedManyWithoutUserInput
+  leakReclaims?: Prisma.LeakReclaimUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutGoalContributionsInput = {
@@ -1054,6 +1101,7 @@ export type UserUpdateWithoutGoalContributionsInput = {
   goals?: Prisma.GoalUpdateManyWithoutUserNestedInput
   budgets?: Prisma.BudgetUpdateManyWithoutUserNestedInput
   resetTokens?: Prisma.PasswordResetTokenUpdateManyWithoutUserNestedInput
+  leakReclaims?: Prisma.LeakReclaimUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutGoalContributionsInput = {
@@ -1068,6 +1116,91 @@ export type UserUncheckedUpdateWithoutGoalContributionsInput = {
   categories?: Prisma.CategoryUncheckedUpdateManyWithoutUserNestedInput
   transactions?: Prisma.TransactionUncheckedUpdateManyWithoutUserNestedInput
   goals?: Prisma.GoalUncheckedUpdateManyWithoutUserNestedInput
+  budgets?: Prisma.BudgetUncheckedUpdateManyWithoutUserNestedInput
+  resetTokens?: Prisma.PasswordResetTokenUncheckedUpdateManyWithoutUserNestedInput
+  leakReclaims?: Prisma.LeakReclaimUncheckedUpdateManyWithoutUserNestedInput
+}
+
+export type UserCreateWithoutLeakReclaimsInput = {
+  id?: string
+  email: string
+  password: string
+  name?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
+  accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
+  categories?: Prisma.CategoryCreateNestedManyWithoutUserInput
+  transactions?: Prisma.TransactionCreateNestedManyWithoutUserInput
+  goals?: Prisma.GoalCreateNestedManyWithoutUserInput
+  goalContributions?: Prisma.GoalContributionCreateNestedManyWithoutUserInput
+  budgets?: Prisma.BudgetCreateNestedManyWithoutUserInput
+  resetTokens?: Prisma.PasswordResetTokenCreateNestedManyWithoutUserInput
+}
+
+export type UserUncheckedCreateWithoutLeakReclaimsInput = {
+  id?: string
+  email: string
+  password: string
+  name?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
+  accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
+  categories?: Prisma.CategoryUncheckedCreateNestedManyWithoutUserInput
+  transactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUserInput
+  goals?: Prisma.GoalUncheckedCreateNestedManyWithoutUserInput
+  goalContributions?: Prisma.GoalContributionUncheckedCreateNestedManyWithoutUserInput
+  budgets?: Prisma.BudgetUncheckedCreateNestedManyWithoutUserInput
+  resetTokens?: Prisma.PasswordResetTokenUncheckedCreateNestedManyWithoutUserInput
+}
+
+export type UserCreateOrConnectWithoutLeakReclaimsInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutLeakReclaimsInput, Prisma.UserUncheckedCreateWithoutLeakReclaimsInput>
+}
+
+export type UserUpsertWithoutLeakReclaimsInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutLeakReclaimsInput, Prisma.UserUncheckedUpdateWithoutLeakReclaimsInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutLeakReclaimsInput, Prisma.UserUncheckedCreateWithoutLeakReclaimsInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutLeakReclaimsInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutLeakReclaimsInput, Prisma.UserUncheckedUpdateWithoutLeakReclaimsInput>
+}
+
+export type UserUpdateWithoutLeakReclaimsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
+  accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
+  categories?: Prisma.CategoryUpdateManyWithoutUserNestedInput
+  transactions?: Prisma.TransactionUpdateManyWithoutUserNestedInput
+  goals?: Prisma.GoalUpdateManyWithoutUserNestedInput
+  goalContributions?: Prisma.GoalContributionUpdateManyWithoutUserNestedInput
+  budgets?: Prisma.BudgetUpdateManyWithoutUserNestedInput
+  resetTokens?: Prisma.PasswordResetTokenUpdateManyWithoutUserNestedInput
+}
+
+export type UserUncheckedUpdateWithoutLeakReclaimsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
+  accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
+  categories?: Prisma.CategoryUncheckedUpdateManyWithoutUserNestedInput
+  transactions?: Prisma.TransactionUncheckedUpdateManyWithoutUserNestedInput
+  goals?: Prisma.GoalUncheckedUpdateManyWithoutUserNestedInput
+  goalContributions?: Prisma.GoalContributionUncheckedUpdateManyWithoutUserNestedInput
   budgets?: Prisma.BudgetUncheckedUpdateManyWithoutUserNestedInput
   resetTokens?: Prisma.PasswordResetTokenUncheckedUpdateManyWithoutUserNestedInput
 }
@@ -1086,6 +1219,7 @@ export type UserCreateWithoutBudgetsInput = {
   goals?: Prisma.GoalCreateNestedManyWithoutUserInput
   goalContributions?: Prisma.GoalContributionCreateNestedManyWithoutUserInput
   resetTokens?: Prisma.PasswordResetTokenCreateNestedManyWithoutUserInput
+  leakReclaims?: Prisma.LeakReclaimCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutBudgetsInput = {
@@ -1102,6 +1236,7 @@ export type UserUncheckedCreateWithoutBudgetsInput = {
   goals?: Prisma.GoalUncheckedCreateNestedManyWithoutUserInput
   goalContributions?: Prisma.GoalContributionUncheckedCreateNestedManyWithoutUserInput
   resetTokens?: Prisma.PasswordResetTokenUncheckedCreateNestedManyWithoutUserInput
+  leakReclaims?: Prisma.LeakReclaimUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutBudgetsInput = {
@@ -1134,6 +1269,7 @@ export type UserUpdateWithoutBudgetsInput = {
   goals?: Prisma.GoalUpdateManyWithoutUserNestedInput
   goalContributions?: Prisma.GoalContributionUpdateManyWithoutUserNestedInput
   resetTokens?: Prisma.PasswordResetTokenUpdateManyWithoutUserNestedInput
+  leakReclaims?: Prisma.LeakReclaimUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutBudgetsInput = {
@@ -1150,6 +1286,7 @@ export type UserUncheckedUpdateWithoutBudgetsInput = {
   goals?: Prisma.GoalUncheckedUpdateManyWithoutUserNestedInput
   goalContributions?: Prisma.GoalContributionUncheckedUpdateManyWithoutUserNestedInput
   resetTokens?: Prisma.PasswordResetTokenUncheckedUpdateManyWithoutUserNestedInput
+  leakReclaims?: Prisma.LeakReclaimUncheckedUpdateManyWithoutUserNestedInput
 }
 
 
@@ -1166,6 +1303,7 @@ export type UserCountOutputType = {
   goalContributions: number
   budgets: number
   resetTokens: number
+  leakReclaims: number
 }
 
 export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1177,6 +1315,7 @@ export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.I
   goalContributions?: boolean | UserCountOutputTypeCountGoalContributionsArgs
   budgets?: boolean | UserCountOutputTypeCountBudgetsArgs
   resetTokens?: boolean | UserCountOutputTypeCountResetTokensArgs
+  leakReclaims?: boolean | UserCountOutputTypeCountLeakReclaimsArgs
 }
 
 /**
@@ -1245,6 +1384,13 @@ export type UserCountOutputTypeCountResetTokensArgs<ExtArgs extends runtime.Type
   where?: Prisma.PasswordResetTokenWhereInput
 }
 
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountLeakReclaimsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.LeakReclaimWhereInput
+}
+
 
 export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -1261,6 +1407,7 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   goalContributions?: boolean | Prisma.User$goalContributionsArgs<ExtArgs>
   budgets?: boolean | Prisma.User$budgetsArgs<ExtArgs>
   resetTokens?: boolean | Prisma.User$resetTokensArgs<ExtArgs>
+  leakReclaims?: boolean | Prisma.User$leakReclaimsArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
 
@@ -1301,6 +1448,7 @@ export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   goalContributions?: boolean | Prisma.User$goalContributionsArgs<ExtArgs>
   budgets?: boolean | Prisma.User$budgetsArgs<ExtArgs>
   resetTokens?: boolean | Prisma.User$resetTokensArgs<ExtArgs>
+  leakReclaims?: boolean | Prisma.User$leakReclaimsArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type UserIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -1317,6 +1465,7 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     goalContributions: Prisma.$GoalContributionPayload<ExtArgs>[]
     budgets: Prisma.$BudgetPayload<ExtArgs>[]
     resetTokens: Prisma.$PasswordResetTokenPayload<ExtArgs>[]
+    leakReclaims: Prisma.$LeakReclaimPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1727,6 +1876,7 @@ export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Typ
   goalContributions<T extends Prisma.User$goalContributionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$goalContributionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$GoalContributionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   budgets<T extends Prisma.User$budgetsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$budgetsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$BudgetPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   resetTokens<T extends Prisma.User$resetTokensArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$resetTokensArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PasswordResetTokenPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  leakReclaims<T extends Prisma.User$leakReclaimsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$leakReclaimsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$LeakReclaimPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2339,6 +2489,30 @@ export type User$resetTokensArgs<ExtArgs extends runtime.Types.Extensions.Intern
   take?: number
   skip?: number
   distinct?: Prisma.PasswordResetTokenScalarFieldEnum | Prisma.PasswordResetTokenScalarFieldEnum[]
+}
+
+/**
+ * User.leakReclaims
+ */
+export type User$leakReclaimsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the LeakReclaim
+   */
+  select?: Prisma.LeakReclaimSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the LeakReclaim
+   */
+  omit?: Prisma.LeakReclaimOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.LeakReclaimInclude<ExtArgs> | null
+  where?: Prisma.LeakReclaimWhereInput
+  orderBy?: Prisma.LeakReclaimOrderByWithRelationInput | Prisma.LeakReclaimOrderByWithRelationInput[]
+  cursor?: Prisma.LeakReclaimWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.LeakReclaimScalarFieldEnum | Prisma.LeakReclaimScalarFieldEnum[]
 }
 
 /**

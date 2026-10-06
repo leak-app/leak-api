@@ -24,6 +24,7 @@ model User {
   goalContributions GoalContribution[]
   budgets           Budget[]
   resetTokens       PasswordResetToken[]
+  leakReclaims      LeakReclaim[]
 
   @@map("users")
 }
@@ -158,6 +159,7 @@ enum GoalContributionType {
 
 enum GoalContributionSource {
   MANUAL
+  LEAK_RECLAIM
 }
 
 model Goal {
@@ -180,22 +182,45 @@ model Goal {
 }
 
 model GoalContribution {
-  id        String                 @id @default(cuid())
-  goalId    String                 @map("goal_id")
-  goal      Goal                   @relation(fields: [goalId], references: [id], onDelete: Restrict)
-  accountId String?                @map("account_id") // null only for OPENING
-  account   Account?               @relation(fields: [accountId], references: [id], onDelete: Restrict)
-  userId    String                 @map("user_id")
-  user      User                   @relation(fields: [userId], references: [id], onDelete: Cascade)
-  type      GoalContributionType
-  source    GoalContributionSource @default(MANUAL)
-  amount    Decimal                @db.Decimal(12, 2) // always positive; direction comes from type
-  note      String?
-  createdAt DateTime               @default(now()) @map("created_at")
+  id          String                 @id @default(cuid())
+  goalId      String                 @map("goal_id")
+  goal        Goal                   @relation(fields: [goalId], references: [id], onDelete: Restrict)
+  accountId   String?                @map("account_id") // null only for OPENING
+  account     Account?               @relation(fields: [accountId], references: [id], onDelete: Restrict)
+  userId      String                 @map("user_id")
+  user        User                   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  type        GoalContributionType
+  source      GoalContributionSource @default(MANUAL)
+  amount      Decimal                @db.Decimal(12, 2) // always positive; direction comes from type
+  note        String?
+  createdAt   DateTime               @default(now()) @map("created_at")
+  leakReclaim LeakReclaim?
 
   @@index([goalId, createdAt])
   @@index([accountId])
   @@map("goal_contributions")
+}
+
+enum LeakReclaimStatus {
+  TRANSFERRED
+  DISMISSED
+}
+
+model LeakReclaim {
+  id             String            @id @default(cuid())
+  userId         String            @map("user_id")
+  user           User              @relation(fields: [userId], references: [id], onDelete: Cascade)
+  year           Int
+  month          Int // 1–12, the reclaimed month
+  computedAmount Decimal           @map("computed_amount") @db.Decimal(12, 2)
+  transferAmount Decimal?          @map("transfer_amount") @db.Decimal(12, 2)
+  status         LeakReclaimStatus
+  contributionId String?           @unique @map("contribution_id")
+  contribution   GoalContribution? @relation(fields: [contributionId], references: [id], onDelete: Restrict)
+  createdAt      DateTime          @default(now()) @map("created_at")
+
+  @@unique([userId, year, month])
+  @@map("leak_reclaims")
 }
 
 model Budget {
