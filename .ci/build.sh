@@ -7,7 +7,6 @@ GITHUB_USERNAME=${GITHUB_USERNAME:-tiendat77}
 GITHUB_PASSWORD=${GITHUB_PASSWORD:-$(cat ~/.github_token)}
 
 # Default variables
-APP_NAME="leak-api"
 APP_VERSION=$(
   cat package.json \
     | grep version \
@@ -19,9 +18,17 @@ APP_VERSION=$(
 
 DOCKER_REGISTRY="ghcr.io"
 REPOSITORY_OWNER="leak-app"
-DOCKER_IMAGE_NAME="${DOCKER_REGISTRY}/${REPOSITORY_OWNER}/${APP_NAME}"
 DOCKER_IMAGE_TAG="latest"
 BUILD_MODE="development"
+
+# Images to build and push, as "<image name>:<Dockerfile target>"
+IMAGES=(
+  "leak-api:runner"
+  "leak-api-migrator:migrator"
+)
+
+image_name() { echo "${DOCKER_REGISTRY}/${REPOSITORY_OWNER}/${1%%:*}"; }
+image_target() { echo "${1##*:}"; }
 
 # Functions
 docker_login() {
@@ -33,7 +40,7 @@ docker_login() {
   echo '   `oo   o` \    |/        | | | |'
   echo '     `ooo`   `---`         "-" |_|'
   echo ''
-  echo "🗝️  Logging in to GitHub Container Registry\n"
+  echo "🗝️  Logging in to GitHub Container Registry"
 
   if [[ -z "${GITHUB_USERNAME:-}" || -z "${GITHUB_PASSWORD:-}" ]]; then
     echo "❌ Error: GITHUB_USERNAME and/or GITHUB_PASSWORD are not set."
@@ -49,7 +56,7 @@ docker_login() {
   }
 }
 
-build_image() {
+build_images() {
   echo ''
   echo ''
   echo ''
@@ -62,20 +69,28 @@ build_image() {
   echo '      \    \         __/'
   echo '       \____\_______/'
   echo ''
-  echo "🐳  Building Docker image with tags: ${DOCKER_IMAGE_TAG} & ${APP_VERSION}\n"
 
-  docker build \
-    -t "${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_TAG}" \
-    -t "${DOCKER_IMAGE_NAME}:${APP_VERSION}" \
-    --build-arg BUILD_MODE=${BUILD_MODE} \
-    --platform 'linux/amd64' \
-    -f Dockerfile . || {
-      echo "❌ Build failed!"
-      exit 1
-    }
+  local entry name target
+  for entry in "${IMAGES[@]}"; do
+    name=$(image_name "$entry")
+    target=$(image_target "$entry")
+
+    echo "🐳  Building ${name} (target: ${target}) with tags: ${DOCKER_IMAGE_TAG} & ${APP_VERSION}"
+
+    docker build \
+      -t "${name}:${DOCKER_IMAGE_TAG}" \
+      -t "${name}:${APP_VERSION}" \
+      --build-arg BUILD_MODE=${BUILD_MODE} \
+      --platform 'linux/arm64' \
+      --target "${target}" \
+      -f Dockerfile . || {
+        echo "❌ Build failed for ${name}!"
+        exit 1
+      }
+  done
 }
 
-push_image() {
+push_images() {
   echo ''
   echo ''
   echo ''
@@ -102,25 +117,36 @@ push_image() {
   echo '        (( ))'
   echo '         ( )'
   echo ''
-  echo "🚀  Pushing Docker image to GitHub Container Registry\n"
 
-  docker push "${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_TAG}" || {
-    echo "❌ Push failed for ${DOCKER_IMAGE_TAG}!"
-    exit 1
-  }
+  local entry name
+  for entry in "${IMAGES[@]}"; do
+    name=$(image_name "$entry")
 
-  docker push "${DOCKER_IMAGE_NAME}:${APP_VERSION}" || {
-    echo "❌ Push failed for ${APP_VERSION}!"
-    exit 1
-  }
+    echo "🚀  Pushing ${name} to GitHub Container Registry"
+
+    docker push "${name}:${DOCKER_IMAGE_TAG}" || {
+      echo "❌ Push failed for ${name}:${DOCKER_IMAGE_TAG}!"
+      exit 1
+    }
+
+    docker push "${name}:${APP_VERSION}" || {
+      echo "❌ Push failed for ${name}:${APP_VERSION}!"
+      exit 1
+    }
+  done
 }
 
 clean_up() {
-  echo "🪠  Clean up docker build shit \n"
+  echo "🪠  Clean up docker build shit "
 
-  docker rmi "${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_TAG}" || echo "⚠️ Could not remove ${DOCKER_IMAGE_TAG} image"
+  local entry name
+  for entry in "${IMAGES[@]}"; do
+    name=$(image_name "$entry")
 
-  docker rmi "${DOCKER_IMAGE_NAME}:${APP_VERSION}" || echo "⚠️ Could not remove ${APP_VERSION} image"
+    docker rmi "${name}:${DOCKER_IMAGE_TAG}" || echo "⚠️ Could not remove ${name}:${DOCKER_IMAGE_TAG} image"
+
+    docker rmi "${name}:${APP_VERSION}" || echo "⚠️ Could not remove ${name}:${APP_VERSION} image"
+  done
 }
 
 # Main function to orchestrate the process
@@ -144,8 +170,8 @@ main() {
 
   echo "✅ Building with tag: ${DOCKER_IMAGE_TAG}"
   docker_login
-  build_image
-  push_image
+  build_images
+  push_images
   clean_up
   echo "🎉  All tasks completed successfully!"
 }
