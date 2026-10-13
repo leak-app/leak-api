@@ -1,4 +1,4 @@
-import type { sheets_v4 } from 'googleapis';
+import type { sheets_v4 } from '@googleapis/sheets';
 import { chunkRows } from './sheets.errors';
 import {
   SYNC_TIME_ZONE,

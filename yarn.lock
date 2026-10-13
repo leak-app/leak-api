@@ -718,6 +718,13 @@
     "@eslint/core" "^0.17.0"
     levn "^0.4.1"
 
+"@googleapis/sheets@^18.1.1":
+  version "18.1.1"
+  resolved "https://registry.yarnpkg.com/@googleapis/sheets/-/sheets-18.1.1.tgz#97283b7a89e77c197deb699c8f7d5cac4bd8d728"
+  integrity sha512-T2AOp0AhDdZ3imQyy3d8AnRMdPFwibKKcmKttWxLBKeiJKmE9p7RFrBpdbswpJ1d3cPdO5kvcYDuKajUFqwraA==
+  dependencies:
+    googleapis-common "^9.0.0"
+
 "@hono/node-server@1.19.9":
   version "1.19.9"
   resolved "https://registry.npmjs.org/@hono/node-server/-/node-server-1.19.9.tgz"
@@ -4364,7 +4371,7 @@ globals@^16.0.0:
   resolved "https://registry.npmjs.org/globals/-/globals-16.5.0.tgz"
   integrity sha512-c/c15i26VrJ4IRt5Z89DnIzCGDn9EcebibhAOjw5ibqEHsE1wLUgkPn9RDmNcUKyU87GeaL633nyJ+pplFR2ZQ==
 
-google-auth-library@^11.0.0:
+google-auth-library@^11.0.0, google-auth-library@^11.3.0:
   version "11.3.0"
   resolved "https://registry.yarnpkg.com/google-auth-library/-/google-auth-library-11.3.0.tgz#f67c7ed13f866efba07f49bb9fee68e61ca99700"
   integrity sha512-gZCyszARHj47WNcKrAcQtimDwtTZpydRZ3HSeb66hObfQU9uaG50ejsZ8LzGISIVAjpsZEouGVs65Q/XRau0Qg==
@@ -4392,14 +4399,6 @@ googleapis-common@^9.0.0:
     google-logging-utils "^2.0.0"
     qs "^6.7.0"
     url-template "^2.0.8"
-
-googleapis@^185.0.0:
-  version "185.0.0"
-  resolved "https://registry.yarnpkg.com/googleapis/-/googleapis-185.0.0.tgz#34741604b1680d1ffb05f546966c4f9885ab9ba3"
-  integrity sha512-w/rO9+ank7JpAj65X6DzUoSLbxvHtsTf4F2kD9+8AScA3KEzDjeTFOUFVldDSePSuRSlpJkP/s36fMaqgFX3sw==
-  dependencies:
-    google-auth-library "^11.0.0"
-    googleapis-common "^9.0.0"
 
 gopd@^1.2.0:
   version "1.2.0"

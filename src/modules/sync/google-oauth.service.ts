@@ -1,7 +1,7 @@
 import { createHmac } from 'node:crypto';
 import { Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import { google, type Auth } from 'googleapis';
+import { type Credentials, OAuth2Client } from 'google-auth-library';
 import { SyncConfig } from './sync.config';
 
 export const DRIVE_FILE_SCOPE = 'https://www.googleapis.com/auth/drive.file';
@@ -42,8 +42,8 @@ export class GoogleOAuthService {
     private readonly _jwt: JwtService,
   ) {}
 
-  createClient(): Auth.OAuth2Client {
-    return new google.auth.OAuth2(
+  createClient(): OAuth2Client {
+    return new OAuth2Client(
       this._config.clientId,
       this._config.clientSecret,
       this._config.redirectUri,
@@ -84,7 +84,7 @@ export class GoogleOAuthService {
   async exchangeCode(code: string): Promise<GoogleGrant> {
     const client = this.createClient();
 
-    let tokens: Auth.Credentials;
+    let tokens: Credentials;
     try {
       ({ tokens } = await client.getToken(code));
     } catch {

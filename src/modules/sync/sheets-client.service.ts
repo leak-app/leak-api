@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
-import { google } from 'googleapis';
+import { sheets as createSheetsClient } from '@googleapis/sheets';
+import { OAuth2Client } from 'google-auth-library';
 import { GoogleApiError, withRetry } from './sheets.errors';
 import {
   buildCreateSpreadsheetBody,
@@ -9,7 +10,7 @@ import {
 import { SyncConfig } from './sync.config';
 import type { SnapshotTabs } from './sync.schema';
 
-/** Thin wrapper over googleapis. Every call retries transient failures and throws classified errors. */
+/** Thin wrapper over the Google Sheets client. Every call retries transient failures and throws classified errors. */
 @Injectable()
 export class SheetsClientService {
   constructor(private readonly _config: SyncConfig) {}
@@ -90,11 +91,11 @@ export class SheetsClientService {
   }
 
   private _sheets(refreshToken: string) {
-    const auth = new google.auth.OAuth2(
+    const auth = new OAuth2Client(
       this._config.clientId,
       this._config.clientSecret,
     );
     auth.setCredentials({ refresh_token: refreshToken });
-    return google.sheets({ version: 'v4', auth });
+    return createSheetsClient({ version: 'v4', auth });
   }
 }
