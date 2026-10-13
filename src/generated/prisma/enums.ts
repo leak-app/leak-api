@@ -79,3 +79,21 @@ export const LeakReclaimStatus = {
 } as const
 
 export type LeakReclaimStatus = (typeof LeakReclaimStatus)[keyof typeof LeakReclaimStatus]
+
+
+export const SyncTrigger = {
+  CRON: 'CRON',
+  MANUAL: 'MANUAL',
+  CONNECT: 'CONNECT'
+} as const
+
+export type SyncTrigger = (typeof SyncTrigger)[keyof typeof SyncTrigger]
+
+
+export const SyncRunStatus = {
+  RUNNING: 'RUNNING',
+  SUCCESS: 'SUCCESS',
+  FAILED: 'FAILED'
+} as const
+
+export type SyncRunStatus = (typeof SyncRunStatus)[keyof typeof SyncRunStatus]

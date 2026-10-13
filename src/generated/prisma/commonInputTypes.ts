@@ -365,6 +365,40 @@ export type EnumLeakReclaimStatusWithAggregatesFilter<$PrismaModel = never> = {
   _max?: Prisma.NestedEnumLeakReclaimStatusFilter<$PrismaModel>
 }
 
+export type EnumSyncTriggerFilter<$PrismaModel = never> = {
+  equals?: $Enums.SyncTrigger | Prisma.EnumSyncTriggerFieldRefInput<$PrismaModel>
+  in?: $Enums.SyncTrigger[] | Prisma.ListEnumSyncTriggerFieldRefInput<$PrismaModel>
+  notIn?: $Enums.SyncTrigger[] | Prisma.ListEnumSyncTriggerFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumSyncTriggerFilter<$PrismaModel> | $Enums.SyncTrigger
+}
+
+export type EnumSyncRunStatusFilter<$PrismaModel = never> = {
+  equals?: $Enums.SyncRunStatus | Prisma.EnumSyncRunStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.SyncRunStatus[] | Prisma.ListEnumSyncRunStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.SyncRunStatus[] | Prisma.ListEnumSyncRunStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumSyncRunStatusFilter<$PrismaModel> | $Enums.SyncRunStatus
+}
+
+export type EnumSyncTriggerWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.SyncTrigger | Prisma.EnumSyncTriggerFieldRefInput<$PrismaModel>
+  in?: $Enums.SyncTrigger[] | Prisma.ListEnumSyncTriggerFieldRefInput<$PrismaModel>
+  notIn?: $Enums.SyncTrigger[] | Prisma.ListEnumSyncTriggerFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumSyncTriggerWithAggregatesFilter<$PrismaModel> | $Enums.SyncTrigger
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumSyncTriggerFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumSyncTriggerFilter<$PrismaModel>
+}
+
+export type EnumSyncRunStatusWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.SyncRunStatus | Prisma.EnumSyncRunStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.SyncRunStatus[] | Prisma.ListEnumSyncRunStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.SyncRunStatus[] | Prisma.ListEnumSyncRunStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumSyncRunStatusWithAggregatesFilter<$PrismaModel> | $Enums.SyncRunStatus
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumSyncRunStatusFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumSyncRunStatusFilter<$PrismaModel>
+}
+
 export type NestedStringFilter<$PrismaModel = never> = {
   equals?: string | Prisma.StringFieldRefInput<$PrismaModel>
   in?: string[] | Prisma.ListStringFieldRefInput<$PrismaModel>
@@ -727,6 +761,40 @@ export type NestedEnumLeakReclaimStatusWithAggregatesFilter<$PrismaModel = never
   _count?: Prisma.NestedIntFilter<$PrismaModel>
   _min?: Prisma.NestedEnumLeakReclaimStatusFilter<$PrismaModel>
   _max?: Prisma.NestedEnumLeakReclaimStatusFilter<$PrismaModel>
+}
+
+export type NestedEnumSyncTriggerFilter<$PrismaModel = never> = {
+  equals?: $Enums.SyncTrigger | Prisma.EnumSyncTriggerFieldRefInput<$PrismaModel>
+  in?: $Enums.SyncTrigger[] | Prisma.ListEnumSyncTriggerFieldRefInput<$PrismaModel>
+  notIn?: $Enums.SyncTrigger[] | Prisma.ListEnumSyncTriggerFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumSyncTriggerFilter<$PrismaModel> | $Enums.SyncTrigger
+}
+
+export type NestedEnumSyncRunStatusFilter<$PrismaModel = never> = {
+  equals?: $Enums.SyncRunStatus | Prisma.EnumSyncRunStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.SyncRunStatus[] | Prisma.ListEnumSyncRunStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.SyncRunStatus[] | Prisma.ListEnumSyncRunStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumSyncRunStatusFilter<$PrismaModel> | $Enums.SyncRunStatus
+}
+
+export type NestedEnumSyncTriggerWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.SyncTrigger | Prisma.EnumSyncTriggerFieldRefInput<$PrismaModel>
+  in?: $Enums.SyncTrigger[] | Prisma.ListEnumSyncTriggerFieldRefInput<$PrismaModel>
+  notIn?: $Enums.SyncTrigger[] | Prisma.ListEnumSyncTriggerFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumSyncTriggerWithAggregatesFilter<$PrismaModel> | $Enums.SyncTrigger
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumSyncTriggerFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumSyncTriggerFilter<$PrismaModel>
+}
+
+export type NestedEnumSyncRunStatusWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.SyncRunStatus | Prisma.EnumSyncRunStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.SyncRunStatus[] | Prisma.ListEnumSyncRunStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.SyncRunStatus[] | Prisma.ListEnumSyncRunStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumSyncRunStatusWithAggregatesFilter<$PrismaModel> | $Enums.SyncRunStatus
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumSyncRunStatusFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumSyncRunStatusFilter<$PrismaModel>
 }
 
 

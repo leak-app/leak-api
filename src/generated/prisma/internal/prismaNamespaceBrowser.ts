@@ -60,7 +60,9 @@ export const ModelName = {
   Goal: 'Goal',
   GoalContribution: 'GoalContribution',
   LeakReclaim: 'LeakReclaim',
-  Budget: 'Budget'
+  Budget: 'Budget',
+  GoogleSheetsConnection: 'GoogleSheetsConnection',
+  SyncRun: 'SyncRun'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -227,6 +229,35 @@ export const BudgetScalarFieldEnum = {
 } as const
 
 export type BudgetScalarFieldEnum = (typeof BudgetScalarFieldEnum)[keyof typeof BudgetScalarFieldEnum]
+
+
+export const GoogleSheetsConnectionScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  googleEmail: 'googleEmail',
+  refreshTokenEnc: 'refreshTokenEnc',
+  spreadsheetId: 'spreadsheetId',
+  syncEnabled: 'syncEnabled',
+  needsReconnect: 'needsReconnect',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type GoogleSheetsConnectionScalarFieldEnum = (typeof GoogleSheetsConnectionScalarFieldEnum)[keyof typeof GoogleSheetsConnectionScalarFieldEnum]
+
+
+export const SyncRunScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  trigger: 'trigger',
+  status: 'status',
+  transactionCount: 'transactionCount',
+  errorMessage: 'errorMessage',
+  startedAt: 'startedAt',
+  finishedAt: 'finishedAt'
+} as const
+
+export type SyncRunScalarFieldEnum = (typeof SyncRunScalarFieldEnum)[keyof typeof SyncRunScalarFieldEnum]
 
 
 export const SortOrder = {

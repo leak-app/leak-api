@@ -25,6 +25,8 @@ model User {
   budgets           Budget[]
   resetTokens       PasswordResetToken[]
   leakReclaims      LeakReclaim[]
+  googleSheetsConnection GoogleSheetsConnection?
+  syncRuns               SyncRun[]
 
   @@map("users")
 }
@@ -237,4 +239,47 @@ model Budget {
 
   @@unique([userId, categoryId, month, year])
   @@map("budgets")
+}
+
+model GoogleSheetsConnection {
+  id              String   @id @default(cuid())
+  userId          String   @unique @map("user_id")
+  user            User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  googleEmail     String   @map("google_email")
+  refreshTokenEnc String   @map("refresh_token_enc") // AES-256-GCM, never returned by any endpoint
+  spreadsheetId   String   @map("spreadsheet_id")
+  syncEnabled     Boolean  @default(true) @map("sync_enabled")
+  needsReconnect  Boolean  @default(false) @map("needs_reconnect")
+  createdAt       DateTime @default(now()) @map("created_at")
+  updatedAt       DateTime @updatedAt @map("updated_at")
+
+  @@index([syncEnabled, needsReconnect])
+  @@map("google_sheets_connections")
+}
+
+enum SyncTrigger {
+  CRON
+  MANUAL
+  CONNECT
+}
+
+enum SyncRunStatus {
+  RUNNING
+  SUCCESS
+  FAILED
+}
+
+model SyncRun {
+  id               String        @id @default(cuid())
+  userId           String        @map("user_id")
+  user             User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  trigger          SyncTrigger
+  status           SyncRunStatus
+  transactionCount Int           @default(0) @map("transaction_count")
+  errorMessage     String?       @map("error_message")
+  startedAt        DateTime      @default(now()) @map("started_at")
+  finishedAt       DateTime?     @map("finished_at")
+
+  @@index([userId, startedAt])
+  @@map("sync_runs")
 }

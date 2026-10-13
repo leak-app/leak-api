@@ -393,7 +393,9 @@ export const ModelName = {
   Goal: 'Goal',
   GoalContribution: 'GoalContribution',
   LeakReclaim: 'LeakReclaim',
-  Budget: 'Budget'
+  Budget: 'Budget',
+  GoogleSheetsConnection: 'GoogleSheetsConnection',
+  SyncRun: 'SyncRun'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -409,7 +411,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "session" | "passwordResetToken" | "account" | "category" | "transaction" | "goal" | "goalContribution" | "leakReclaim" | "budget"
+    modelProps: "user" | "session" | "passwordResetToken" | "account" | "category" | "transaction" | "goal" | "goalContribution" | "leakReclaim" | "budget" | "googleSheetsConnection" | "syncRun"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -1153,6 +1155,154 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    GoogleSheetsConnection: {
+      payload: Prisma.$GoogleSheetsConnectionPayload<ExtArgs>
+      fields: Prisma.GoogleSheetsConnectionFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.GoogleSheetsConnectionFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$GoogleSheetsConnectionPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.GoogleSheetsConnectionFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$GoogleSheetsConnectionPayload>
+        }
+        findFirst: {
+          args: Prisma.GoogleSheetsConnectionFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$GoogleSheetsConnectionPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.GoogleSheetsConnectionFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$GoogleSheetsConnectionPayload>
+        }
+        findMany: {
+          args: Prisma.GoogleSheetsConnectionFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$GoogleSheetsConnectionPayload>[]
+        }
+        create: {
+          args: Prisma.GoogleSheetsConnectionCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$GoogleSheetsConnectionPayload>
+        }
+        createMany: {
+          args: Prisma.GoogleSheetsConnectionCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.GoogleSheetsConnectionCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$GoogleSheetsConnectionPayload>[]
+        }
+        delete: {
+          args: Prisma.GoogleSheetsConnectionDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$GoogleSheetsConnectionPayload>
+        }
+        update: {
+          args: Prisma.GoogleSheetsConnectionUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$GoogleSheetsConnectionPayload>
+        }
+        deleteMany: {
+          args: Prisma.GoogleSheetsConnectionDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.GoogleSheetsConnectionUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.GoogleSheetsConnectionUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$GoogleSheetsConnectionPayload>[]
+        }
+        upsert: {
+          args: Prisma.GoogleSheetsConnectionUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$GoogleSheetsConnectionPayload>
+        }
+        aggregate: {
+          args: Prisma.GoogleSheetsConnectionAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateGoogleSheetsConnection>
+        }
+        groupBy: {
+          args: Prisma.GoogleSheetsConnectionGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.GoogleSheetsConnectionGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.GoogleSheetsConnectionCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.GoogleSheetsConnectionCountAggregateOutputType> | number
+        }
+      }
+    }
+    SyncRun: {
+      payload: Prisma.$SyncRunPayload<ExtArgs>
+      fields: Prisma.SyncRunFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.SyncRunFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SyncRunPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.SyncRunFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SyncRunPayload>
+        }
+        findFirst: {
+          args: Prisma.SyncRunFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SyncRunPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.SyncRunFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SyncRunPayload>
+        }
+        findMany: {
+          args: Prisma.SyncRunFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SyncRunPayload>[]
+        }
+        create: {
+          args: Prisma.SyncRunCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SyncRunPayload>
+        }
+        createMany: {
+          args: Prisma.SyncRunCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.SyncRunCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SyncRunPayload>[]
+        }
+        delete: {
+          args: Prisma.SyncRunDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SyncRunPayload>
+        }
+        update: {
+          args: Prisma.SyncRunUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SyncRunPayload>
+        }
+        deleteMany: {
+          args: Prisma.SyncRunDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.SyncRunUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.SyncRunUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SyncRunPayload>[]
+        }
+        upsert: {
+          args: Prisma.SyncRunUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SyncRunPayload>
+        }
+        aggregate: {
+          args: Prisma.SyncRunAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateSyncRun>
+        }
+        groupBy: {
+          args: Prisma.SyncRunGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.SyncRunGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.SyncRunCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.SyncRunCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -1340,6 +1490,35 @@ export const BudgetScalarFieldEnum = {
 } as const
 
 export type BudgetScalarFieldEnum = (typeof BudgetScalarFieldEnum)[keyof typeof BudgetScalarFieldEnum]
+
+
+export const GoogleSheetsConnectionScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  googleEmail: 'googleEmail',
+  refreshTokenEnc: 'refreshTokenEnc',
+  spreadsheetId: 'spreadsheetId',
+  syncEnabled: 'syncEnabled',
+  needsReconnect: 'needsReconnect',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type GoogleSheetsConnectionScalarFieldEnum = (typeof GoogleSheetsConnectionScalarFieldEnum)[keyof typeof GoogleSheetsConnectionScalarFieldEnum]
+
+
+export const SyncRunScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  trigger: 'trigger',
+  status: 'status',
+  transactionCount: 'transactionCount',
+  errorMessage: 'errorMessage',
+  startedAt: 'startedAt',
+  finishedAt: 'finishedAt'
+} as const
+
+export type SyncRunScalarFieldEnum = (typeof SyncRunScalarFieldEnum)[keyof typeof SyncRunScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -1548,6 +1727,34 @@ export type ListEnumLeakReclaimStatusFieldRefInput<$PrismaModel> = FieldRefInput
 
 
 /**
+ * Reference to a field of type 'SyncTrigger'
+ */
+export type EnumSyncTriggerFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'SyncTrigger'>
+    
+
+
+/**
+ * Reference to a field of type 'SyncTrigger[]'
+ */
+export type ListEnumSyncTriggerFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'SyncTrigger[]'>
+    
+
+
+/**
+ * Reference to a field of type 'SyncRunStatus'
+ */
+export type EnumSyncRunStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'SyncRunStatus'>
+    
+
+
+/**
+ * Reference to a field of type 'SyncRunStatus[]'
+ */
+export type ListEnumSyncRunStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'SyncRunStatus[]'>
+    
+
+
+/**
  * Reference to a field of type 'Float'
  */
 export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
@@ -1665,6 +1872,8 @@ export type GlobalOmitConfig = {
   goalContribution?: Prisma.GoalContributionOmit
   leakReclaim?: Prisma.LeakReclaimOmit
   budget?: Prisma.BudgetOmit
+  googleSheetsConnection?: Prisma.GoogleSheetsConnectionOmit
+  syncRun?: Prisma.SyncRunOmit
 }
 
 /* Types for Logging */

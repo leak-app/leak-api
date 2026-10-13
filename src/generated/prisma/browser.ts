@@ -67,3 +67,13 @@ export type LeakReclaim = Prisma.LeakReclaimModel
  * 
  */
 export type Budget = Prisma.BudgetModel
+/**
+ * Model GoogleSheetsConnection
+ * 
+ */
+export type GoogleSheetsConnection = Prisma.GoogleSheetsConnectionModel
+/**
+ * Model SyncRun
+ * 
+ */
+export type SyncRun = Prisma.SyncRunModel
