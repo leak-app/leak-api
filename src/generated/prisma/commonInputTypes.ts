@@ -219,6 +219,23 @@ export type DecimalWithAggregatesFilter<$PrismaModel = never> = {
   _max?: Prisma.NestedDecimalFilter<$PrismaModel>
 }
 
+export type EnumValuationKindFilter<$PrismaModel = never> = {
+  equals?: $Enums.ValuationKind | Prisma.EnumValuationKindFieldRefInput<$PrismaModel>
+  in?: $Enums.ValuationKind[] | Prisma.ListEnumValuationKindFieldRefInput<$PrismaModel>
+  notIn?: $Enums.ValuationKind[] | Prisma.ListEnumValuationKindFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumValuationKindFilter<$PrismaModel> | $Enums.ValuationKind
+}
+
+export type EnumValuationKindWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.ValuationKind | Prisma.EnumValuationKindFieldRefInput<$PrismaModel>
+  in?: $Enums.ValuationKind[] | Prisma.ListEnumValuationKindFieldRefInput<$PrismaModel>
+  notIn?: $Enums.ValuationKind[] | Prisma.ListEnumValuationKindFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumValuationKindWithAggregatesFilter<$PrismaModel> | $Enums.ValuationKind
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumValuationKindFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumValuationKindFilter<$PrismaModel>
+}
+
 export type EnumCategoryTypeFilter<$PrismaModel = never> = {
   equals?: $Enums.CategoryType | Prisma.EnumCategoryTypeFieldRefInput<$PrismaModel>
   in?: $Enums.CategoryType[] | Prisma.ListEnumCategoryTypeFieldRefInput<$PrismaModel>
@@ -615,6 +632,23 @@ export type NestedDecimalWithAggregatesFilter<$PrismaModel = never> = {
   _sum?: Prisma.NestedDecimalFilter<$PrismaModel>
   _min?: Prisma.NestedDecimalFilter<$PrismaModel>
   _max?: Prisma.NestedDecimalFilter<$PrismaModel>
+}
+
+export type NestedEnumValuationKindFilter<$PrismaModel = never> = {
+  equals?: $Enums.ValuationKind | Prisma.EnumValuationKindFieldRefInput<$PrismaModel>
+  in?: $Enums.ValuationKind[] | Prisma.ListEnumValuationKindFieldRefInput<$PrismaModel>
+  notIn?: $Enums.ValuationKind[] | Prisma.ListEnumValuationKindFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumValuationKindFilter<$PrismaModel> | $Enums.ValuationKind
+}
+
+export type NestedEnumValuationKindWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.ValuationKind | Prisma.EnumValuationKindFieldRefInput<$PrismaModel>
+  in?: $Enums.ValuationKind[] | Prisma.ListEnumValuationKindFieldRefInput<$PrismaModel>
+  notIn?: $Enums.ValuationKind[] | Prisma.ListEnumValuationKindFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumValuationKindWithAggregatesFilter<$PrismaModel> | $Enums.ValuationKind
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumValuationKindFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumValuationKindFilter<$PrismaModel>
 }
 
 export type NestedEnumCategoryTypeFilter<$PrismaModel = never> = {

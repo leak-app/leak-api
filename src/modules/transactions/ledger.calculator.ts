@@ -57,3 +57,49 @@ export function planContributionChanges(c: ContributionEntry): BalanceChange[] {
     c.type === GoalContributionType.DEPOSIT ? amount.negated() : amount;
   return [{ accountId: c.accountId, delta }];
 }
+
+export type ValuationEntry = {
+  accountId: string;
+  adjustment: Prisma.Decimal | number | string;
+};
+
+/**
+ * A balance update moves the wallet by the difference to what the user entered.
+ * Undoing it passes `undo: true` and moves it back. A zero difference changes nothing.
+ */
+export function planValuationChanges(
+  v: ValuationEntry,
+  undo = false,
+): BalanceChange[] {
+  const adjustment = new Prisma.Decimal(v.adjustment);
+  if (adjustment.isZero()) return [];
+  return [
+    {
+      accountId: v.accountId,
+      delta: undo ? adjustment.negated() : adjustment,
+    },
+  ];
+}
+
+export type TransferEntry = {
+  fromAccountId: string;
+  toAccountId: string;
+  amount: Prisma.Decimal | number | string;
+};
+
+/**
+ * A transfer takes the amount out of one wallet and puts it into the other.
+ * Deleting it passes `undo: true` and moves the money back.
+ */
+export function planTransferChanges(
+  t: TransferEntry,
+  undo = false,
+): BalanceChange[] {
+  const amount = new Prisma.Decimal(t.amount);
+  if (amount.isZero()) return [];
+  const out = undo ? amount : amount.negated();
+  return [
+    { accountId: t.fromAccountId, delta: out },
+    { accountId: t.toAccountId, delta: out.negated() },
+  ];
+}

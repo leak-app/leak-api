@@ -16,15 +16,17 @@ model User {
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
 
-  sessions          Session[]
-  accounts          Account[]
-  categories        Category[]
-  transactions      Transaction[]
-  goals             Goal[]
-  goalContributions GoalContribution[]
-  budgets           Budget[]
-  resetTokens       PasswordResetToken[]
-  leakReclaims      LeakReclaim[]
+  sessions               Session[]
+  accounts               Account[]
+  categories             Category[]
+  transactions           Transaction[]
+  goals                  Goal[]
+  goalContributions      GoalContribution[]
+  budgets                Budget[]
+  resetTokens            PasswordResetToken[]
+  leakReclaims           LeakReclaim[]
+  valuations             AccountValuation[]
+  transfers              Transfer[]
   googleSheetsConnection GoogleSheetsConnection?
   syncRuns               SyncRun[]
 
@@ -78,9 +80,64 @@ model Account {
 
   transactions      Transaction[]
   goalContributions GoalContribution[]
+  valuations        AccountValuation[]
+  transfersOut      Transfer[]         @relation("TransferFrom")
+  transfersIn       Transfer[]         @relation("TransferTo")
 
   @@index([userId, isDeleted])
   @@map("accounts")
+}
+
+enum ValuationKind {
+  BASELINE // First update of a wallet: the difference is capital, not profit
+  UPDATE // The difference is profit or loss
+}
+
+/// A balance the user entered for an investment wallet. Append-only; only the
+/// latest one of a wallet can be soft-deleted.
+model AccountValuation {
+  id              String        @id @default(cuid())
+  accountId       String        @map("account_id")
+  account         Account       @relation(fields: [accountId], references: [id], onDelete: Restrict)
+  userId          String        @map("user_id")
+  user            User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  kind            ValuationKind
+  valuedAt        DateTime      @map("valued_at") @db.Date
+  previousBalance Decimal       @map("previous_balance") @db.Decimal(12, 2) // last update's balance, or the opening balance
+  netFlow         Decimal       @map("net_flow") @db.Decimal(12, 2) // wallet balance before this update − previousBalance
+  balance         Decimal       @db.Decimal(12, 2) // what the user entered
+  gain            Decimal       @db.Decimal(12, 2) // balance − previousBalance − netFlow; 0 for BASELINE
+  adjustment      Decimal       @db.Decimal(12, 2) // balance − wallet balance before this update; what the ledger applied
+  isDeleted       Boolean       @default(false) @map("is_deleted")
+  deletedAt       DateTime?     @map("deleted_at")
+  createdAt       DateTime      @default(now()) @map("created_at")
+
+  @@index([accountId, isDeleted, createdAt])
+  @@index([userId, valuedAt])
+  @@map("account_valuations")
+}
+
+/// Money moved between two of the user's wallets. Not income or expense, so it
+/// never reaches budgets, leak rate or the transaction list.
+model Transfer {
+  id            String    @id @default(cuid())
+  fromAccountId String    @map("from_account_id")
+  from          Account   @relation("TransferFrom", fields: [fromAccountId], references: [id], onDelete: Restrict)
+  toAccountId   String    @map("to_account_id")
+  to            Account   @relation("TransferTo", fields: [toAccountId], references: [id], onDelete: Restrict)
+  userId        String    @map("user_id")
+  user          User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  amount        Decimal   @db.Decimal(12, 2) // always positive
+  note          String?
+  occurredAt    DateTime  @map("occurred_at") @db.Date
+  isDeleted     Boolean   @default(false) @map("is_deleted")
+  deletedAt     DateTime? @map("deleted_at")
+  createdAt     DateTime  @default(now()) @map("created_at")
+
+  @@index([userId, isDeleted, occurredAt])
+  @@index([fromAccountId])
+  @@index([toAccountId])
+  @@map("transfers")
 }
 
 enum CategoryType {

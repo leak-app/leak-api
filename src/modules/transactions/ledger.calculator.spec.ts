@@ -8,6 +8,8 @@ import {
   type LedgerEntry,
   planBalanceChanges,
   planContributionChanges,
+  planTransferChanges,
+  planValuationChanges,
   signedAmount,
 } from './ledger.calculator';
 
@@ -233,5 +235,70 @@ describe('planContributionChanges', () => {
         amount: new D(1),
       }),
     ).toThrow('DEPOSIT needs a wallet');
+  });
+});
+
+describe('planValuationChanges', () => {
+  it('moves the wallet by the adjustment', () => {
+    expect(
+      plain(
+        planValuationChanges({ accountId: 'fund', adjustment: new D(2000) }),
+      ),
+    ).toEqual([{ accountId: 'fund', delta: '2000' }]);
+  });
+
+  it('keeps the sign of a loss', () => {
+    expect(
+      plain(
+        planValuationChanges({ accountId: 'fund', adjustment: new D(-500) }),
+      ),
+    ).toEqual([{ accountId: 'fund', delta: '-500' }]);
+  });
+
+  it('undo reverses the adjustment', () => {
+    expect(
+      plain(
+        planValuationChanges(
+          { accountId: 'fund', adjustment: new D(2000) },
+          true,
+        ),
+      ),
+    ).toEqual([{ accountId: 'fund', delta: '-2000' }]);
+  });
+
+  it('does nothing for a zero adjustment', () => {
+    expect(
+      planValuationChanges({ accountId: 'fund', adjustment: new D(0) }),
+    ).toEqual([]);
+  });
+});
+
+describe('planTransferChanges', () => {
+  const transfer = {
+    fromAccountId: 'cash',
+    toAccountId: 'fund',
+    amount: new D(5000),
+  };
+
+  it('takes the amount out of the source and puts it into the destination', () => {
+    expect(plain(planTransferChanges(transfer))).toEqual([
+      { accountId: 'cash', delta: '-5000' },
+      { accountId: 'fund', delta: '5000' },
+    ]);
+  });
+
+  it('undo moves the money back', () => {
+    expect(plain(planTransferChanges(transfer, true))).toEqual([
+      { accountId: 'cash', delta: '5000' },
+      { accountId: 'fund', delta: '-5000' },
+    ]);
+  });
+
+  it('keeps the net balance change at zero', () => {
+    const total = planTransferChanges(transfer).reduce(
+      (sum, c) => sum.plus(c.delta),
+      new D(0),
+    );
+    expect(total.isZero()).toBe(true);
   });
 });

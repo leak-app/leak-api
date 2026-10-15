@@ -17,6 +17,14 @@ export const AccountType = {
 export type AccountType = (typeof AccountType)[keyof typeof AccountType]
 
 
+export const ValuationKind = {
+  BASELINE: 'BASELINE',
+  UPDATE: 'UPDATE'
+} as const
+
+export type ValuationKind = (typeof ValuationKind)[keyof typeof ValuationKind]
+
+
 export const CategoryType = {
   INCOME: 'INCOME',
   EXPENSE: 'EXPENSE',

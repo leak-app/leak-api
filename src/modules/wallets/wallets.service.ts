@@ -4,8 +4,9 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { PrismaService } from '@/common/prisma.service';
-import { Prisma } from '@/generated/prisma/client';
+import { AccountType, Prisma } from '@/generated/prisma/client';
 import { LedgerService } from '@/modules/transactions/ledger.service';
+import { ValuationsService } from '@/modules/valuations/valuations.service';
 import { CreateWalletDto, UpdateWalletDto } from './dto/wallets.dto';
 
 @Injectable()
@@ -13,13 +14,20 @@ export class WalletService {
   constructor(
     private readonly _prisma: PrismaService,
     private readonly _ledger: LedgerService,
+    private readonly _valuations: ValuationsService,
   ) {}
 
+  /** Investment wallets also carry their profit figures; other wallets get `valuation: null`. */
   async findAll(userId: string) {
-    return this._prisma.account.findMany({
+    const wallets = await this._prisma.account.findMany({
       where: { userId, isDeleted: false },
       orderBy: { createdAt: 'asc' },
     });
+    const summaries = await this._valuations.summarize(userId, wallets);
+    return wallets.map((wallet) => ({
+      ...wallet,
+      valuation: summaries.get(wallet.id) ?? null,
+    }));
   }
 
   async create(userId: string, dto: CreateWalletDto) {
@@ -42,6 +50,7 @@ export class WalletService {
       const wallet = await this._findActive(tx, userId, id);
 
       if (dto.initialBalance !== undefined) {
+        await this._assertOpeningBalanceEditable(tx, wallet);
         await this._ledger.shiftInitialBalance(
           tx,
           id,
@@ -76,6 +85,25 @@ export class WalletService {
         data: { isDeleted: true, deletedAt: new Date() },
       });
     });
+  }
+
+  /**
+   * Once an investment wallet has balance updates, its opening balance is the
+   * start of the profit maths. Moving it would silently turn profit into capital.
+   */
+  private async _assertOpeningBalanceEditable(
+    tx: Prisma.TransactionClient,
+    wallet: { id: string; type: AccountType },
+  ) {
+    if (wallet.type !== AccountType.INVESTMENT) return;
+    const updates = await tx.accountValuation.count({
+      where: { accountId: wallet.id, isDeleted: false },
+    });
+    if (updates > 0) {
+      throw new ConflictException(
+        'Ví đầu tư đã có cập nhật số dư. Hãy dùng "Cập nhật số dư" để đổi số dư.',
+      );
+    }
   }
 
   private async _findActive(

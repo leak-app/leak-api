@@ -55,6 +55,8 @@ export const ModelName = {
   Session: 'Session',
   PasswordResetToken: 'PasswordResetToken',
   Account: 'Account',
+  AccountValuation: 'AccountValuation',
+  Transfer: 'Transfer',
   Category: 'Category',
   Transaction: 'Transaction',
   Goal: 'Goal',
@@ -133,6 +135,41 @@ export const AccountScalarFieldEnum = {
 } as const
 
 export type AccountScalarFieldEnum = (typeof AccountScalarFieldEnum)[keyof typeof AccountScalarFieldEnum]
+
+
+export const AccountValuationScalarFieldEnum = {
+  id: 'id',
+  accountId: 'accountId',
+  userId: 'userId',
+  kind: 'kind',
+  valuedAt: 'valuedAt',
+  previousBalance: 'previousBalance',
+  netFlow: 'netFlow',
+  balance: 'balance',
+  gain: 'gain',
+  adjustment: 'adjustment',
+  isDeleted: 'isDeleted',
+  deletedAt: 'deletedAt',
+  createdAt: 'createdAt'
+} as const
+
+export type AccountValuationScalarFieldEnum = (typeof AccountValuationScalarFieldEnum)[keyof typeof AccountValuationScalarFieldEnum]
+
+
+export const TransferScalarFieldEnum = {
+  id: 'id',
+  fromAccountId: 'fromAccountId',
+  toAccountId: 'toAccountId',
+  userId: 'userId',
+  amount: 'amount',
+  note: 'note',
+  occurredAt: 'occurredAt',
+  isDeleted: 'isDeleted',
+  deletedAt: 'deletedAt',
+  createdAt: 'createdAt'
+} as const
+
+export type TransferScalarFieldEnum = (typeof TransferScalarFieldEnum)[keyof typeof TransferScalarFieldEnum]
 
 
 export const CategoryScalarFieldEnum = {

@@ -17,6 +17,7 @@ import {
 import { TransactionWhereInput } from '@/generated/prisma/models';
 import { LedgerService } from './ledger.service';
 import { planBalanceChanges } from './ledger.calculator';
+import { resolveOccurredAt } from './occurred-at';
 import { WalletResolver } from './wallet-resolver.service';
 
 const ALLOWED_CATEGORY_TYPES: Record<TransactionType, CategoryType[]> = {
@@ -127,6 +128,8 @@ export class TransactionService {
   }
 
   async create(userId: string, dto: CreateTransactionDto) {
+    // Reports read `createdAt` as the day of the transaction, so a past day goes there.
+    const occurredAt = resolveOccurredAt(dto.occurredOn);
     return this._prisma.$transaction(async (tx) => {
       await this._assertCategory(tx, userId, dto.categoryId, dto.type);
       const accountId = await this._wallets.resolve(tx, userId, dto.accountId);
@@ -139,6 +142,7 @@ export class TransactionService {
           accountId,
           description: dto.description,
           userId,
+          createdAt: occurredAt,
         },
       });
 

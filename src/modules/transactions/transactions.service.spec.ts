@@ -159,12 +159,32 @@ describe('TransactionService', () => {
           accountId: 'cash',
           description: undefined,
           userId,
+          createdAt: expect.any(Date),
         },
       });
       expect(ledger.apply.mock.calls[0][0]).toBe(prisma);
       expect(appliedChanges()).toEqual([
         { accountId: 'cash', delta: '-50000' },
       ]);
+    });
+
+    it('stores a past day as the transaction date', async () => {
+      await service.create(userId, { ...dto, occurredOn: '2020-03-05' });
+
+      const [{ data }] = prisma.transaction.create.mock.calls[0] as [
+        { data: { createdAt: Date } },
+      ];
+      expect(data.createdAt.toISOString().slice(0, 10)).toMatch(
+        /^2020-03-0[45]$/, // the day in Vietnam time, which can be the evening before in UTC
+      );
+      expect(data.createdAt.getTime()).toBeLessThan(Date.now());
+    });
+
+    it('refuses a day in the future', async () => {
+      await expect(
+        service.create(userId, { ...dto, occurredOn: '2999-01-01' }),
+      ).rejects.toThrow(BadRequestException);
+      expect(prisma.transaction.create).not.toHaveBeenCalled();
     });
 
     it('falls back to the oldest active wallet of any type when no LIQUID wallet is active', async () => {

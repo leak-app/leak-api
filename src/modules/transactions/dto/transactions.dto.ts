@@ -7,6 +7,11 @@ export const createTransactionSchema = z.object({
   categoryId: z.string().min(1, 'Danh mục là bắt buộc'),
   accountId: z.string().min(1).optional(),
   description: z.string().optional(),
+  /** The day it happened (YYYY-MM-DD, Vietnam time); today when left out. */
+  occurredOn: z
+    .string()
+    .regex(/^\d{4}-\d{2}-\d{2}$/, 'Ngày giao dịch không hợp lệ')
+    .optional(),
 });
 
 export class CreateTransactionDto implements z.infer<
@@ -17,6 +22,7 @@ export class CreateTransactionDto implements z.infer<
   categoryId!: string;
   accountId?: string;
   description?: string;
+  occurredOn?: string;
 }
 
 export const updateTransactionSchema = z.object({

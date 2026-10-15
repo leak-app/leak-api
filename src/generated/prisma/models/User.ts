@@ -199,6 +199,8 @@ export type UserWhereInput = {
   budgets?: Prisma.BudgetListRelationFilter
   resetTokens?: Prisma.PasswordResetTokenListRelationFilter
   leakReclaims?: Prisma.LeakReclaimListRelationFilter
+  valuations?: Prisma.AccountValuationListRelationFilter
+  transfers?: Prisma.TransferListRelationFilter
   googleSheetsConnection?: Prisma.XOR<Prisma.GoogleSheetsConnectionNullableScalarRelationFilter, Prisma.GoogleSheetsConnectionWhereInput> | null
   syncRuns?: Prisma.SyncRunListRelationFilter
 }
@@ -219,6 +221,8 @@ export type UserOrderByWithRelationInput = {
   budgets?: Prisma.BudgetOrderByRelationAggregateInput
   resetTokens?: Prisma.PasswordResetTokenOrderByRelationAggregateInput
   leakReclaims?: Prisma.LeakReclaimOrderByRelationAggregateInput
+  valuations?: Prisma.AccountValuationOrderByRelationAggregateInput
+  transfers?: Prisma.TransferOrderByRelationAggregateInput
   googleSheetsConnection?: Prisma.GoogleSheetsConnectionOrderByWithRelationInput
   syncRuns?: Prisma.SyncRunOrderByRelationAggregateInput
 }
@@ -242,6 +246,8 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   budgets?: Prisma.BudgetListRelationFilter
   resetTokens?: Prisma.PasswordResetTokenListRelationFilter
   leakReclaims?: Prisma.LeakReclaimListRelationFilter
+  valuations?: Prisma.AccountValuationListRelationFilter
+  transfers?: Prisma.TransferListRelationFilter
   googleSheetsConnection?: Prisma.XOR<Prisma.GoogleSheetsConnectionNullableScalarRelationFilter, Prisma.GoogleSheetsConnectionWhereInput> | null
   syncRuns?: Prisma.SyncRunListRelationFilter
 }, "id" | "email">
@@ -286,6 +292,8 @@ export type UserCreateInput = {
   budgets?: Prisma.BudgetCreateNestedManyWithoutUserInput
   resetTokens?: Prisma.PasswordResetTokenCreateNestedManyWithoutUserInput
   leakReclaims?: Prisma.LeakReclaimCreateNestedManyWithoutUserInput
+  valuations?: Prisma.AccountValuationCreateNestedManyWithoutUserInput
+  transfers?: Prisma.TransferCreateNestedManyWithoutUserInput
   googleSheetsConnection?: Prisma.GoogleSheetsConnectionCreateNestedOneWithoutUserInput
   syncRuns?: Prisma.SyncRunCreateNestedManyWithoutUserInput
 }
@@ -306,6 +314,8 @@ export type UserUncheckedCreateInput = {
   budgets?: Prisma.BudgetUncheckedCreateNestedManyWithoutUserInput
   resetTokens?: Prisma.PasswordResetTokenUncheckedCreateNestedManyWithoutUserInput
   leakReclaims?: Prisma.LeakReclaimUncheckedCreateNestedManyWithoutUserInput
+  valuations?: Prisma.AccountValuationUncheckedCreateNestedManyWithoutUserInput
+  transfers?: Prisma.TransferUncheckedCreateNestedManyWithoutUserInput
   googleSheetsConnection?: Prisma.GoogleSheetsConnectionUncheckedCreateNestedOneWithoutUserInput
   syncRuns?: Prisma.SyncRunUncheckedCreateNestedManyWithoutUserInput
 }
@@ -326,6 +336,8 @@ export type UserUpdateInput = {
   budgets?: Prisma.BudgetUpdateManyWithoutUserNestedInput
   resetTokens?: Prisma.PasswordResetTokenUpdateManyWithoutUserNestedInput
   leakReclaims?: Prisma.LeakReclaimUpdateManyWithoutUserNestedInput
+  valuations?: Prisma.AccountValuationUpdateManyWithoutUserNestedInput
+  transfers?: Prisma.TransferUpdateManyWithoutUserNestedInput
   googleSheetsConnection?: Prisma.GoogleSheetsConnectionUpdateOneWithoutUserNestedInput
   syncRuns?: Prisma.SyncRunUpdateManyWithoutUserNestedInput
 }
@@ -346,6 +358,8 @@ export type UserUncheckedUpdateInput = {
   budgets?: Prisma.BudgetUncheckedUpdateManyWithoutUserNestedInput
   resetTokens?: Prisma.PasswordResetTokenUncheckedUpdateManyWithoutUserNestedInput
   leakReclaims?: Prisma.LeakReclaimUncheckedUpdateManyWithoutUserNestedInput
+  valuations?: Prisma.AccountValuationUncheckedUpdateManyWithoutUserNestedInput
+  transfers?: Prisma.TransferUncheckedUpdateManyWithoutUserNestedInput
   googleSheetsConnection?: Prisma.GoogleSheetsConnectionUncheckedUpdateOneWithoutUserNestedInput
   syncRuns?: Prisma.SyncRunUncheckedUpdateManyWithoutUserNestedInput
 }
@@ -461,6 +475,34 @@ export type UserUpdateOneRequiredWithoutAccountsNestedInput = {
   upsert?: Prisma.UserUpsertWithoutAccountsInput
   connect?: Prisma.UserWhereUniqueInput
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutAccountsInput, Prisma.UserUpdateWithoutAccountsInput>, Prisma.UserUncheckedUpdateWithoutAccountsInput>
+}
+
+export type UserCreateNestedOneWithoutValuationsInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutValuationsInput, Prisma.UserUncheckedCreateWithoutValuationsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutValuationsInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutValuationsNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutValuationsInput, Prisma.UserUncheckedCreateWithoutValuationsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutValuationsInput
+  upsert?: Prisma.UserUpsertWithoutValuationsInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutValuationsInput, Prisma.UserUpdateWithoutValuationsInput>, Prisma.UserUncheckedUpdateWithoutValuationsInput>
+}
+
+export type UserCreateNestedOneWithoutTransfersInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutTransfersInput, Prisma.UserUncheckedCreateWithoutTransfersInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutTransfersInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutTransfersNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutTransfersInput, Prisma.UserUncheckedCreateWithoutTransfersInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutTransfersInput
+  upsert?: Prisma.UserUpsertWithoutTransfersInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutTransfersInput, Prisma.UserUpdateWithoutTransfersInput>, Prisma.UserUncheckedUpdateWithoutTransfersInput>
 }
 
 export type UserCreateNestedOneWithoutCategoriesInput = {
@@ -590,6 +632,8 @@ export type UserCreateWithoutSessionsInput = {
   budgets?: Prisma.BudgetCreateNestedManyWithoutUserInput
   resetTokens?: Prisma.PasswordResetTokenCreateNestedManyWithoutUserInput
   leakReclaims?: Prisma.LeakReclaimCreateNestedManyWithoutUserInput
+  valuations?: Prisma.AccountValuationCreateNestedManyWithoutUserInput
+  transfers?: Prisma.TransferCreateNestedManyWithoutUserInput
   googleSheetsConnection?: Prisma.GoogleSheetsConnectionCreateNestedOneWithoutUserInput
   syncRuns?: Prisma.SyncRunCreateNestedManyWithoutUserInput
 }
@@ -609,6 +653,8 @@ export type UserUncheckedCreateWithoutSessionsInput = {
   budgets?: Prisma.BudgetUncheckedCreateNestedManyWithoutUserInput
   resetTokens?: Prisma.PasswordResetTokenUncheckedCreateNestedManyWithoutUserInput
   leakReclaims?: Prisma.LeakReclaimUncheckedCreateNestedManyWithoutUserInput
+  valuations?: Prisma.AccountValuationUncheckedCreateNestedManyWithoutUserInput
+  transfers?: Prisma.TransferUncheckedCreateNestedManyWithoutUserInput
   googleSheetsConnection?: Prisma.GoogleSheetsConnectionUncheckedCreateNestedOneWithoutUserInput
   syncRuns?: Prisma.SyncRunUncheckedCreateNestedManyWithoutUserInput
 }
@@ -644,6 +690,8 @@ export type UserUpdateWithoutSessionsInput = {
   budgets?: Prisma.BudgetUpdateManyWithoutUserNestedInput
   resetTokens?: Prisma.PasswordResetTokenUpdateManyWithoutUserNestedInput
   leakReclaims?: Prisma.LeakReclaimUpdateManyWithoutUserNestedInput
+  valuations?: Prisma.AccountValuationUpdateManyWithoutUserNestedInput
+  transfers?: Prisma.TransferUpdateManyWithoutUserNestedInput
   googleSheetsConnection?: Prisma.GoogleSheetsConnectionUpdateOneWithoutUserNestedInput
   syncRuns?: Prisma.SyncRunUpdateManyWithoutUserNestedInput
 }
@@ -663,6 +711,8 @@ export type UserUncheckedUpdateWithoutSessionsInput = {
   budgets?: Prisma.BudgetUncheckedUpdateManyWithoutUserNestedInput
   resetTokens?: Prisma.PasswordResetTokenUncheckedUpdateManyWithoutUserNestedInput
   leakReclaims?: Prisma.LeakReclaimUncheckedUpdateManyWithoutUserNestedInput
+  valuations?: Prisma.AccountValuationUncheckedUpdateManyWithoutUserNestedInput
+  transfers?: Prisma.TransferUncheckedUpdateManyWithoutUserNestedInput
   googleSheetsConnection?: Prisma.GoogleSheetsConnectionUncheckedUpdateOneWithoutUserNestedInput
   syncRuns?: Prisma.SyncRunUncheckedUpdateManyWithoutUserNestedInput
 }
@@ -682,6 +732,8 @@ export type UserCreateWithoutResetTokensInput = {
   goalContributions?: Prisma.GoalContributionCreateNestedManyWithoutUserInput
   budgets?: Prisma.BudgetCreateNestedManyWithoutUserInput
   leakReclaims?: Prisma.LeakReclaimCreateNestedManyWithoutUserInput
+  valuations?: Prisma.AccountValuationCreateNestedManyWithoutUserInput
+  transfers?: Prisma.TransferCreateNestedManyWithoutUserInput
   googleSheetsConnection?: Prisma.GoogleSheetsConnectionCreateNestedOneWithoutUserInput
   syncRuns?: Prisma.SyncRunCreateNestedManyWithoutUserInput
 }
@@ -701,6 +753,8 @@ export type UserUncheckedCreateWithoutResetTokensInput = {
   goalContributions?: Prisma.GoalContributionUncheckedCreateNestedManyWithoutUserInput
   budgets?: Prisma.BudgetUncheckedCreateNestedManyWithoutUserInput
   leakReclaims?: Prisma.LeakReclaimUncheckedCreateNestedManyWithoutUserInput
+  valuations?: Prisma.AccountValuationUncheckedCreateNestedManyWithoutUserInput
+  transfers?: Prisma.TransferUncheckedCreateNestedManyWithoutUserInput
   googleSheetsConnection?: Prisma.GoogleSheetsConnectionUncheckedCreateNestedOneWithoutUserInput
   syncRuns?: Prisma.SyncRunUncheckedCreateNestedManyWithoutUserInput
 }
@@ -736,6 +790,8 @@ export type UserUpdateWithoutResetTokensInput = {
   goalContributions?: Prisma.GoalContributionUpdateManyWithoutUserNestedInput
   budgets?: Prisma.BudgetUpdateManyWithoutUserNestedInput
   leakReclaims?: Prisma.LeakReclaimUpdateManyWithoutUserNestedInput
+  valuations?: Prisma.AccountValuationUpdateManyWithoutUserNestedInput
+  transfers?: Prisma.TransferUpdateManyWithoutUserNestedInput
   googleSheetsConnection?: Prisma.GoogleSheetsConnectionUpdateOneWithoutUserNestedInput
   syncRuns?: Prisma.SyncRunUpdateManyWithoutUserNestedInput
 }
@@ -755,6 +811,8 @@ export type UserUncheckedUpdateWithoutResetTokensInput = {
   goalContributions?: Prisma.GoalContributionUncheckedUpdateManyWithoutUserNestedInput
   budgets?: Prisma.BudgetUncheckedUpdateManyWithoutUserNestedInput
   leakReclaims?: Prisma.LeakReclaimUncheckedUpdateManyWithoutUserNestedInput
+  valuations?: Prisma.AccountValuationUncheckedUpdateManyWithoutUserNestedInput
+  transfers?: Prisma.TransferUncheckedUpdateManyWithoutUserNestedInput
   googleSheetsConnection?: Prisma.GoogleSheetsConnectionUncheckedUpdateOneWithoutUserNestedInput
   syncRuns?: Prisma.SyncRunUncheckedUpdateManyWithoutUserNestedInput
 }
@@ -774,6 +832,8 @@ export type UserCreateWithoutAccountsInput = {
   budgets?: Prisma.BudgetCreateNestedManyWithoutUserInput
   resetTokens?: Prisma.PasswordResetTokenCreateNestedManyWithoutUserInput
   leakReclaims?: Prisma.LeakReclaimCreateNestedManyWithoutUserInput
+  valuations?: Prisma.AccountValuationCreateNestedManyWithoutUserInput
+  transfers?: Prisma.TransferCreateNestedManyWithoutUserInput
   googleSheetsConnection?: Prisma.GoogleSheetsConnectionCreateNestedOneWithoutUserInput
   syncRuns?: Prisma.SyncRunCreateNestedManyWithoutUserInput
 }
@@ -793,6 +853,8 @@ export type UserUncheckedCreateWithoutAccountsInput = {
   budgets?: Prisma.BudgetUncheckedCreateNestedManyWithoutUserInput
   resetTokens?: Prisma.PasswordResetTokenUncheckedCreateNestedManyWithoutUserInput
   leakReclaims?: Prisma.LeakReclaimUncheckedCreateNestedManyWithoutUserInput
+  valuations?: Prisma.AccountValuationUncheckedCreateNestedManyWithoutUserInput
+  transfers?: Prisma.TransferUncheckedCreateNestedManyWithoutUserInput
   googleSheetsConnection?: Prisma.GoogleSheetsConnectionUncheckedCreateNestedOneWithoutUserInput
   syncRuns?: Prisma.SyncRunUncheckedCreateNestedManyWithoutUserInput
 }
@@ -828,6 +890,8 @@ export type UserUpdateWithoutAccountsInput = {
   budgets?: Prisma.BudgetUpdateManyWithoutUserNestedInput
   resetTokens?: Prisma.PasswordResetTokenUpdateManyWithoutUserNestedInput
   leakReclaims?: Prisma.LeakReclaimUpdateManyWithoutUserNestedInput
+  valuations?: Prisma.AccountValuationUpdateManyWithoutUserNestedInput
+  transfers?: Prisma.TransferUpdateManyWithoutUserNestedInput
   googleSheetsConnection?: Prisma.GoogleSheetsConnectionUpdateOneWithoutUserNestedInput
   syncRuns?: Prisma.SyncRunUpdateManyWithoutUserNestedInput
 }
@@ -847,6 +911,208 @@ export type UserUncheckedUpdateWithoutAccountsInput = {
   budgets?: Prisma.BudgetUncheckedUpdateManyWithoutUserNestedInput
   resetTokens?: Prisma.PasswordResetTokenUncheckedUpdateManyWithoutUserNestedInput
   leakReclaims?: Prisma.LeakReclaimUncheckedUpdateManyWithoutUserNestedInput
+  valuations?: Prisma.AccountValuationUncheckedUpdateManyWithoutUserNestedInput
+  transfers?: Prisma.TransferUncheckedUpdateManyWithoutUserNestedInput
+  googleSheetsConnection?: Prisma.GoogleSheetsConnectionUncheckedUpdateOneWithoutUserNestedInput
+  syncRuns?: Prisma.SyncRunUncheckedUpdateManyWithoutUserNestedInput
+}
+
+export type UserCreateWithoutValuationsInput = {
+  id?: string
+  email: string
+  password: string
+  name?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
+  accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
+  categories?: Prisma.CategoryCreateNestedManyWithoutUserInput
+  transactions?: Prisma.TransactionCreateNestedManyWithoutUserInput
+  goals?: Prisma.GoalCreateNestedManyWithoutUserInput
+  goalContributions?: Prisma.GoalContributionCreateNestedManyWithoutUserInput
+  budgets?: Prisma.BudgetCreateNestedManyWithoutUserInput
+  resetTokens?: Prisma.PasswordResetTokenCreateNestedManyWithoutUserInput
+  leakReclaims?: Prisma.LeakReclaimCreateNestedManyWithoutUserInput
+  transfers?: Prisma.TransferCreateNestedManyWithoutUserInput
+  googleSheetsConnection?: Prisma.GoogleSheetsConnectionCreateNestedOneWithoutUserInput
+  syncRuns?: Prisma.SyncRunCreateNestedManyWithoutUserInput
+}
+
+export type UserUncheckedCreateWithoutValuationsInput = {
+  id?: string
+  email: string
+  password: string
+  name?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
+  accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
+  categories?: Prisma.CategoryUncheckedCreateNestedManyWithoutUserInput
+  transactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUserInput
+  goals?: Prisma.GoalUncheckedCreateNestedManyWithoutUserInput
+  goalContributions?: Prisma.GoalContributionUncheckedCreateNestedManyWithoutUserInput
+  budgets?: Prisma.BudgetUncheckedCreateNestedManyWithoutUserInput
+  resetTokens?: Prisma.PasswordResetTokenUncheckedCreateNestedManyWithoutUserInput
+  leakReclaims?: Prisma.LeakReclaimUncheckedCreateNestedManyWithoutUserInput
+  transfers?: Prisma.TransferUncheckedCreateNestedManyWithoutUserInput
+  googleSheetsConnection?: Prisma.GoogleSheetsConnectionUncheckedCreateNestedOneWithoutUserInput
+  syncRuns?: Prisma.SyncRunUncheckedCreateNestedManyWithoutUserInput
+}
+
+export type UserCreateOrConnectWithoutValuationsInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutValuationsInput, Prisma.UserUncheckedCreateWithoutValuationsInput>
+}
+
+export type UserUpsertWithoutValuationsInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutValuationsInput, Prisma.UserUncheckedUpdateWithoutValuationsInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutValuationsInput, Prisma.UserUncheckedCreateWithoutValuationsInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutValuationsInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutValuationsInput, Prisma.UserUncheckedUpdateWithoutValuationsInput>
+}
+
+export type UserUpdateWithoutValuationsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
+  accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
+  categories?: Prisma.CategoryUpdateManyWithoutUserNestedInput
+  transactions?: Prisma.TransactionUpdateManyWithoutUserNestedInput
+  goals?: Prisma.GoalUpdateManyWithoutUserNestedInput
+  goalContributions?: Prisma.GoalContributionUpdateManyWithoutUserNestedInput
+  budgets?: Prisma.BudgetUpdateManyWithoutUserNestedInput
+  resetTokens?: Prisma.PasswordResetTokenUpdateManyWithoutUserNestedInput
+  leakReclaims?: Prisma.LeakReclaimUpdateManyWithoutUserNestedInput
+  transfers?: Prisma.TransferUpdateManyWithoutUserNestedInput
+  googleSheetsConnection?: Prisma.GoogleSheetsConnectionUpdateOneWithoutUserNestedInput
+  syncRuns?: Prisma.SyncRunUpdateManyWithoutUserNestedInput
+}
+
+export type UserUncheckedUpdateWithoutValuationsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
+  accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
+  categories?: Prisma.CategoryUncheckedUpdateManyWithoutUserNestedInput
+  transactions?: Prisma.TransactionUncheckedUpdateManyWithoutUserNestedInput
+  goals?: Prisma.GoalUncheckedUpdateManyWithoutUserNestedInput
+  goalContributions?: Prisma.GoalContributionUncheckedUpdateManyWithoutUserNestedInput
+  budgets?: Prisma.BudgetUncheckedUpdateManyWithoutUserNestedInput
+  resetTokens?: Prisma.PasswordResetTokenUncheckedUpdateManyWithoutUserNestedInput
+  leakReclaims?: Prisma.LeakReclaimUncheckedUpdateManyWithoutUserNestedInput
+  transfers?: Prisma.TransferUncheckedUpdateManyWithoutUserNestedInput
+  googleSheetsConnection?: Prisma.GoogleSheetsConnectionUncheckedUpdateOneWithoutUserNestedInput
+  syncRuns?: Prisma.SyncRunUncheckedUpdateManyWithoutUserNestedInput
+}
+
+export type UserCreateWithoutTransfersInput = {
+  id?: string
+  email: string
+  password: string
+  name?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
+  accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
+  categories?: Prisma.CategoryCreateNestedManyWithoutUserInput
+  transactions?: Prisma.TransactionCreateNestedManyWithoutUserInput
+  goals?: Prisma.GoalCreateNestedManyWithoutUserInput
+  goalContributions?: Prisma.GoalContributionCreateNestedManyWithoutUserInput
+  budgets?: Prisma.BudgetCreateNestedManyWithoutUserInput
+  resetTokens?: Prisma.PasswordResetTokenCreateNestedManyWithoutUserInput
+  leakReclaims?: Prisma.LeakReclaimCreateNestedManyWithoutUserInput
+  valuations?: Prisma.AccountValuationCreateNestedManyWithoutUserInput
+  googleSheetsConnection?: Prisma.GoogleSheetsConnectionCreateNestedOneWithoutUserInput
+  syncRuns?: Prisma.SyncRunCreateNestedManyWithoutUserInput
+}
+
+export type UserUncheckedCreateWithoutTransfersInput = {
+  id?: string
+  email: string
+  password: string
+  name?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
+  accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
+  categories?: Prisma.CategoryUncheckedCreateNestedManyWithoutUserInput
+  transactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUserInput
+  goals?: Prisma.GoalUncheckedCreateNestedManyWithoutUserInput
+  goalContributions?: Prisma.GoalContributionUncheckedCreateNestedManyWithoutUserInput
+  budgets?: Prisma.BudgetUncheckedCreateNestedManyWithoutUserInput
+  resetTokens?: Prisma.PasswordResetTokenUncheckedCreateNestedManyWithoutUserInput
+  leakReclaims?: Prisma.LeakReclaimUncheckedCreateNestedManyWithoutUserInput
+  valuations?: Prisma.AccountValuationUncheckedCreateNestedManyWithoutUserInput
+  googleSheetsConnection?: Prisma.GoogleSheetsConnectionUncheckedCreateNestedOneWithoutUserInput
+  syncRuns?: Prisma.SyncRunUncheckedCreateNestedManyWithoutUserInput
+}
+
+export type UserCreateOrConnectWithoutTransfersInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutTransfersInput, Prisma.UserUncheckedCreateWithoutTransfersInput>
+}
+
+export type UserUpsertWithoutTransfersInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutTransfersInput, Prisma.UserUncheckedUpdateWithoutTransfersInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutTransfersInput, Prisma.UserUncheckedCreateWithoutTransfersInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutTransfersInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutTransfersInput, Prisma.UserUncheckedUpdateWithoutTransfersInput>
+}
+
+export type UserUpdateWithoutTransfersInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
+  accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
+  categories?: Prisma.CategoryUpdateManyWithoutUserNestedInput
+  transactions?: Prisma.TransactionUpdateManyWithoutUserNestedInput
+  goals?: Prisma.GoalUpdateManyWithoutUserNestedInput
+  goalContributions?: Prisma.GoalContributionUpdateManyWithoutUserNestedInput
+  budgets?: Prisma.BudgetUpdateManyWithoutUserNestedInput
+  resetTokens?: Prisma.PasswordResetTokenUpdateManyWithoutUserNestedInput
+  leakReclaims?: Prisma.LeakReclaimUpdateManyWithoutUserNestedInput
+  valuations?: Prisma.AccountValuationUpdateManyWithoutUserNestedInput
+  googleSheetsConnection?: Prisma.GoogleSheetsConnectionUpdateOneWithoutUserNestedInput
+  syncRuns?: Prisma.SyncRunUpdateManyWithoutUserNestedInput
+}
+
+export type UserUncheckedUpdateWithoutTransfersInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
+  accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
+  categories?: Prisma.CategoryUncheckedUpdateManyWithoutUserNestedInput
+  transactions?: Prisma.TransactionUncheckedUpdateManyWithoutUserNestedInput
+  goals?: Prisma.GoalUncheckedUpdateManyWithoutUserNestedInput
+  goalContributions?: Prisma.GoalContributionUncheckedUpdateManyWithoutUserNestedInput
+  budgets?: Prisma.BudgetUncheckedUpdateManyWithoutUserNestedInput
+  resetTokens?: Prisma.PasswordResetTokenUncheckedUpdateManyWithoutUserNestedInput
+  leakReclaims?: Prisma.LeakReclaimUncheckedUpdateManyWithoutUserNestedInput
+  valuations?: Prisma.AccountValuationUncheckedUpdateManyWithoutUserNestedInput
   googleSheetsConnection?: Prisma.GoogleSheetsConnectionUncheckedUpdateOneWithoutUserNestedInput
   syncRuns?: Prisma.SyncRunUncheckedUpdateManyWithoutUserNestedInput
 }
@@ -866,6 +1132,8 @@ export type UserCreateWithoutCategoriesInput = {
   budgets?: Prisma.BudgetCreateNestedManyWithoutUserInput
   resetTokens?: Prisma.PasswordResetTokenCreateNestedManyWithoutUserInput
   leakReclaims?: Prisma.LeakReclaimCreateNestedManyWithoutUserInput
+  valuations?: Prisma.AccountValuationCreateNestedManyWithoutUserInput
+  transfers?: Prisma.TransferCreateNestedManyWithoutUserInput
   googleSheetsConnection?: Prisma.GoogleSheetsConnectionCreateNestedOneWithoutUserInput
   syncRuns?: Prisma.SyncRunCreateNestedManyWithoutUserInput
 }
@@ -885,6 +1153,8 @@ export type UserUncheckedCreateWithoutCategoriesInput = {
   budgets?: Prisma.BudgetUncheckedCreateNestedManyWithoutUserInput
   resetTokens?: Prisma.PasswordResetTokenUncheckedCreateNestedManyWithoutUserInput
   leakReclaims?: Prisma.LeakReclaimUncheckedCreateNestedManyWithoutUserInput
+  valuations?: Prisma.AccountValuationUncheckedCreateNestedManyWithoutUserInput
+  transfers?: Prisma.TransferUncheckedCreateNestedManyWithoutUserInput
   googleSheetsConnection?: Prisma.GoogleSheetsConnectionUncheckedCreateNestedOneWithoutUserInput
   syncRuns?: Prisma.SyncRunUncheckedCreateNestedManyWithoutUserInput
 }
@@ -920,6 +1190,8 @@ export type UserUpdateWithoutCategoriesInput = {
   budgets?: Prisma.BudgetUpdateManyWithoutUserNestedInput
   resetTokens?: Prisma.PasswordResetTokenUpdateManyWithoutUserNestedInput
   leakReclaims?: Prisma.LeakReclaimUpdateManyWithoutUserNestedInput
+  valuations?: Prisma.AccountValuationUpdateManyWithoutUserNestedInput
+  transfers?: Prisma.TransferUpdateManyWithoutUserNestedInput
   googleSheetsConnection?: Prisma.GoogleSheetsConnectionUpdateOneWithoutUserNestedInput
   syncRuns?: Prisma.SyncRunUpdateManyWithoutUserNestedInput
 }
@@ -939,6 +1211,8 @@ export type UserUncheckedUpdateWithoutCategoriesInput = {
   budgets?: Prisma.BudgetUncheckedUpdateManyWithoutUserNestedInput
   resetTokens?: Prisma.PasswordResetTokenUncheckedUpdateManyWithoutUserNestedInput
   leakReclaims?: Prisma.LeakReclaimUncheckedUpdateManyWithoutUserNestedInput
+  valuations?: Prisma.AccountValuationUncheckedUpdateManyWithoutUserNestedInput
+  transfers?: Prisma.TransferUncheckedUpdateManyWithoutUserNestedInput
   googleSheetsConnection?: Prisma.GoogleSheetsConnectionUncheckedUpdateOneWithoutUserNestedInput
   syncRuns?: Prisma.SyncRunUncheckedUpdateManyWithoutUserNestedInput
 }
@@ -958,6 +1232,8 @@ export type UserCreateWithoutTransactionsInput = {
   budgets?: Prisma.BudgetCreateNestedManyWithoutUserInput
   resetTokens?: Prisma.PasswordResetTokenCreateNestedManyWithoutUserInput
   leakReclaims?: Prisma.LeakReclaimCreateNestedManyWithoutUserInput
+  valuations?: Prisma.AccountValuationCreateNestedManyWithoutUserInput
+  transfers?: Prisma.TransferCreateNestedManyWithoutUserInput
   googleSheetsConnection?: Prisma.GoogleSheetsConnectionCreateNestedOneWithoutUserInput
   syncRuns?: Prisma.SyncRunCreateNestedManyWithoutUserInput
 }
@@ -977,6 +1253,8 @@ export type UserUncheckedCreateWithoutTransactionsInput = {
   budgets?: Prisma.BudgetUncheckedCreateNestedManyWithoutUserInput
   resetTokens?: Prisma.PasswordResetTokenUncheckedCreateNestedManyWithoutUserInput
   leakReclaims?: Prisma.LeakReclaimUncheckedCreateNestedManyWithoutUserInput
+  valuations?: Prisma.AccountValuationUncheckedCreateNestedManyWithoutUserInput
+  transfers?: Prisma.TransferUncheckedCreateNestedManyWithoutUserInput
   googleSheetsConnection?: Prisma.GoogleSheetsConnectionUncheckedCreateNestedOneWithoutUserInput
   syncRuns?: Prisma.SyncRunUncheckedCreateNestedManyWithoutUserInput
 }
@@ -1012,6 +1290,8 @@ export type UserUpdateWithoutTransactionsInput = {
   budgets?: Prisma.BudgetUpdateManyWithoutUserNestedInput
   resetTokens?: Prisma.PasswordResetTokenUpdateManyWithoutUserNestedInput
   leakReclaims?: Prisma.LeakReclaimUpdateManyWithoutUserNestedInput
+  valuations?: Prisma.AccountValuationUpdateManyWithoutUserNestedInput
+  transfers?: Prisma.TransferUpdateManyWithoutUserNestedInput
   googleSheetsConnection?: Prisma.GoogleSheetsConnectionUpdateOneWithoutUserNestedInput
   syncRuns?: Prisma.SyncRunUpdateManyWithoutUserNestedInput
 }
@@ -1031,6 +1311,8 @@ export type UserUncheckedUpdateWithoutTransactionsInput = {
   budgets?: Prisma.BudgetUncheckedUpdateManyWithoutUserNestedInput
   resetTokens?: Prisma.PasswordResetTokenUncheckedUpdateManyWithoutUserNestedInput
   leakReclaims?: Prisma.LeakReclaimUncheckedUpdateManyWithoutUserNestedInput
+  valuations?: Prisma.AccountValuationUncheckedUpdateManyWithoutUserNestedInput
+  transfers?: Prisma.TransferUncheckedUpdateManyWithoutUserNestedInput
   googleSheetsConnection?: Prisma.GoogleSheetsConnectionUncheckedUpdateOneWithoutUserNestedInput
   syncRuns?: Prisma.SyncRunUncheckedUpdateManyWithoutUserNestedInput
 }
@@ -1050,6 +1332,8 @@ export type UserCreateWithoutGoalsInput = {
   budgets?: Prisma.BudgetCreateNestedManyWithoutUserInput
   resetTokens?: Prisma.PasswordResetTokenCreateNestedManyWithoutUserInput
   leakReclaims?: Prisma.LeakReclaimCreateNestedManyWithoutUserInput
+  valuations?: Prisma.AccountValuationCreateNestedManyWithoutUserInput
+  transfers?: Prisma.TransferCreateNestedManyWithoutUserInput
   googleSheetsConnection?: Prisma.GoogleSheetsConnectionCreateNestedOneWithoutUserInput
   syncRuns?: Prisma.SyncRunCreateNestedManyWithoutUserInput
 }
@@ -1069,6 +1353,8 @@ export type UserUncheckedCreateWithoutGoalsInput = {
   budgets?: Prisma.BudgetUncheckedCreateNestedManyWithoutUserInput
   resetTokens?: Prisma.PasswordResetTokenUncheckedCreateNestedManyWithoutUserInput
   leakReclaims?: Prisma.LeakReclaimUncheckedCreateNestedManyWithoutUserInput
+  valuations?: Prisma.AccountValuationUncheckedCreateNestedManyWithoutUserInput
+  transfers?: Prisma.TransferUncheckedCreateNestedManyWithoutUserInput
   googleSheetsConnection?: Prisma.GoogleSheetsConnectionUncheckedCreateNestedOneWithoutUserInput
   syncRuns?: Prisma.SyncRunUncheckedCreateNestedManyWithoutUserInput
 }
@@ -1104,6 +1390,8 @@ export type UserUpdateWithoutGoalsInput = {
   budgets?: Prisma.BudgetUpdateManyWithoutUserNestedInput
   resetTokens?: Prisma.PasswordResetTokenUpdateManyWithoutUserNestedInput
   leakReclaims?: Prisma.LeakReclaimUpdateManyWithoutUserNestedInput
+  valuations?: Prisma.AccountValuationUpdateManyWithoutUserNestedInput
+  transfers?: Prisma.TransferUpdateManyWithoutUserNestedInput
   googleSheetsConnection?: Prisma.GoogleSheetsConnectionUpdateOneWithoutUserNestedInput
   syncRuns?: Prisma.SyncRunUpdateManyWithoutUserNestedInput
 }
@@ -1123,6 +1411,8 @@ export type UserUncheckedUpdateWithoutGoalsInput = {
   budgets?: Prisma.BudgetUncheckedUpdateManyWithoutUserNestedInput
   resetTokens?: Prisma.PasswordResetTokenUncheckedUpdateManyWithoutUserNestedInput
   leakReclaims?: Prisma.LeakReclaimUncheckedUpdateManyWithoutUserNestedInput
+  valuations?: Prisma.AccountValuationUncheckedUpdateManyWithoutUserNestedInput
+  transfers?: Prisma.TransferUncheckedUpdateManyWithoutUserNestedInput
   googleSheetsConnection?: Prisma.GoogleSheetsConnectionUncheckedUpdateOneWithoutUserNestedInput
   syncRuns?: Prisma.SyncRunUncheckedUpdateManyWithoutUserNestedInput
 }
@@ -1142,6 +1432,8 @@ export type UserCreateWithoutGoalContributionsInput = {
   budgets?: Prisma.BudgetCreateNestedManyWithoutUserInput
   resetTokens?: Prisma.PasswordResetTokenCreateNestedManyWithoutUserInput
   leakReclaims?: Prisma.LeakReclaimCreateNestedManyWithoutUserInput
+  valuations?: Prisma.AccountValuationCreateNestedManyWithoutUserInput
+  transfers?: Prisma.TransferCreateNestedManyWithoutUserInput
   googleSheetsConnection?: Prisma.GoogleSheetsConnectionCreateNestedOneWithoutUserInput
   syncRuns?: Prisma.SyncRunCreateNestedManyWithoutUserInput
 }
@@ -1161,6 +1453,8 @@ export type UserUncheckedCreateWithoutGoalContributionsInput = {
   budgets?: Prisma.BudgetUncheckedCreateNestedManyWithoutUserInput
   resetTokens?: Prisma.PasswordResetTokenUncheckedCreateNestedManyWithoutUserInput
   leakReclaims?: Prisma.LeakReclaimUncheckedCreateNestedManyWithoutUserInput
+  valuations?: Prisma.AccountValuationUncheckedCreateNestedManyWithoutUserInput
+  transfers?: Prisma.TransferUncheckedCreateNestedManyWithoutUserInput
   googleSheetsConnection?: Prisma.GoogleSheetsConnectionUncheckedCreateNestedOneWithoutUserInput
   syncRuns?: Prisma.SyncRunUncheckedCreateNestedManyWithoutUserInput
 }
@@ -1196,6 +1490,8 @@ export type UserUpdateWithoutGoalContributionsInput = {
   budgets?: Prisma.BudgetUpdateManyWithoutUserNestedInput
   resetTokens?: Prisma.PasswordResetTokenUpdateManyWithoutUserNestedInput
   leakReclaims?: Prisma.LeakReclaimUpdateManyWithoutUserNestedInput
+  valuations?: Prisma.AccountValuationUpdateManyWithoutUserNestedInput
+  transfers?: Prisma.TransferUpdateManyWithoutUserNestedInput
   googleSheetsConnection?: Prisma.GoogleSheetsConnectionUpdateOneWithoutUserNestedInput
   syncRuns?: Prisma.SyncRunUpdateManyWithoutUserNestedInput
 }
@@ -1215,6 +1511,8 @@ export type UserUncheckedUpdateWithoutGoalContributionsInput = {
   budgets?: Prisma.BudgetUncheckedUpdateManyWithoutUserNestedInput
   resetTokens?: Prisma.PasswordResetTokenUncheckedUpdateManyWithoutUserNestedInput
   leakReclaims?: Prisma.LeakReclaimUncheckedUpdateManyWithoutUserNestedInput
+  valuations?: Prisma.AccountValuationUncheckedUpdateManyWithoutUserNestedInput
+  transfers?: Prisma.TransferUncheckedUpdateManyWithoutUserNestedInput
   googleSheetsConnection?: Prisma.GoogleSheetsConnectionUncheckedUpdateOneWithoutUserNestedInput
   syncRuns?: Prisma.SyncRunUncheckedUpdateManyWithoutUserNestedInput
 }
@@ -1234,6 +1532,8 @@ export type UserCreateWithoutLeakReclaimsInput = {
   goalContributions?: Prisma.GoalContributionCreateNestedManyWithoutUserInput
   budgets?: Prisma.BudgetCreateNestedManyWithoutUserInput
   resetTokens?: Prisma.PasswordResetTokenCreateNestedManyWithoutUserInput
+  valuations?: Prisma.AccountValuationCreateNestedManyWithoutUserInput
+  transfers?: Prisma.TransferCreateNestedManyWithoutUserInput
   googleSheetsConnection?: Prisma.GoogleSheetsConnectionCreateNestedOneWithoutUserInput
   syncRuns?: Prisma.SyncRunCreateNestedManyWithoutUserInput
 }
@@ -1253,6 +1553,8 @@ export type UserUncheckedCreateWithoutLeakReclaimsInput = {
   goalContributions?: Prisma.GoalContributionUncheckedCreateNestedManyWithoutUserInput
   budgets?: Prisma.BudgetUncheckedCreateNestedManyWithoutUserInput
   resetTokens?: Prisma.PasswordResetTokenUncheckedCreateNestedManyWithoutUserInput
+  valuations?: Prisma.AccountValuationUncheckedCreateNestedManyWithoutUserInput
+  transfers?: Prisma.TransferUncheckedCreateNestedManyWithoutUserInput
   googleSheetsConnection?: Prisma.GoogleSheetsConnectionUncheckedCreateNestedOneWithoutUserInput
   syncRuns?: Prisma.SyncRunUncheckedCreateNestedManyWithoutUserInput
 }
@@ -1288,6 +1590,8 @@ export type UserUpdateWithoutLeakReclaimsInput = {
   goalContributions?: Prisma.GoalContributionUpdateManyWithoutUserNestedInput
   budgets?: Prisma.BudgetUpdateManyWithoutUserNestedInput
   resetTokens?: Prisma.PasswordResetTokenUpdateManyWithoutUserNestedInput
+  valuations?: Prisma.AccountValuationUpdateManyWithoutUserNestedInput
+  transfers?: Prisma.TransferUpdateManyWithoutUserNestedInput
   googleSheetsConnection?: Prisma.GoogleSheetsConnectionUpdateOneWithoutUserNestedInput
   syncRuns?: Prisma.SyncRunUpdateManyWithoutUserNestedInput
 }
@@ -1307,6 +1611,8 @@ export type UserUncheckedUpdateWithoutLeakReclaimsInput = {
   goalContributions?: Prisma.GoalContributionUncheckedUpdateManyWithoutUserNestedInput
   budgets?: Prisma.BudgetUncheckedUpdateManyWithoutUserNestedInput
   resetTokens?: Prisma.PasswordResetTokenUncheckedUpdateManyWithoutUserNestedInput
+  valuations?: Prisma.AccountValuationUncheckedUpdateManyWithoutUserNestedInput
+  transfers?: Prisma.TransferUncheckedUpdateManyWithoutUserNestedInput
   googleSheetsConnection?: Prisma.GoogleSheetsConnectionUncheckedUpdateOneWithoutUserNestedInput
   syncRuns?: Prisma.SyncRunUncheckedUpdateManyWithoutUserNestedInput
 }
@@ -1326,6 +1632,8 @@ export type UserCreateWithoutBudgetsInput = {
   goalContributions?: Prisma.GoalContributionCreateNestedManyWithoutUserInput
   resetTokens?: Prisma.PasswordResetTokenCreateNestedManyWithoutUserInput
   leakReclaims?: Prisma.LeakReclaimCreateNestedManyWithoutUserInput
+  valuations?: Prisma.AccountValuationCreateNestedManyWithoutUserInput
+  transfers?: Prisma.TransferCreateNestedManyWithoutUserInput
   googleSheetsConnection?: Prisma.GoogleSheetsConnectionCreateNestedOneWithoutUserInput
   syncRuns?: Prisma.SyncRunCreateNestedManyWithoutUserInput
 }
@@ -1345,6 +1653,8 @@ export type UserUncheckedCreateWithoutBudgetsInput = {
   goalContributions?: Prisma.GoalContributionUncheckedCreateNestedManyWithoutUserInput
   resetTokens?: Prisma.PasswordResetTokenUncheckedCreateNestedManyWithoutUserInput
   leakReclaims?: Prisma.LeakReclaimUncheckedCreateNestedManyWithoutUserInput
+  valuations?: Prisma.AccountValuationUncheckedCreateNestedManyWithoutUserInput
+  transfers?: Prisma.TransferUncheckedCreateNestedManyWithoutUserInput
   googleSheetsConnection?: Prisma.GoogleSheetsConnectionUncheckedCreateNestedOneWithoutUserInput
   syncRuns?: Prisma.SyncRunUncheckedCreateNestedManyWithoutUserInput
 }
@@ -1380,6 +1690,8 @@ export type UserUpdateWithoutBudgetsInput = {
   goalContributions?: Prisma.GoalContributionUpdateManyWithoutUserNestedInput
   resetTokens?: Prisma.PasswordResetTokenUpdateManyWithoutUserNestedInput
   leakReclaims?: Prisma.LeakReclaimUpdateManyWithoutUserNestedInput
+  valuations?: Prisma.AccountValuationUpdateManyWithoutUserNestedInput
+  transfers?: Prisma.TransferUpdateManyWithoutUserNestedInput
   googleSheetsConnection?: Prisma.GoogleSheetsConnectionUpdateOneWithoutUserNestedInput
   syncRuns?: Prisma.SyncRunUpdateManyWithoutUserNestedInput
 }
@@ -1399,6 +1711,8 @@ export type UserUncheckedUpdateWithoutBudgetsInput = {
   goalContributions?: Prisma.GoalContributionUncheckedUpdateManyWithoutUserNestedInput
   resetTokens?: Prisma.PasswordResetTokenUncheckedUpdateManyWithoutUserNestedInput
   leakReclaims?: Prisma.LeakReclaimUncheckedUpdateManyWithoutUserNestedInput
+  valuations?: Prisma.AccountValuationUncheckedUpdateManyWithoutUserNestedInput
+  transfers?: Prisma.TransferUncheckedUpdateManyWithoutUserNestedInput
   googleSheetsConnection?: Prisma.GoogleSheetsConnectionUncheckedUpdateOneWithoutUserNestedInput
   syncRuns?: Prisma.SyncRunUncheckedUpdateManyWithoutUserNestedInput
 }
@@ -1419,6 +1733,8 @@ export type UserCreateWithoutGoogleSheetsConnectionInput = {
   budgets?: Prisma.BudgetCreateNestedManyWithoutUserInput
   resetTokens?: Prisma.PasswordResetTokenCreateNestedManyWithoutUserInput
   leakReclaims?: Prisma.LeakReclaimCreateNestedManyWithoutUserInput
+  valuations?: Prisma.AccountValuationCreateNestedManyWithoutUserInput
+  transfers?: Prisma.TransferCreateNestedManyWithoutUserInput
   syncRuns?: Prisma.SyncRunCreateNestedManyWithoutUserInput
 }
 
@@ -1438,6 +1754,8 @@ export type UserUncheckedCreateWithoutGoogleSheetsConnectionInput = {
   budgets?: Prisma.BudgetUncheckedCreateNestedManyWithoutUserInput
   resetTokens?: Prisma.PasswordResetTokenUncheckedCreateNestedManyWithoutUserInput
   leakReclaims?: Prisma.LeakReclaimUncheckedCreateNestedManyWithoutUserInput
+  valuations?: Prisma.AccountValuationUncheckedCreateNestedManyWithoutUserInput
+  transfers?: Prisma.TransferUncheckedCreateNestedManyWithoutUserInput
   syncRuns?: Prisma.SyncRunUncheckedCreateNestedManyWithoutUserInput
 }
 
@@ -1473,6 +1791,8 @@ export type UserUpdateWithoutGoogleSheetsConnectionInput = {
   budgets?: Prisma.BudgetUpdateManyWithoutUserNestedInput
   resetTokens?: Prisma.PasswordResetTokenUpdateManyWithoutUserNestedInput
   leakReclaims?: Prisma.LeakReclaimUpdateManyWithoutUserNestedInput
+  valuations?: Prisma.AccountValuationUpdateManyWithoutUserNestedInput
+  transfers?: Prisma.TransferUpdateManyWithoutUserNestedInput
   syncRuns?: Prisma.SyncRunUpdateManyWithoutUserNestedInput
 }
 
@@ -1492,6 +1812,8 @@ export type UserUncheckedUpdateWithoutGoogleSheetsConnectionInput = {
   budgets?: Prisma.BudgetUncheckedUpdateManyWithoutUserNestedInput
   resetTokens?: Prisma.PasswordResetTokenUncheckedUpdateManyWithoutUserNestedInput
   leakReclaims?: Prisma.LeakReclaimUncheckedUpdateManyWithoutUserNestedInput
+  valuations?: Prisma.AccountValuationUncheckedUpdateManyWithoutUserNestedInput
+  transfers?: Prisma.TransferUncheckedUpdateManyWithoutUserNestedInput
   syncRuns?: Prisma.SyncRunUncheckedUpdateManyWithoutUserNestedInput
 }
 
@@ -1511,6 +1833,8 @@ export type UserCreateWithoutSyncRunsInput = {
   budgets?: Prisma.BudgetCreateNestedManyWithoutUserInput
   resetTokens?: Prisma.PasswordResetTokenCreateNestedManyWithoutUserInput
   leakReclaims?: Prisma.LeakReclaimCreateNestedManyWithoutUserInput
+  valuations?: Prisma.AccountValuationCreateNestedManyWithoutUserInput
+  transfers?: Prisma.TransferCreateNestedManyWithoutUserInput
   googleSheetsConnection?: Prisma.GoogleSheetsConnectionCreateNestedOneWithoutUserInput
 }
 
@@ -1530,6 +1854,8 @@ export type UserUncheckedCreateWithoutSyncRunsInput = {
   budgets?: Prisma.BudgetUncheckedCreateNestedManyWithoutUserInput
   resetTokens?: Prisma.PasswordResetTokenUncheckedCreateNestedManyWithoutUserInput
   leakReclaims?: Prisma.LeakReclaimUncheckedCreateNestedManyWithoutUserInput
+  valuations?: Prisma.AccountValuationUncheckedCreateNestedManyWithoutUserInput
+  transfers?: Prisma.TransferUncheckedCreateNestedManyWithoutUserInput
   googleSheetsConnection?: Prisma.GoogleSheetsConnectionUncheckedCreateNestedOneWithoutUserInput
 }
 
@@ -1565,6 +1891,8 @@ export type UserUpdateWithoutSyncRunsInput = {
   budgets?: Prisma.BudgetUpdateManyWithoutUserNestedInput
   resetTokens?: Prisma.PasswordResetTokenUpdateManyWithoutUserNestedInput
   leakReclaims?: Prisma.LeakReclaimUpdateManyWithoutUserNestedInput
+  valuations?: Prisma.AccountValuationUpdateManyWithoutUserNestedInput
+  transfers?: Prisma.TransferUpdateManyWithoutUserNestedInput
   googleSheetsConnection?: Prisma.GoogleSheetsConnectionUpdateOneWithoutUserNestedInput
 }
 
@@ -1584,6 +1912,8 @@ export type UserUncheckedUpdateWithoutSyncRunsInput = {
   budgets?: Prisma.BudgetUncheckedUpdateManyWithoutUserNestedInput
   resetTokens?: Prisma.PasswordResetTokenUncheckedUpdateManyWithoutUserNestedInput
   leakReclaims?: Prisma.LeakReclaimUncheckedUpdateManyWithoutUserNestedInput
+  valuations?: Prisma.AccountValuationUncheckedUpdateManyWithoutUserNestedInput
+  transfers?: Prisma.TransferUncheckedUpdateManyWithoutUserNestedInput
   googleSheetsConnection?: Prisma.GoogleSheetsConnectionUncheckedUpdateOneWithoutUserNestedInput
 }
 
@@ -1602,6 +1932,8 @@ export type UserCountOutputType = {
   budgets: number
   resetTokens: number
   leakReclaims: number
+  valuations: number
+  transfers: number
   syncRuns: number
 }
 
@@ -1615,6 +1947,8 @@ export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.I
   budgets?: boolean | UserCountOutputTypeCountBudgetsArgs
   resetTokens?: boolean | UserCountOutputTypeCountResetTokensArgs
   leakReclaims?: boolean | UserCountOutputTypeCountLeakReclaimsArgs
+  valuations?: boolean | UserCountOutputTypeCountValuationsArgs
+  transfers?: boolean | UserCountOutputTypeCountTransfersArgs
   syncRuns?: boolean | UserCountOutputTypeCountSyncRunsArgs
 }
 
@@ -1694,6 +2028,20 @@ export type UserCountOutputTypeCountLeakReclaimsArgs<ExtArgs extends runtime.Typ
 /**
  * UserCountOutputType without action
  */
+export type UserCountOutputTypeCountValuationsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.AccountValuationWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountTransfersArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.TransferWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
 export type UserCountOutputTypeCountSyncRunsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.SyncRunWhereInput
 }
@@ -1715,6 +2063,8 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   budgets?: boolean | Prisma.User$budgetsArgs<ExtArgs>
   resetTokens?: boolean | Prisma.User$resetTokensArgs<ExtArgs>
   leakReclaims?: boolean | Prisma.User$leakReclaimsArgs<ExtArgs>
+  valuations?: boolean | Prisma.User$valuationsArgs<ExtArgs>
+  transfers?: boolean | Prisma.User$transfersArgs<ExtArgs>
   googleSheetsConnection?: boolean | Prisma.User$googleSheetsConnectionArgs<ExtArgs>
   syncRuns?: boolean | Prisma.User$syncRunsArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
@@ -1758,6 +2108,8 @@ export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   budgets?: boolean | Prisma.User$budgetsArgs<ExtArgs>
   resetTokens?: boolean | Prisma.User$resetTokensArgs<ExtArgs>
   leakReclaims?: boolean | Prisma.User$leakReclaimsArgs<ExtArgs>
+  valuations?: boolean | Prisma.User$valuationsArgs<ExtArgs>
+  transfers?: boolean | Prisma.User$transfersArgs<ExtArgs>
   googleSheetsConnection?: boolean | Prisma.User$googleSheetsConnectionArgs<ExtArgs>
   syncRuns?: boolean | Prisma.User$syncRunsArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
@@ -1777,6 +2129,8 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     budgets: Prisma.$BudgetPayload<ExtArgs>[]
     resetTokens: Prisma.$PasswordResetTokenPayload<ExtArgs>[]
     leakReclaims: Prisma.$LeakReclaimPayload<ExtArgs>[]
+    valuations: Prisma.$AccountValuationPayload<ExtArgs>[]
+    transfers: Prisma.$TransferPayload<ExtArgs>[]
     googleSheetsConnection: Prisma.$GoogleSheetsConnectionPayload<ExtArgs> | null
     syncRuns: Prisma.$SyncRunPayload<ExtArgs>[]
   }
@@ -2190,6 +2544,8 @@ export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Typ
   budgets<T extends Prisma.User$budgetsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$budgetsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$BudgetPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   resetTokens<T extends Prisma.User$resetTokensArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$resetTokensArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PasswordResetTokenPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   leakReclaims<T extends Prisma.User$leakReclaimsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$leakReclaimsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$LeakReclaimPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  valuations<T extends Prisma.User$valuationsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$valuationsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AccountValuationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  transfers<T extends Prisma.User$transfersArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$transfersArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TransferPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   googleSheetsConnection<T extends Prisma.User$googleSheetsConnectionArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$googleSheetsConnectionArgs<ExtArgs>>): Prisma.Prisma__GoogleSheetsConnectionClient<runtime.Types.Result.GetResult<Prisma.$GoogleSheetsConnectionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   syncRuns<T extends Prisma.User$syncRunsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$syncRunsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SyncRunPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
@@ -2828,6 +3184,54 @@ export type User$leakReclaimsArgs<ExtArgs extends runtime.Types.Extensions.Inter
   take?: number
   skip?: number
   distinct?: Prisma.LeakReclaimScalarFieldEnum | Prisma.LeakReclaimScalarFieldEnum[]
+}
+
+/**
+ * User.valuations
+ */
+export type User$valuationsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the AccountValuation
+   */
+  select?: Prisma.AccountValuationSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the AccountValuation
+   */
+  omit?: Prisma.AccountValuationOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.AccountValuationInclude<ExtArgs> | null
+  where?: Prisma.AccountValuationWhereInput
+  orderBy?: Prisma.AccountValuationOrderByWithRelationInput | Prisma.AccountValuationOrderByWithRelationInput[]
+  cursor?: Prisma.AccountValuationWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.AccountValuationScalarFieldEnum | Prisma.AccountValuationScalarFieldEnum[]
+}
+
+/**
+ * User.transfers
+ */
+export type User$transfersArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Transfer
+   */
+  select?: Prisma.TransferSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Transfer
+   */
+  omit?: Prisma.TransferOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.TransferInclude<ExtArgs> | null
+  where?: Prisma.TransferWhereInput
+  orderBy?: Prisma.TransferOrderByWithRelationInput | Prisma.TransferOrderByWithRelationInput[]
+  cursor?: Prisma.TransferWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.TransferScalarFieldEnum | Prisma.TransferScalarFieldEnum[]
 }
 
 /**

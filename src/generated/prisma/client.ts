@@ -58,6 +58,18 @@ export type PasswordResetToken = Prisma.PasswordResetTokenModel
  */
 export type Account = Prisma.AccountModel
 /**
+ * Model AccountValuation
+ * A balance the user entered for an investment wallet. Append-only; only the
+ * latest one of a wallet can be soft-deleted.
+ */
+export type AccountValuation = Prisma.AccountValuationModel
+/**
+ * Model Transfer
+ * Money moved between two of the user's wallets. Not income or expense, so it
+ * never reaches budgets, leak rate or the transaction list.
+ */
+export type Transfer = Prisma.TransferModel
+/**
  * Model Category
  * 
  */

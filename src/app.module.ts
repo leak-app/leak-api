@@ -19,6 +19,8 @@ import { MailModule } from './modules/mail/mail.module';
 import { OutcomesModule } from './modules/outcomes/outcomes.module';
 import { ReclaimModule } from './modules/reclaim/reclaim.module';
 import { SyncModule } from './modules/sync/sync.module';
+import { TransfersModule } from './modules/transfers/transfers.module';
+import { ValuationsModule } from './modules/valuations/valuations.module';
 
 @Module({
   imports: [
@@ -36,6 +38,8 @@ import { SyncModule } from './modules/sync/sync.module';
     OutcomesModule,
     ReclaimModule,
     SyncModule,
+    ValuationsModule,
+    TransfersModule,
   ],
   controllers: [],
   providers: [

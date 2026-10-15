@@ -2,6 +2,7 @@ import { ConflictException, NotFoundException } from '@nestjs/common';
 import type { PrismaService } from '@/common/prisma.service';
 import { AccountType, Prisma } from '@/generated/prisma/client';
 import type { LedgerService } from '@/modules/transactions/ledger.service';
+import type { ValuationsService } from '@/modules/valuations/valuations.service';
 import { WalletService } from './wallets.service';
 
 /* eslint-disable @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access */
@@ -28,6 +29,7 @@ function createPrismaMock() {
       create: jest.fn().mockResolvedValue(cash),
       update: jest.fn().mockResolvedValue(cash),
     },
+    accountValuation: { count: jest.fn().mockResolvedValue(0) },
   };
   prisma.$transaction.mockImplementation((fn: (tx: unknown) => unknown) =>
     fn(prisma),
@@ -38,14 +40,17 @@ function createPrismaMock() {
 describe('WalletService', () => {
   let prisma: ReturnType<typeof createPrismaMock>;
   let ledger: { shiftInitialBalance: jest.Mock };
+  let valuations: { summarize: jest.Mock };
   let service: WalletService;
 
   beforeEach(() => {
     prisma = createPrismaMock();
     ledger = { shiftInitialBalance: jest.fn().mockResolvedValue(undefined) };
+    valuations = { summarize: jest.fn().mockResolvedValue(new Map()) };
     service = new WalletService(
       prisma as unknown as PrismaService,
       ledger as unknown as LedgerService,
+      valuations as unknown as ValuationsService,
     );
   });
 
@@ -55,6 +60,18 @@ describe('WalletService', () => {
       where: { userId, isDeleted: false },
       orderBy: { createdAt: 'asc' },
     });
+  });
+
+  it('findAll attaches profit figures to investment wallets and null to the rest', async () => {
+    const fund = { ...cash, id: 'fund', type: AccountType.INVESTMENT };
+    prisma.account.findMany.mockResolvedValue([cash, fund]);
+    const summary = { hasValuations: true };
+    valuations.summarize.mockResolvedValue(new Map([['fund', summary]]));
+
+    const result = await service.findAll(userId);
+
+    expect(result[0]).toMatchObject({ id: 'cash', valuation: null });
+    expect(result[1]).toMatchObject({ id: 'fund', valuation: summary });
   });
 
   describe('update', () => {
@@ -84,6 +101,30 @@ describe('WalletService', () => {
         where: { id: 'cash' },
         data: { name: 'Ví chính' },
       });
+    });
+
+    it('refuses to move the opening balance of an investment wallet that has updates', async () => {
+      prisma.account.findFirst.mockResolvedValue({
+        ...cash,
+        type: AccountType.INVESTMENT,
+      });
+      prisma.accountValuation.count.mockResolvedValue(1);
+
+      await expect(
+        service.update(userId, 'cash', { initialBalance: 1 }),
+      ).rejects.toBeInstanceOf(ConflictException);
+      expect(ledger.shiftInitialBalance).not.toHaveBeenCalled();
+    });
+
+    it('still renames an investment wallet that has updates', async () => {
+      prisma.account.findFirst.mockResolvedValue({
+        ...cash,
+        type: AccountType.INVESTMENT,
+      });
+      prisma.accountValuation.count.mockResolvedValue(1);
+
+      await service.update(userId, 'cash', { name: 'Quỹ' });
+      expect(prisma.account.update).toHaveBeenCalled();
     });
 
     it('never writes currentBalance directly', async () => {

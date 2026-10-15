@@ -388,6 +388,8 @@ export const ModelName = {
   Session: 'Session',
   PasswordResetToken: 'PasswordResetToken',
   Account: 'Account',
+  AccountValuation: 'AccountValuation',
+  Transfer: 'Transfer',
   Category: 'Category',
   Transaction: 'Transaction',
   Goal: 'Goal',
@@ -411,7 +413,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "session" | "passwordResetToken" | "account" | "category" | "transaction" | "goal" | "goalContribution" | "leakReclaim" | "budget" | "googleSheetsConnection" | "syncRun"
+    modelProps: "user" | "session" | "passwordResetToken" | "account" | "accountValuation" | "transfer" | "category" | "transaction" | "goal" | "goalContribution" | "leakReclaim" | "budget" | "googleSheetsConnection" | "syncRun"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -708,6 +710,154 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.AccountCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.AccountCountAggregateOutputType> | number
+        }
+      }
+    }
+    AccountValuation: {
+      payload: Prisma.$AccountValuationPayload<ExtArgs>
+      fields: Prisma.AccountValuationFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.AccountValuationFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AccountValuationPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.AccountValuationFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AccountValuationPayload>
+        }
+        findFirst: {
+          args: Prisma.AccountValuationFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AccountValuationPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.AccountValuationFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AccountValuationPayload>
+        }
+        findMany: {
+          args: Prisma.AccountValuationFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AccountValuationPayload>[]
+        }
+        create: {
+          args: Prisma.AccountValuationCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AccountValuationPayload>
+        }
+        createMany: {
+          args: Prisma.AccountValuationCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.AccountValuationCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AccountValuationPayload>[]
+        }
+        delete: {
+          args: Prisma.AccountValuationDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AccountValuationPayload>
+        }
+        update: {
+          args: Prisma.AccountValuationUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AccountValuationPayload>
+        }
+        deleteMany: {
+          args: Prisma.AccountValuationDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.AccountValuationUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.AccountValuationUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AccountValuationPayload>[]
+        }
+        upsert: {
+          args: Prisma.AccountValuationUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AccountValuationPayload>
+        }
+        aggregate: {
+          args: Prisma.AccountValuationAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateAccountValuation>
+        }
+        groupBy: {
+          args: Prisma.AccountValuationGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AccountValuationGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.AccountValuationCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AccountValuationCountAggregateOutputType> | number
+        }
+      }
+    }
+    Transfer: {
+      payload: Prisma.$TransferPayload<ExtArgs>
+      fields: Prisma.TransferFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.TransferFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TransferPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.TransferFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TransferPayload>
+        }
+        findFirst: {
+          args: Prisma.TransferFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TransferPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.TransferFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TransferPayload>
+        }
+        findMany: {
+          args: Prisma.TransferFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TransferPayload>[]
+        }
+        create: {
+          args: Prisma.TransferCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TransferPayload>
+        }
+        createMany: {
+          args: Prisma.TransferCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.TransferCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TransferPayload>[]
+        }
+        delete: {
+          args: Prisma.TransferDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TransferPayload>
+        }
+        update: {
+          args: Prisma.TransferUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TransferPayload>
+        }
+        deleteMany: {
+          args: Prisma.TransferDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.TransferUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.TransferUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TransferPayload>[]
+        }
+        upsert: {
+          args: Prisma.TransferUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TransferPayload>
+        }
+        aggregate: {
+          args: Prisma.TransferAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateTransfer>
+        }
+        groupBy: {
+          args: Prisma.TransferGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.TransferGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.TransferCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.TransferCountAggregateOutputType> | number
         }
       }
     }
@@ -1396,6 +1546,41 @@ export const AccountScalarFieldEnum = {
 export type AccountScalarFieldEnum = (typeof AccountScalarFieldEnum)[keyof typeof AccountScalarFieldEnum]
 
 
+export const AccountValuationScalarFieldEnum = {
+  id: 'id',
+  accountId: 'accountId',
+  userId: 'userId',
+  kind: 'kind',
+  valuedAt: 'valuedAt',
+  previousBalance: 'previousBalance',
+  netFlow: 'netFlow',
+  balance: 'balance',
+  gain: 'gain',
+  adjustment: 'adjustment',
+  isDeleted: 'isDeleted',
+  deletedAt: 'deletedAt',
+  createdAt: 'createdAt'
+} as const
+
+export type AccountValuationScalarFieldEnum = (typeof AccountValuationScalarFieldEnum)[keyof typeof AccountValuationScalarFieldEnum]
+
+
+export const TransferScalarFieldEnum = {
+  id: 'id',
+  fromAccountId: 'fromAccountId',
+  toAccountId: 'toAccountId',
+  userId: 'userId',
+  amount: 'amount',
+  note: 'note',
+  occurredAt: 'occurredAt',
+  isDeleted: 'isDeleted',
+  deletedAt: 'deletedAt',
+  createdAt: 'createdAt'
+} as const
+
+export type TransferScalarFieldEnum = (typeof TransferScalarFieldEnum)[keyof typeof TransferScalarFieldEnum]
+
+
 export const CategoryScalarFieldEnum = {
   id: 'id',
   name: 'name',
@@ -1625,6 +1810,20 @@ export type DecimalFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel,
  * Reference to a field of type 'Decimal[]'
  */
 export type ListDecimalFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Decimal[]'>
+    
+
+
+/**
+ * Reference to a field of type 'ValuationKind'
+ */
+export type EnumValuationKindFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ValuationKind'>
+    
+
+
+/**
+ * Reference to a field of type 'ValuationKind[]'
+ */
+export type ListEnumValuationKindFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ValuationKind[]'>
     
 
 
@@ -1866,6 +2065,8 @@ export type GlobalOmitConfig = {
   session?: Prisma.SessionOmit
   passwordResetToken?: Prisma.PasswordResetTokenOmit
   account?: Prisma.AccountOmit
+  accountValuation?: Prisma.AccountValuationOmit
+  transfer?: Prisma.TransferOmit
   category?: Prisma.CategoryOmit
   transaction?: Prisma.TransactionOmit
   goal?: Prisma.GoalOmit
