@@ -8,5 +8,6 @@ import { WalletService } from './wallets.service';
   imports: [TransactionsModule, ValuationsModule],
   controllers: [WalletController],
   providers: [WalletService],
+  exports: [WalletService],
 })
 export class WalletsModule {}
