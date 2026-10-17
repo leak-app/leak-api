@@ -62,6 +62,22 @@ describe('WalletService', () => {
     });
   });
 
+  it('findOptions lists id and name of active wallets without valuation work', async () => {
+    prisma.account.findMany.mockResolvedValue([
+      { id: 'cash', name: 'Tiền mặt' },
+    ]);
+
+    const result = await service.findOptions(userId);
+
+    expect(result).toEqual([{ id: 'cash', name: 'Tiền mặt' }]);
+    expect(prisma.account.findMany).toHaveBeenCalledWith({
+      where: { userId, isDeleted: false },
+      orderBy: { createdAt: 'asc' },
+      select: { id: true, name: true },
+    });
+    expect(valuations.summarize).not.toHaveBeenCalled();
+  });
+
   it('findAll attaches profit figures to investment wallets and null to the rest', async () => {
     const fund = { ...cash, id: 'fund', type: AccountType.INVESTMENT };
     prisma.account.findMany.mockResolvedValue([cash, fund]);

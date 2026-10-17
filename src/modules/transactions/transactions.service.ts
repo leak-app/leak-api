@@ -127,6 +127,16 @@ export class TransactionService {
     };
   }
 
+  /** The caller's latest described transactions, for learning which words mean which category. */
+  async findRecentDescriptions(userId: string) {
+    return this._prisma.transaction.findMany({
+      where: { userId, isDeleted: false, description: { not: null } },
+      orderBy: { createdAt: 'desc' },
+      take: 500,
+      select: { description: true, categoryId: true },
+    });
+  }
+
   async create(userId: string, dto: CreateTransactionDto) {
     // Reports read `createdAt` as the day of the transaction, so a past day goes there.
     const occurredAt = resolveOccurredAt(dto.occurredOn);

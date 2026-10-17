@@ -30,6 +30,15 @@ export class WalletService {
     }));
   }
 
+  /** Id and name of active wallets. Skips the valuation work `findAll` does. */
+  async findOptions(userId: string) {
+    return this._prisma.account.findMany({
+      where: { userId, isDeleted: false },
+      orderBy: { createdAt: 'asc' },
+      select: { id: true, name: true },
+    });
+  }
+
   async create(userId: string, dto: CreateWalletDto) {
     return this._prisma.account.create({
       data: {

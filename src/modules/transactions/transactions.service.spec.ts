@@ -86,6 +86,22 @@ describe('TransactionService', () => {
     );
   });
 
+  it('findRecentDescriptions reads only the caller’s recent, described rows', async () => {
+    prisma.transaction.findMany.mockResolvedValue([
+      { description: 'phở bò', categoryId: 'c1' },
+    ]);
+
+    const rows = await service.findRecentDescriptions(userId);
+
+    expect(rows).toEqual([{ description: 'phở bò', categoryId: 'c1' }]);
+    expect(prisma.transaction.findMany).toHaveBeenCalledWith({
+      where: { userId, isDeleted: false, description: { not: null } },
+      orderBy: { createdAt: 'desc' },
+      take: 500,
+      select: { description: true, categoryId: true },
+    });
+  });
+
   describe('findAll', () => {
     it('excludes soft-deleted rows and includes the wallet', async () => {
       await service.findAll(userId, {});

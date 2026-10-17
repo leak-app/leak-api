@@ -7,6 +7,6 @@ import { WalletResolver } from './wallet-resolver.service';
 @Module({
   controllers: [TransactionController],
   providers: [TransactionService, LedgerService, WalletResolver],
-  exports: [LedgerService, WalletResolver],
+  exports: [TransactionService, LedgerService, WalletResolver],
 })
 export class TransactionsModule {}
