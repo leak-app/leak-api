@@ -95,10 +95,10 @@ if (!apiKey) {
   process.exit(1);
 }
 const ai = new GoogleGenAI({ apiKey });
-// Optional: MINIMAL | LOW | MEDIUM | HIGH. Unset keeps the model default.
-const THINKING = process.env.GEMINI_PROBE_THINKING as
-  | keyof typeof ThinkingLevel
-  | undefined;
+// MINIMAL | LOW | MEDIUM | HIGH. Defaults to MINIMAL: the task is trivial
+// and thinking tokens only add latency.
+const THINKING = (process.env.GEMINI_PROBE_THINKING ??
+  'MINIMAL') as keyof typeof ThinkingLevel;
 const models = (
   process.env.GEMINI_PROBE_MODELS ??
   'gemini-3.5-flash-lite,gemini-3.1-flash-lite'
