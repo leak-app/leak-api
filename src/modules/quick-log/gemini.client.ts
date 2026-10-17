@@ -7,6 +7,12 @@ export interface GeminiClientPort {
   generateJson(request: GeminiRequest): Promise<unknown>;
 }
 
+export interface GeminiUsage {
+  promptTokens: number;
+  outputTokens: number;
+  thoughtTokens: number;
+}
+
 export class GeminiClient implements GeminiClientPort {
   private readonly ai: GoogleGenAI;
 
@@ -14,6 +20,7 @@ export class GeminiClient implements GeminiClientPort {
     apiKey: string,
     private readonly model: string,
     private readonly timeoutMs: number,
+    private readonly onUsage?: (usage: GeminiUsage) => void,
   ) {
     this.ai = new GoogleGenAI({ apiKey });
   }
@@ -32,6 +39,15 @@ export class GeminiClient implements GeminiClientPort {
         thinkingConfig: { thinkingLevel: ThinkingLevel.MINIMAL },
       },
     });
+
+    const usage = response.usageMetadata;
+    if (usage) {
+      this.onUsage?.({
+        promptTokens: usage.promptTokenCount ?? 0,
+        outputTokens: usage.candidatesTokenCount ?? 0,
+        thoughtTokens: usage.thoughtsTokenCount ?? 0,
+      });
+    }
 
     if (!response.text) throw new Error('Gemini returned no text');
     return JSON.parse(response.text) as unknown;

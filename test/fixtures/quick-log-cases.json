@@ -1,0 +1,757 @@
+{
+  "_comment": "Made-up phrases, no real user text. Expected values are the human answer. Categories are the fixed list the cases are scored against.",
+  "categories": [
+    {
+      "id": "cat-0",
+      "name": "Ăn uống",
+      "type": "EXPENSE"
+    },
+    {
+      "id": "cat-1",
+      "name": "Di chuyển",
+      "type": "EXPENSE"
+    },
+    {
+      "id": "cat-2",
+      "name": "Mua sắm",
+      "type": "EXPENSE"
+    },
+    {
+      "id": "cat-3",
+      "name": "Hóa đơn",
+      "type": "EXPENSE"
+    },
+    {
+      "id": "cat-4",
+      "name": "Giải trí",
+      "type": "EXPENSE"
+    },
+    {
+      "id": "cat-5",
+      "name": "Sức khỏe",
+      "type": "EXPENSE"
+    },
+    {
+      "id": "cat-6",
+      "name": "Lương",
+      "type": "INCOME"
+    },
+    {
+      "id": "cat-7",
+      "name": "Thưởng",
+      "type": "INCOME"
+    }
+  ],
+  "wallets": [
+    {
+      "id": "w-cash",
+      "name": "Ví tiền mặt"
+    },
+    {
+      "id": "w-bank",
+      "name": "Techcombank"
+    }
+  ],
+  "cases": [
+    {
+      "text": "55k phở bò",
+      "expectedAmount": 55000,
+      "expectedType": "EXPENSE",
+      "expectedCategory": "Ăn uống",
+      "tags": []
+    },
+    {
+      "text": "35k cà phê sữa",
+      "expectedAmount": 35000,
+      "expectedType": "EXPENSE",
+      "expectedCategory": "Ăn uống",
+      "tags": []
+    },
+    {
+      "text": "hủ tiếu 45k",
+      "expectedAmount": 45000,
+      "expectedType": "EXPENSE",
+      "expectedCategory": "Ăn uống",
+      "tags": ["no-keyword"]
+    },
+    {
+      "text": "bánh xèo 60k",
+      "expectedAmount": 60000,
+      "expectedType": "EXPENSE",
+      "expectedCategory": "Ăn uống",
+      "tags": ["no-keyword"]
+    },
+    {
+      "text": "lẩu thái với team 850k",
+      "expectedAmount": 850000,
+      "expectedType": "EXPENSE",
+      "expectedCategory": "Ăn uống",
+      "tags": ["no-keyword"]
+    },
+    {
+      "text": "Highlands 59k",
+      "expectedAmount": 59000,
+      "expectedType": "EXPENSE",
+      "expectedCategory": "Ăn uống",
+      "tags": ["no-keyword"]
+    },
+    {
+      "text": "KFC 129k",
+      "expectedAmount": 129000,
+      "expectedType": "EXPENSE",
+      "expectedCategory": "Ăn uống",
+      "tags": ["no-keyword"]
+    },
+    {
+      "text": "trà sữa Gongcha 65k",
+      "expectedAmount": 65000,
+      "expectedType": "EXPENSE",
+      "expectedCategory": "Ăn uống",
+      "tags": []
+    },
+    {
+      "text": "ăn sáng 30k",
+      "expectedAmount": 30000,
+      "expectedType": "EXPENSE",
+      "expectedCategory": "Ăn uống",
+      "tags": []
+    },
+    {
+      "text": "nhậu với bạn 450k",
+      "expectedAmount": 450000,
+      "expectedType": "EXPENSE",
+      "expectedCategory": "Ăn uống",
+      "tags": []
+    },
+    {
+      "text": "đi chợ 200k",
+      "expectedAmount": 200000,
+      "expectedType": "EXPENSE",
+      "expectedCategory": "Ăn uống",
+      "tags": ["no-keyword"]
+    },
+    {
+      "text": "sinh tố bơ 40k",
+      "expectedAmount": 40000,
+      "expectedType": "EXPENSE",
+      "expectedCategory": "Ăn uống",
+      "tags": ["no-keyword"]
+    },
+    {
+      "text": "pizza 4P's 350k",
+      "expectedAmount": 350000,
+      "expectedType": "EXPENSE",
+      "expectedCategory": "Ăn uống",
+      "tags": ["no-keyword"]
+    },
+    {
+      "text": "mì cay 55k",
+      "expectedAmount": 55000,
+      "expectedType": "EXPENSE",
+      "expectedCategory": "Ăn uống",
+      "tags": ["no-keyword"]
+    },
+    {
+      "text": "đặt đồ ăn ShopeeFood 87k",
+      "expectedAmount": 87000,
+      "expectedType": "EXPENSE",
+      "expectedCategory": "Ăn uống",
+      "tags": ["adversarial"]
+    },
+    {
+      "text": "GrabFood 95k",
+      "expectedAmount": 95000,
+      "expectedType": "EXPENSE",
+      "expectedCategory": "Ăn uống",
+      "tags": ["adversarial"]
+    },
+    {
+      "text": "bánh trung thu 180k",
+      "expectedAmount": 180000,
+      "expectedType": "EXPENSE",
+      "expectedCategory": "Ăn uống",
+      "tags": ["no-keyword"]
+    },
+    {
+      "text": "hai lăm nghìn bánh mì",
+      "expectedAmount": 25000,
+      "expectedType": "EXPENSE",
+      "expectedCategory": "Ăn uống",
+      "tags": ["spoken"]
+    },
+    {
+      "text": "năm chục nghìn cơm trưa",
+      "expectedAmount": 50000,
+      "expectedType": "EXPENSE",
+      "expectedCategory": "Ăn uống",
+      "tags": ["spoken"]
+    },
+    {
+      "text": "bốn chục nghìn ăn sáng",
+      "expectedAmount": 40000,
+      "expectedType": "EXPENSE",
+      "expectedCategory": "Ăn uống",
+      "tags": ["spoken"]
+    },
+    {
+      "text": "tám chục nghìn bún chả",
+      "expectedAmount": 80000,
+      "expectedType": "EXPENSE",
+      "expectedCategory": "Ăn uống",
+      "tags": ["spoken"]
+    },
+    {
+      "text": "một trăm hai chục nghìn lẩu nướng",
+      "expectedAmount": 120000,
+      "expectedType": "EXPENSE",
+      "expectedCategory": "Ăn uống",
+      "tags": ["spoken", "no-keyword"]
+    },
+    {
+      "text": "2 lít đi nhậu",
+      "expectedAmount": 200000,
+      "expectedType": "EXPENSE",
+      "expectedCategory": "Ăn uống",
+      "tags": ["spoken"]
+    },
+    {
+      "text": "Grab 42k",
+      "expectedAmount": 42000,
+      "expectedType": "EXPENSE",
+      "expectedCategory": "Di chuyển",
+      "tags": []
+    },
+    {
+      "text": "đổ xăng 80k",
+      "expectedAmount": 80000,
+      "expectedType": "EXPENSE",
+      "expectedCategory": "Di chuyển",
+      "tags": []
+    },
+    {
+      "text": "xe ôm 25k",
+      "expectedAmount": 25000,
+      "expectedType": "EXPENSE",
+      "expectedCategory": "Di chuyển",
+      "tags": ["no-keyword"]
+    },
+    {
+      "text": "vé tàu về quê 420k",
+      "expectedAmount": 420000,
+      "expectedType": "EXPENSE",
+      "expectedCategory": "Di chuyển",
+      "tags": ["no-keyword"]
+    },
+    {
+      "text": "taxi sân bay 250k",
+      "expectedAmount": 250000,
+      "expectedType": "EXPENSE",
+      "expectedCategory": "Di chuyển",
+      "tags": []
+    },
+    {
+      "text": "vé xe khách 180k",
+      "expectedAmount": 180000,
+      "expectedType": "EXPENSE",
+      "expectedCategory": "Di chuyển",
+      "tags": ["no-keyword"]
+    },
+    {
+      "text": "rửa xe 40k",
+      "expectedAmount": 40000,
+      "expectedType": "EXPENSE",
+      "expectedCategory": "Di chuyển",
+      "tags": ["no-keyword"]
+    },
+    {
+      "text": "thay nhớt 150k",
+      "expectedAmount": 150000,
+      "expectedType": "EXPENSE",
+      "expectedCategory": "Di chuyển",
+      "tags": ["no-keyword"]
+    },
+    {
+      "text": "phí cầu đường 35k",
+      "expectedAmount": 35000,
+      "expectedType": "EXPENSE",
+      "expectedCategory": "Di chuyển",
+      "tags": ["no-keyword"]
+    },
+    {
+      "text": "vé máy bay Đà Nẵng 1tr9",
+      "expectedAmount": 1900000,
+      "expectedType": "EXPENSE",
+      "expectedCategory": "Di chuyển",
+      "tags": ["no-keyword"]
+    },
+    {
+      "text": "xe buýt 7k",
+      "expectedAmount": 7000,
+      "expectedType": "EXPENSE",
+      "expectedCategory": "Di chuyển",
+      "tags": ["no-keyword"]
+    },
+    {
+      "text": "vé metro 12k",
+      "expectedAmount": 12000,
+      "expectedType": "EXPENSE",
+      "expectedCategory": "Di chuyển",
+      "tags": ["no-keyword"]
+    },
+    {
+      "text": "hai lăm nghìn xe ôm",
+      "expectedAmount": 25000,
+      "expectedType": "EXPENSE",
+      "expectedCategory": "Di chuyển",
+      "tags": ["spoken", "no-keyword"]
+    },
+    {
+      "text": "ba chục nghìn đổ xăng",
+      "expectedAmount": 30000,
+      "expectedType": "EXPENSE",
+      "expectedCategory": "Di chuyển",
+      "tags": ["spoken"]
+    },
+    {
+      "text": "sửa xe 2 lít",
+      "expectedAmount": 200000,
+      "expectedType": "EXPENSE",
+      "expectedCategory": "Di chuyển",
+      "tags": ["spoken", "no-keyword"]
+    },
+    {
+      "text": "mua áo 200k",
+      "expectedAmount": 200000,
+      "expectedType": "EXPENSE",
+      "expectedCategory": "Mua sắm",
+      "tags": ["no-keyword"]
+    },
+    {
+      "text": "Shopee 350k",
+      "expectedAmount": 350000,
+      "expectedType": "EXPENSE",
+      "expectedCategory": "Mua sắm",
+      "tags": []
+    },
+    {
+      "text": "Lazada 220k",
+      "expectedAmount": 220000,
+      "expectedType": "EXPENSE",
+      "expectedCategory": "Mua sắm",
+      "tags": []
+    },
+    {
+      "text": "giày sneaker 1tr8",
+      "expectedAmount": 1800000,
+      "expectedType": "EXPENSE",
+      "expectedCategory": "Mua sắm",
+      "tags": ["no-keyword"]
+    },
+    {
+      "text": "mua quần jean 450k",
+      "expectedAmount": 450000,
+      "expectedType": "EXPENSE",
+      "expectedCategory": "Mua sắm",
+      "tags": ["no-keyword"]
+    },
+    {
+      "text": "son môi 280k",
+      "expectedAmount": 280000,
+      "expectedType": "EXPENSE",
+      "expectedCategory": "Mua sắm",
+      "tags": ["no-keyword"]
+    },
+    {
+      "text": "tai nghe 690k",
+      "expectedAmount": 690000,
+      "expectedType": "EXPENSE",
+      "expectedCategory": "Mua sắm",
+      "tags": ["no-keyword"]
+    },
+    {
+      "text": "ốp lưng điện thoại 90k",
+      "expectedAmount": 90000,
+      "expectedType": "EXPENSE",
+      "expectedCategory": "Mua sắm",
+      "tags": ["no-keyword", "adversarial"]
+    },
+    {
+      "text": "balo 520k",
+      "expectedAmount": 520000,
+      "expectedType": "EXPENSE",
+      "expectedCategory": "Mua sắm",
+      "tags": ["no-keyword"]
+    },
+    {
+      "text": "quà sinh nhật bạn 300k",
+      "expectedAmount": 300000,
+      "expectedType": "EXPENSE",
+      "expectedCategory": "Mua sắm",
+      "tags": ["no-keyword"]
+    },
+    {
+      "text": "sạc dự phòng 350k",
+      "expectedAmount": 350000,
+      "expectedType": "EXPENSE",
+      "expectedCategory": "Mua sắm",
+      "tags": ["no-keyword"]
+    },
+    {
+      "text": "nước hoa 1tr2",
+      "expectedAmount": 1200000,
+      "expectedType": "EXPENSE",
+      "expectedCategory": "Mua sắm",
+      "tags": ["no-keyword"]
+    },
+    {
+      "text": "Tiki 180k",
+      "expectedAmount": 180000,
+      "expectedType": "EXPENSE",
+      "expectedCategory": "Mua sắm",
+      "tags": []
+    },
+    {
+      "text": "hai trăm rưỡi mua áo",
+      "expectedAmount": 250000,
+      "expectedType": "EXPENSE",
+      "expectedCategory": "Mua sắm",
+      "tags": ["spoken", "no-keyword"]
+    },
+    {
+      "text": "2 củ rưỡi mua giày",
+      "expectedAmount": 2500000,
+      "expectedType": "EXPENSE",
+      "expectedCategory": "Mua sắm",
+      "tags": ["spoken", "no-keyword"]
+    },
+    {
+      "text": "mua chậu cây 85k",
+      "expectedAmount": 85000,
+      "expectedType": "EXPENSE",
+      "expectedCategory": "Mua sắm",
+      "tags": ["no-keyword"]
+    },
+    {
+      "text": "tiền điện 1tr2",
+      "expectedAmount": 1200000,
+      "expectedType": "EXPENSE",
+      "expectedCategory": "Hóa đơn",
+      "tags": []
+    },
+    {
+      "text": "wifi 220k",
+      "expectedAmount": 220000,
+      "expectedType": "EXPENSE",
+      "expectedCategory": "Hóa đơn",
+      "tags": []
+    },
+    {
+      "text": "internet FPT 250k",
+      "expectedAmount": 250000,
+      "expectedType": "EXPENSE",
+      "expectedCategory": "Hóa đơn",
+      "tags": []
+    },
+    {
+      "text": "tiền nhà 4tr5",
+      "expectedAmount": 4500000,
+      "expectedType": "EXPENSE",
+      "expectedCategory": "Hóa đơn",
+      "tags": []
+    },
+    {
+      "text": "nạp tiền Viettel 200k",
+      "expectedAmount": 200000,
+      "expectedType": "EXPENSE",
+      "expectedCategory": "Hóa đơn",
+      "tags": ["no-keyword"]
+    },
+    {
+      "text": "phí quản lý chung cư 600k",
+      "expectedAmount": 600000,
+      "expectedType": "EXPENSE",
+      "expectedCategory": "Hóa đơn",
+      "tags": ["no-keyword"]
+    },
+    {
+      "text": "tiền gas 380k",
+      "expectedAmount": 380000,
+      "expectedType": "EXPENSE",
+      "expectedCategory": "Hóa đơn",
+      "tags": ["no-keyword"]
+    },
+    {
+      "text": "truyền hình cáp 90k",
+      "expectedAmount": 90000,
+      "expectedType": "EXPENSE",
+      "expectedCategory": "Hóa đơn",
+      "tags": ["no-keyword"]
+    },
+    {
+      "text": "tiền rác 30k",
+      "expectedAmount": 30000,
+      "expectedType": "EXPENSE",
+      "expectedCategory": "Hóa đơn",
+      "tags": ["no-keyword"]
+    },
+    {
+      "text": "một triệu hai tiền điện",
+      "expectedAmount": 1200000,
+      "expectedType": "EXPENSE",
+      "expectedCategory": "Hóa đơn",
+      "tags": ["spoken"]
+    },
+    {
+      "text": "tiền nước bảy chục nghìn",
+      "expectedAmount": 70000,
+      "expectedType": "EXPENSE",
+      "expectedCategory": "Hóa đơn",
+      "tags": ["spoken"]
+    },
+    {
+      "text": "xem phim 120k",
+      "expectedAmount": 120000,
+      "expectedType": "EXPENSE",
+      "expectedCategory": "Giải trí",
+      "tags": []
+    },
+    {
+      "text": "netflix 260k",
+      "expectedAmount": 260000,
+      "expectedType": "EXPENSE",
+      "expectedCategory": "Giải trí",
+      "tags": []
+    },
+    {
+      "text": "nạp thẻ game 100k",
+      "expectedAmount": 100000,
+      "expectedType": "EXPENSE",
+      "expectedCategory": "Giải trí",
+      "tags": []
+    },
+    {
+      "text": "karaoke với team 600k",
+      "expectedAmount": 600000,
+      "expectedType": "EXPENSE",
+      "expectedCategory": "Giải trí",
+      "tags": ["no-keyword"]
+    },
+    {
+      "text": "vé concert 1tr5",
+      "expectedAmount": 1500000,
+      "expectedType": "EXPENSE",
+      "expectedCategory": "Giải trí",
+      "tags": ["no-keyword"]
+    },
+    {
+      "text": "đi bar 500k",
+      "expectedAmount": 500000,
+      "expectedType": "EXPENSE",
+      "expectedCategory": "Giải trí",
+      "tags": ["no-keyword"]
+    },
+    {
+      "text": "Youtube Premium 79k",
+      "expectedAmount": 79000,
+      "expectedType": "EXPENSE",
+      "expectedCategory": "Giải trí",
+      "tags": ["no-keyword"]
+    },
+    {
+      "text": "bowling 150k",
+      "expectedAmount": 150000,
+      "expectedType": "EXPENSE",
+      "expectedCategory": "Giải trí",
+      "tags": ["no-keyword"]
+    },
+    {
+      "text": "CGV 98k",
+      "expectedAmount": 98000,
+      "expectedType": "EXPENSE",
+      "expectedCategory": "Giải trí",
+      "tags": ["no-keyword"]
+    },
+    {
+      "text": "Steam 250k",
+      "expectedAmount": 250000,
+      "expectedType": "EXPENSE",
+      "expectedCategory": "Giải trí",
+      "tags": ["no-keyword"]
+    },
+    {
+      "text": "vé xem kịch 350k",
+      "expectedAmount": 350000,
+      "expectedType": "EXPENSE",
+      "expectedCategory": "Giải trí",
+      "tags": ["no-keyword"]
+    },
+    {
+      "text": "một trăm hai chục nghìn xem phim",
+      "expectedAmount": 120000,
+      "expectedType": "EXPENSE",
+      "expectedCategory": "Giải trí",
+      "tags": ["spoken"]
+    },
+    {
+      "text": "5 lít karaoke",
+      "expectedAmount": 500000,
+      "expectedType": "EXPENSE",
+      "expectedCategory": "Giải trí",
+      "tags": ["spoken", "no-keyword"]
+    },
+    {
+      "text": "mua thuốc 90k",
+      "expectedAmount": 90000,
+      "expectedType": "EXPENSE",
+      "expectedCategory": "Sức khỏe",
+      "tags": []
+    },
+    {
+      "text": "khám răng 500k",
+      "expectedAmount": 500000,
+      "expectedType": "EXPENSE",
+      "expectedCategory": "Sức khỏe",
+      "tags": ["no-keyword"]
+    },
+    {
+      "text": "vitamin C 180k",
+      "expectedAmount": 180000,
+      "expectedType": "EXPENSE",
+      "expectedCategory": "Sức khỏe",
+      "tags": ["no-keyword"]
+    },
+    {
+      "text": "xét nghiệm máu 420k",
+      "expectedAmount": 420000,
+      "expectedType": "EXPENSE",
+      "expectedCategory": "Sức khỏe",
+      "tags": ["no-keyword"]
+    },
+    {
+      "text": "tiêm vacxin 350k",
+      "expectedAmount": 350000,
+      "expectedType": "EXPENSE",
+      "expectedCategory": "Sức khỏe",
+      "tags": ["no-keyword"]
+    },
+    {
+      "text": "khám sức khỏe định kỳ 1tr1",
+      "expectedAmount": 1100000,
+      "expectedType": "EXPENSE",
+      "expectedCategory": "Sức khỏe",
+      "tags": ["no-keyword"]
+    },
+    {
+      "text": "hai trăm rưỡi tiền thuốc",
+      "expectedAmount": 250000,
+      "expectedType": "EXPENSE",
+      "expectedCategory": "Sức khỏe",
+      "tags": ["spoken"]
+    },
+    {
+      "text": "tám chục nghìn mua vitamin",
+      "expectedAmount": 80000,
+      "expectedType": "EXPENSE",
+      "expectedCategory": "Sức khỏe",
+      "tags": ["spoken", "no-keyword"]
+    },
+    {
+      "text": "niềng răng 2 củ",
+      "expectedAmount": 2000000,
+      "expectedType": "EXPENSE",
+      "expectedCategory": "Sức khỏe",
+      "tags": ["spoken", "no-keyword"]
+    },
+    {
+      "text": "lương tháng 10 15tr",
+      "expectedAmount": 15000000,
+      "expectedType": "INCOME",
+      "expectedCategory": "Lương",
+      "tags": ["income"]
+    },
+    {
+      "text": "nhận lương 12tr5",
+      "expectedAmount": 12500000,
+      "expectedType": "INCOME",
+      "expectedCategory": "Lương",
+      "tags": ["income"]
+    },
+    {
+      "text": "lương 18 củ",
+      "expectedAmount": 18000000,
+      "expectedType": "INCOME",
+      "expectedCategory": "Lương",
+      "tags": ["income", "spoken"]
+    },
+    {
+      "text": "lương về 20tr",
+      "expectedAmount": 20000000,
+      "expectedType": "INCOME",
+      "expectedCategory": "Lương",
+      "tags": ["income"]
+    },
+    {
+      "text": "lương tháng 11 mười lăm triệu",
+      "expectedAmount": 15000000,
+      "expectedType": "INCOME",
+      "expectedCategory": "Lương",
+      "tags": ["income", "spoken"]
+    },
+    {
+      "text": "lương part-time 3tr2",
+      "expectedAmount": 3200000,
+      "expectedType": "INCOME",
+      "expectedCategory": "Lương",
+      "tags": ["income"]
+    },
+    {
+      "text": "thưởng tết 5tr",
+      "expectedAmount": 5000000,
+      "expectedType": "INCOME",
+      "expectedCategory": "Thưởng",
+      "tags": ["income"]
+    },
+    {
+      "text": "thưởng dự án 2tr",
+      "expectedAmount": 2000000,
+      "expectedType": "INCOME",
+      "expectedCategory": "Thưởng",
+      "tags": ["income"]
+    },
+    {
+      "text": "thưởng KPI quý 3 8tr",
+      "expectedAmount": 8000000,
+      "expectedType": "INCOME",
+      "expectedCategory": "Thưởng",
+      "tags": ["income"]
+    },
+    {
+      "text": "bonus cuối năm 10tr",
+      "expectedAmount": 10000000,
+      "expectedType": "INCOME",
+      "expectedCategory": "Thưởng",
+      "tags": ["income", "no-keyword"]
+    },
+    {
+      "text": "hoa hồng bán hàng 1tr8",
+      "expectedAmount": 1800000,
+      "expectedType": "INCOME",
+      "expectedCategory": "Thưởng",
+      "tags": ["income", "no-keyword"]
+    },
+    {
+      "text": "thưởng nóng 500k",
+      "expectedAmount": 500000,
+      "expectedType": "INCOME",
+      "expectedCategory": "Thưởng",
+      "tags": ["income"]
+    },
+    {
+      "text": "hai triệu rưỡi thưởng",
+      "expectedAmount": 2500000,
+      "expectedType": "INCOME",
+      "expectedCategory": "Thưởng",
+      "tags": ["income", "spoken"]
+    }
+  ]
+}
