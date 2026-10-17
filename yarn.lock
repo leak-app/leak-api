@@ -718,7 +718,7 @@
     "@eslint/core" "^0.17.0"
     levn "^0.4.1"
 
-"@google/genai@^2.30.0":
+"@google/genai@2.30.0":
   version "2.30.0"
   resolved "https://registry.yarnpkg.com/@google/genai/-/genai-2.30.0.tgz#841a256a199936d8f6ef3ff1339d809e5a672421"
   integrity sha512-Gkv1ix8iZey/V3WF4lHaRS8C71P533jenDT/lA+fdPTCfXYfmCVHvo+0H5jTgzonqsmROQG7QpzLJkpoP/x7bg==
