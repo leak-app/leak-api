@@ -48,6 +48,7 @@ function createPrismaMock() {
       findMany: jest.fn().mockResolvedValue([]),
     },
     accountValuation: {
+      count: jest.fn().mockResolvedValue(0),
       findFirst: jest.fn().mockResolvedValue(null),
       findMany: jest.fn().mockResolvedValue([]),
       create: jest
@@ -126,14 +127,53 @@ describe('ValuationsService', () => {
       ).rejects.toBeInstanceOf(NotFoundException);
     });
 
-    it('rejects a liquid wallet', async () => {
-      prisma.account.findFirst.mockResolvedValue({
+    describe('on a liquid wallet', () => {
+      const cash = {
         ...fund,
+        id: 'cash',
         type: AccountType.LIQUID,
+        initialBalance: new D(1_000_000),
+        currentBalance: new D(1_200_000),
+      };
+      const adjust = (over: Record<string, unknown> = {}) =>
+        service.create(
+          userId,
+          'cash',
+          input({ balance: 900_000, expectedBalance: 1_200_000, ...over }),
+        );
+
+      beforeEach(() => {
+        prisma.account.findFirst.mockResolvedValue(cash);
       });
-      await expect(
-        service.create(userId, 'fund', input()),
-      ).rejects.toBeInstanceOf(BadRequestException);
+
+      it('sets the balance as a new starting point with no profit', async () => {
+        await adjust();
+
+        const data = prisma.accountValuation.create.mock.calls[0][0].data;
+        expect(data.kind).toBe(ValuationKind.BASELINE);
+        expect(data.gain.toString()).toBe('0');
+        const [, changes] = ledger.apply.mock.calls[0];
+        expect(changes[0].accountId).toBe('cash');
+        expect(changes[0].delta.toString()).toBe('-300000');
+      });
+
+      it('can be adjusted again after an earlier update', async () => {
+        prisma.accountValuation.findFirst.mockResolvedValue(
+          stored({ accountId: 'cash', kind: ValuationKind.BASELINE }),
+        );
+        await adjust({ asBaseline: false });
+
+        const data = prisma.accountValuation.create.mock.calls[0][0].data;
+        expect(data.kind).toBe(ValuationKind.BASELINE);
+        expect(data.gain.toString()).toBe('0');
+      });
+
+      it('still rejects when the balance moved meanwhile', async () => {
+        await expect(
+          adjust({ expectedBalance: 1_000_000 }),
+        ).rejects.toBeInstanceOf(ConflictException);
+        expect(ledger.apply).not.toHaveBeenCalled();
+      });
     });
 
     it('makes the first update a baseline when asked: capital, not profit', async () => {
@@ -225,6 +265,15 @@ describe('ValuationsService', () => {
       await expect(service.delete(userId, 'gone')).rejects.toBeInstanceOf(
         NotFoundException,
       );
+    });
+  });
+
+  describe('hasUpdateAfter', () => {
+    it('only counts investment wallets', async () => {
+      await service.hasUpdateAfter(prisma as never, ['a'], new Date());
+      expect(
+        prisma.accountValuation.count.mock.calls[0][0].where.account,
+      ).toEqual({ type: AccountType.INVESTMENT });
     });
   });
 

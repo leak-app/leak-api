@@ -35,6 +35,8 @@ export interface ValuationInput {
   enteredBalance: Money;
   /** Honoured only for the first update. */
   asBaseline: boolean;
+  /** Liquid wallets: always a baseline, however many updates came before. */
+  forceBaseline?: boolean;
 }
 
 export interface ValuationResult {
@@ -61,7 +63,7 @@ export function computeValuation(input: ValuationInput): ValuationResult {
   const previousBalance = dec(input.previousBalance ?? input.initialBalance);
 
   const kind =
-    !hasPrevious && input.asBaseline
+    input.forceBaseline || (!hasPrevious && input.asBaseline)
       ? ValuationKind.BASELINE
       : ValuationKind.UPDATE;
   const adjustment = entered.minus(current);

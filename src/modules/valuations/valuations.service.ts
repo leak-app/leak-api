@@ -55,7 +55,7 @@ export class ValuationsService {
 
   async create(userId: string, accountId: string, dto: CreateValuationDto) {
     return this._prisma.$transaction(async (tx) => {
-      const account = await this._lockInvestmentWallet(tx, userId, accountId);
+      const account = await this._lockWallet(tx, userId, accountId);
 
       if (
         !new Prisma.Decimal(dto.expectedBalance).equals(account.currentBalance)
@@ -65,8 +65,11 @@ export class ValuationsService {
         );
       }
 
+      // A liquid wallet has no profit to track: every entry resets the balance
+      // and later movements are counted from it.
+      const isLiquid = account.type === AccountType.LIQUID;
       const previous = await this._latest(tx, accountId);
-      if (dto.asBaseline && previous) {
+      if (dto.asBaseline && previous && !isLiquid) {
         throw new BadRequestException(
           'Chỉ lần cập nhật đầu tiên mới có thể đặt làm mốc',
         );
@@ -88,7 +91,8 @@ export class ValuationsService {
         initialBalance: account.initialBalance,
         previousBalance: previous?.balance ?? null,
         enteredBalance: dto.balance,
-        asBaseline: dto.asBaseline ?? false,
+        asBaseline: isLiquid || (dto.asBaseline ?? false),
+        forceBaseline: isLiquid,
       });
 
       const valuation = await tx.accountValuation.create({
@@ -221,6 +225,8 @@ export class ValuationsService {
     const count = await tx.accountValuation.count({
       where: {
         accountId: { in: accountIds },
+        // Liquid adjustments carry no profit, so they never "count" a movement.
+        account: { type: AccountType.INVESTMENT },
         isDeleted: false,
         createdAt: { gt: moment },
       },
@@ -273,7 +279,7 @@ export class ValuationsService {
   }
 
   /** Locks the row before reading it, so two updates of one wallet run one after another. */
-  private async _lockInvestmentWallet(
+  private async _lockWallet(
     tx: Prisma.TransactionClient,
     userId: string,
     accountId: string,
@@ -283,9 +289,6 @@ export class ValuationsService {
       where: { id: accountId, userId, isDeleted: false },
     });
     if (!account) throw new NotFoundException('Không tìm thấy ví');
-    if (account.type !== AccountType.INVESTMENT) {
-      throw new BadRequestException('Chỉ ví đầu tư mới có thể cập nhật số dư');
-    }
     return account;
   }
 }

@@ -27,6 +27,20 @@ describe('computeValuation', () => {
     expect(result.adjustment.toNumber()).toBe(2_000_000);
   });
 
+  it('forceBaseline resets even after earlier updates: no gain, balance follows the entry', () => {
+    const result = computeValuation({
+      currentBalance: 1_200_000,
+      initialBalance: 1_000_000,
+      previousBalance: 1_100_000,
+      enteredBalance: 900_000,
+      asBaseline: false,
+      forceBaseline: true,
+    });
+    expect(result.kind).toBe(ValuationKind.BASELINE);
+    expect(result.gain.toNumber()).toBe(0);
+    expect(result.adjustment.toNumber()).toBe(-300_000);
+  });
+
   it('measures from the previous update, not from the opening balance', () => {
     const result = computeValuation({
       currentBalance: 60_000_000, // 52M + 8M deposited since
