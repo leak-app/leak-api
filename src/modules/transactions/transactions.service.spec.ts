@@ -26,6 +26,7 @@ const existing = {
   amount: new Prisma.Decimal(50000),
   description: 'Phở',
   isDeleted: false,
+  createdAt: new Date('2026-10-12T14:45:00Z'), // 21:45 on the 12th in Vietnam
 };
 
 function createPrismaMock() {
@@ -458,6 +459,60 @@ describe('TransactionService', () => {
       expect(prisma.category.findFirst).not.toHaveBeenCalled();
       expect(ledger.apply).toHaveBeenCalledWith(prisma, []);
     });
+    describe('occurredOn', () => {
+      afterEach(() => jest.useRealTimers());
+
+      it('moves only the day, keeps the time and touches no balance', async () => {
+        jest.useFakeTimers({ now: new Date('2026-10-14T08:30:00Z') });
+
+        await service.update(userId, 't1', { occurredOn: '2026-10-10' });
+
+        const { data } = prisma.transaction.update.mock.calls[0][0];
+        expect((data.createdAt as Date).toISOString()).toBe(
+          '2026-10-10T14:45:00.000Z',
+        );
+        expect(data.amount).toBeUndefined();
+        expect(ledger.apply).toHaveBeenCalledWith(prisma, []);
+      });
+
+      it('leaves createdAt alone when the day is the current one', async () => {
+        jest.useFakeTimers({ now: new Date('2026-10-14T08:30:00Z') });
+
+        await service.update(userId, 't1', { occurredOn: '2026-10-12' });
+
+        const { data } = prisma.transaction.update.mock.calls[0][0];
+        expect(data.createdAt).toEqual(existing.createdAt);
+      });
+
+      it('does not write createdAt when no day is sent', async () => {
+        await service.update(userId, 't1', { amount: 70000 });
+        const { data } = prisma.transaction.update.mock.calls[0][0];
+        expect(data.createdAt).toBeUndefined();
+      });
+
+      it('refuses a future day before changing anything', async () => {
+        jest.useFakeTimers({ now: new Date('2026-10-14T08:30:00Z') });
+
+        await expect(
+          service.update(userId, 't1', { occurredOn: '2026-10-15' }),
+        ).rejects.toThrow(BadRequestException);
+        expect(prisma.transaction.update).not.toHaveBeenCalled();
+        expect(ledger.apply).not.toHaveBeenCalled();
+      });
+    });
+
+    it('clears the note when it is blank and trims it otherwise', async () => {
+      await service.update(userId, 't1', { description: '   ' });
+      expect(
+        prisma.transaction.update.mock.calls[0][0].data.description,
+      ).toBeNull();
+
+      await service.update(userId, 't1', { description: '  Bún chả ' });
+      expect(prisma.transaction.update.mock.calls[1][0].data.description).toBe(
+        'Bún chả',
+      );
+    });
+
     it('key-share locks the destination wallet when moving a transaction', async () => {
       prisma.account.findFirst.mockResolvedValue({ id: 'bank' });
 

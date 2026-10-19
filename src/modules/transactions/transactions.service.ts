@@ -17,7 +17,7 @@ import {
 import { TransactionWhereInput } from '@/generated/prisma/models';
 import { LedgerService } from './ledger.service';
 import { planBalanceChanges } from './ledger.calculator';
-import { resolveOccurredAt } from './occurred-at';
+import { moveToDay, resolveOccurredAt } from './occurred-at';
 import { WalletResolver } from './wallet-resolver.service';
 
 const ALLOWED_CATEGORY_TYPES: Record<TransactionType, CategoryType[]> = {
@@ -200,7 +200,15 @@ export class TransactionService {
           type: dto.type,
           categoryId: dto.categoryId,
           accountId,
-          description: dto.description,
+          // A blank note clears it; undefined leaves it as it is.
+          description:
+            dto.description === undefined
+              ? undefined
+              : dto.description.trim() || null,
+          createdAt:
+            dto.occurredOn === undefined
+              ? undefined
+              : moveToDay(existing.createdAt, dto.occurredOn),
           ...outcomeReset,
         },
       });
