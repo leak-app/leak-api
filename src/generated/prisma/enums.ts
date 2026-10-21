@@ -105,3 +105,31 @@ export const SyncRunStatus = {
 } as const
 
 export type SyncRunStatus = (typeof SyncRunStatus)[keyof typeof SyncRunStatus]
+
+
+export const CommentSentiment = {
+  ROAST: 'ROAST',
+  PRAISE: 'PRAISE',
+  NUDGE: 'NUDGE'
+} as const
+
+export type CommentSentiment = (typeof CommentSentiment)[keyof typeof CommentSentiment]
+
+
+export const BuddyMode = {
+  SAVAGE: 'SAVAGE',
+  GENTLE: 'GENTLE',
+  MUTE: 'MUTE'
+} as const
+
+export type BuddyMode = (typeof BuddyMode)[keyof typeof BuddyMode]
+
+
+export const AiCommentJobStatus = {
+  PENDING: 'PENDING',
+  DONE: 'DONE',
+  SKIPPED: 'SKIPPED',
+  FAILED: 'FAILED'
+} as const
+
+export type AiCommentJobStatus = (typeof AiCommentJobStatus)[keyof typeof AiCommentJobStatus]

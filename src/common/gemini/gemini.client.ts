@@ -1,5 +1,16 @@
 import { GoogleGenAI, ThinkingLevel } from '@google/genai';
-import type { GeminiRequest } from './gemini.request';
+
+/** One structured-output call: the system part, the data part, and the JSON Schema of the answer. */
+export interface GeminiRequest {
+  /** Instructions only; user-written text never goes here. */
+  system: string;
+  /** The data to read, JSON-encoded. */
+  user: string;
+  /** JSON Schema for the structured response. */
+  schema: Record<string, unknown>;
+  /** Sampling temperature. 0 (deterministic) when left out. */
+  temperature?: number;
+}
 
 /** Thin port over the SDK so the parser can be tested without the network. */
 export interface GeminiClientPort {
@@ -31,7 +42,7 @@ export class GeminiClient implements GeminiClientPort {
       contents: request.user,
       config: {
         systemInstruction: request.system,
-        temperature: 0,
+        temperature: request.temperature ?? 0,
         responseMimeType: 'application/json',
         responseJsonSchema: request.schema,
         abortSignal: AbortSignal.timeout(this.timeoutMs),

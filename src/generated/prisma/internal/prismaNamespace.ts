@@ -397,7 +397,8 @@ export const ModelName = {
   LeakReclaim: 'LeakReclaim',
   Budget: 'Budget',
   GoogleSheetsConnection: 'GoogleSheetsConnection',
-  SyncRun: 'SyncRun'
+  SyncRun: 'SyncRun',
+  AiCommentJob: 'AiCommentJob'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -413,7 +414,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "session" | "passwordResetToken" | "account" | "accountValuation" | "transfer" | "category" | "transaction" | "goal" | "goalContribution" | "leakReclaim" | "budget" | "googleSheetsConnection" | "syncRun"
+    modelProps: "user" | "session" | "passwordResetToken" | "account" | "accountValuation" | "transfer" | "category" | "transaction" | "goal" | "goalContribution" | "leakReclaim" | "budget" | "googleSheetsConnection" | "syncRun" | "aiCommentJob"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -1453,6 +1454,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    AiCommentJob: {
+      payload: Prisma.$AiCommentJobPayload<ExtArgs>
+      fields: Prisma.AiCommentJobFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.AiCommentJobFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AiCommentJobPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.AiCommentJobFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AiCommentJobPayload>
+        }
+        findFirst: {
+          args: Prisma.AiCommentJobFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AiCommentJobPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.AiCommentJobFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AiCommentJobPayload>
+        }
+        findMany: {
+          args: Prisma.AiCommentJobFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AiCommentJobPayload>[]
+        }
+        create: {
+          args: Prisma.AiCommentJobCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AiCommentJobPayload>
+        }
+        createMany: {
+          args: Prisma.AiCommentJobCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.AiCommentJobCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AiCommentJobPayload>[]
+        }
+        delete: {
+          args: Prisma.AiCommentJobDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AiCommentJobPayload>
+        }
+        update: {
+          args: Prisma.AiCommentJobUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AiCommentJobPayload>
+        }
+        deleteMany: {
+          args: Prisma.AiCommentJobDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.AiCommentJobUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.AiCommentJobUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AiCommentJobPayload>[]
+        }
+        upsert: {
+          args: Prisma.AiCommentJobUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AiCommentJobPayload>
+        }
+        aggregate: {
+          args: Prisma.AiCommentJobAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateAiCommentJob>
+        }
+        groupBy: {
+          args: Prisma.AiCommentJobGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AiCommentJobGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.AiCommentJobCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AiCommentJobCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -1498,7 +1573,8 @@ export const UserScalarFieldEnum = {
   password: 'password',
   name: 'name',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  updatedAt: 'updatedAt',
+  buddyMode: 'buddyMode'
 } as const
 
 export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
@@ -1610,7 +1686,9 @@ export const TransactionScalarFieldEnum = {
   updatedAt: 'updatedAt',
   outcome: 'outcome',
   leakReason: 'leakReason',
-  reviewedAt: 'reviewedAt'
+  reviewedAt: 'reviewedAt',
+  aiComment: 'aiComment',
+  aiSentiment: 'aiSentiment'
 } as const
 
 export type TransactionScalarFieldEnum = (typeof TransactionScalarFieldEnum)[keyof typeof TransactionScalarFieldEnum]
@@ -1706,6 +1784,20 @@ export const SyncRunScalarFieldEnum = {
 export type SyncRunScalarFieldEnum = (typeof SyncRunScalarFieldEnum)[keyof typeof SyncRunScalarFieldEnum]
 
 
+export const AiCommentJobScalarFieldEnum = {
+  id: 'id',
+  transactionId: 'transactionId',
+  userId: 'userId',
+  status: 'status',
+  attempts: 'attempts',
+  nextAttemptAt: 'nextAttemptAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type AiCommentJobScalarFieldEnum = (typeof AiCommentJobScalarFieldEnum)[keyof typeof AiCommentJobScalarFieldEnum]
+
+
 export const SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -1761,6 +1853,20 @@ export type DateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel
  * Reference to a field of type 'DateTime[]'
  */
 export type ListDateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime[]'>
+    
+
+
+/**
+ * Reference to a field of type 'BuddyMode'
+ */
+export type EnumBuddyModeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'BuddyMode'>
+    
+
+
+/**
+ * Reference to a field of type 'BuddyMode[]'
+ */
+export type ListEnumBuddyModeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'BuddyMode[]'>
     
 
 
@@ -1884,6 +1990,20 @@ export type ListEnumLeakReasonFieldRefInput<$PrismaModel> = FieldRefInputType<$P
 
 
 /**
+ * Reference to a field of type 'CommentSentiment'
+ */
+export type EnumCommentSentimentFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'CommentSentiment'>
+    
+
+
+/**
+ * Reference to a field of type 'CommentSentiment[]'
+ */
+export type ListEnumCommentSentimentFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'CommentSentiment[]'>
+    
+
+
+/**
  * Reference to a field of type 'GoalContributionType'
  */
 export type EnumGoalContributionTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'GoalContributionType'>
@@ -1950,6 +2070,20 @@ export type EnumSyncRunStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$Pr
  * Reference to a field of type 'SyncRunStatus[]'
  */
 export type ListEnumSyncRunStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'SyncRunStatus[]'>
+    
+
+
+/**
+ * Reference to a field of type 'AiCommentJobStatus'
+ */
+export type EnumAiCommentJobStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'AiCommentJobStatus'>
+    
+
+
+/**
+ * Reference to a field of type 'AiCommentJobStatus[]'
+ */
+export type ListEnumAiCommentJobStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'AiCommentJobStatus[]'>
     
 
 
@@ -2075,6 +2209,7 @@ export type GlobalOmitConfig = {
   budget?: Prisma.BudgetOmit
   googleSheetsConnection?: Prisma.GoogleSheetsConnectionOmit
   syncRun?: Prisma.SyncRunOmit
+  aiCommentJob?: Prisma.AiCommentJobOmit
 }
 
 /* Types for Logging */

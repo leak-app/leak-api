@@ -13,7 +13,7 @@ import { CallLimiter } from '../src/modules/quick-log/call-limiter';
 import {
   GeminiClient,
   type GeminiUsage,
-} from '../src/modules/quick-log/gemini.client';
+} from '../src/common/gemini/gemini.client';
 import { GeminiParser } from '../src/modules/quick-log/gemini.parser';
 import { parseQuickLog } from '../src/modules/quick-log/quick-log.parser';
 import { resolveQuickLog } from '../src/modules/quick-log/quick-log.resolve';

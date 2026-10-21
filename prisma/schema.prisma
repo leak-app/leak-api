@@ -9,12 +9,13 @@ datasource db {
 }
 
 model User {
-  id        String   @id @default(cuid())
-  email     String   @unique
+  id        String    @id @default(cuid())
+  email     String    @unique
   password  String // Will store a hashed password
   name      String?
-  createdAt DateTime @default(now()) @map("created_at")
-  updatedAt DateTime @updatedAt @map("updated_at")
+  createdAt DateTime  @default(now()) @map("created_at")
+  updatedAt DateTime  @updatedAt @map("updated_at")
+  buddyMode BuddyMode @default(SAVAGE) @map("buddy_mode")
 
   sessions               Session[]
   accounts               Account[]
@@ -29,6 +30,7 @@ model User {
   transfers              Transfer[]
   googleSheetsConnection GoogleSheetsConnection?
   syncRuns               SyncRun[]
+  aiCommentJobs          AiCommentJob[]
 
   @@map("users")
 }
@@ -186,23 +188,26 @@ enum LeakReason {
 }
 
 model Transaction {
-  id          String          @id @default(cuid())
-  amount      Decimal         @db.Decimal(12, 2)
-  type        TransactionType
-  description String? // Nullable from day one to support Phase 2 AI parsing
-  categoryId  String          @map("category_id")
-  category    Category        @relation(fields: [categoryId], references: [id], onDelete: Restrict)
-  accountId   String          @map("account_id")
-  account     Account         @relation(fields: [accountId], references: [id], onDelete: Restrict)
-  userId      String          @map("user_id")
-  user        User            @relation(fields: [userId], references: [id], onDelete: Cascade)
-  isDeleted   Boolean         @default(false) @map("is_deleted")
-  deletedAt   DateTime?       @map("deleted_at")
-  createdAt   DateTime        @default(now()) @map("created_at")
-  updatedAt   DateTime        @updatedAt @map("updated_at")
-  outcome     SpendOutcome    @default(UNREVIEWED)
-  leakReason  LeakReason?     @map("leak_reason")
-  reviewedAt  DateTime?       @map("reviewed_at")
+  id           String            @id @default(cuid())
+  amount       Decimal           @db.Decimal(12, 2)
+  type         TransactionType
+  description  String? // Nullable from day one to support Phase 2 AI parsing
+  categoryId   String            @map("category_id")
+  category     Category          @relation(fields: [categoryId], references: [id], onDelete: Restrict)
+  accountId    String            @map("account_id")
+  account      Account           @relation(fields: [accountId], references: [id], onDelete: Restrict)
+  userId       String            @map("user_id")
+  user         User              @relation(fields: [userId], references: [id], onDelete: Cascade)
+  isDeleted    Boolean           @default(false) @map("is_deleted")
+  deletedAt    DateTime?         @map("deleted_at")
+  createdAt    DateTime          @default(now()) @map("created_at")
+  updatedAt    DateTime          @updatedAt @map("updated_at")
+  outcome      SpendOutcome      @default(UNREVIEWED)
+  leakReason   LeakReason?       @map("leak_reason")
+  reviewedAt   DateTime?         @map("reviewed_at")
+  aiComment    String?           @map("ai_comment")
+  aiSentiment  CommentSentiment? @map("ai_sentiment")
+  aiCommentJob AiCommentJob?
 
   @@index([userId, outcome, createdAt])
   @@index([userId, isDeleted, createdAt])
@@ -339,4 +344,41 @@ model SyncRun {
 
   @@index([userId, startedAt])
   @@map("sync_runs")
+}
+
+enum CommentSentiment {
+  ROAST // Sarcastic callout for a wasteful spend
+  PRAISE // Supportive note for a good spend
+  NUDGE // Casual remark on an ordinary spend
+}
+
+enum BuddyMode {
+  SAVAGE // Roasts and praise (default)
+  GENTLE // Soft praise and mild reminders only
+  MUTE // No comments
+}
+
+enum AiCommentJobStatus {
+  PENDING
+  DONE // A comment was written
+  SKIPPED // Not worth a comment, muted, deleted, edited or too old
+  FAILED // Gave up after the last attempt
+}
+
+/// One queued "should the Buddy comment on this expense" decision. Not a ledger row.
+model AiCommentJob {
+  id            String             @id @default(cuid())
+  transactionId String             @unique @map("transaction_id")
+  transaction   Transaction        @relation(fields: [transactionId], references: [id], onDelete: Cascade)
+  userId        String             @map("user_id")
+  user          User               @relation(fields: [userId], references: [id], onDelete: Cascade)
+  status        AiCommentJobStatus @default(PENDING)
+  attempts      Int                @default(0)
+  nextAttemptAt DateTime           @default(now()) @map("next_attempt_at")
+  createdAt     DateTime           @default(now()) @map("created_at")
+  updatedAt     DateTime           @updatedAt @map("updated_at")
+
+  @@index([status, nextAttemptAt])
+  @@index([userId, status, updatedAt])
+  @@map("ai_comment_jobs")
 }

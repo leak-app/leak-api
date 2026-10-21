@@ -1,14 +1,9 @@
+import type { GeminiRequest } from '@/common/gemini/gemini.client';
+
 /** Stands for "no category fits" in the response schema, in place of a nullable enum. */
 export const NO_CATEGORY = '__none__';
 
-export interface GeminiRequest {
-  /** Instructions only; the user's phrase never goes here. */
-  system: string;
-  /** The allowed category names and the phrase, both JSON-encoded. */
-  user: string;
-  /** JSON Schema for the structured response. */
-  schema: Record<string, unknown>;
-}
+export type { GeminiRequest };
 
 const SYSTEM_PROMPT = [
   'You read one short Vietnamese phrase that a person typed to log a personal expense or income.',

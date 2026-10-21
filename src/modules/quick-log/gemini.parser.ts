@@ -1,7 +1,7 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { z } from 'zod';
 import { CallLimiter } from './call-limiter';
-import type { GeminiClientPort } from './gemini.client';
+import type { GeminiClientPort } from '@/common/gemini/gemini.client';
 import { buildGeminiRequest, NO_CATEGORY } from './gemini.request';
 
 export interface GeminiResult {

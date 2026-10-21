@@ -55,6 +55,13 @@ export type DateTimeFilter<$PrismaModel = never> = {
   not?: Prisma.NestedDateTimeFilter<$PrismaModel> | Date | string
 }
 
+export type EnumBuddyModeFilter<$PrismaModel = never> = {
+  equals?: $Enums.BuddyMode | Prisma.EnumBuddyModeFieldRefInput<$PrismaModel>
+  in?: $Enums.BuddyMode[] | Prisma.ListEnumBuddyModeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.BuddyMode[] | Prisma.ListEnumBuddyModeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumBuddyModeFilter<$PrismaModel> | $Enums.BuddyMode
+}
+
 export type SortOrderInput = {
   sort: Prisma.SortOrder
   nulls?: Prisma.NullsOrder
@@ -108,6 +115,16 @@ export type DateTimeWithAggregatesFilter<$PrismaModel = never> = {
   _count?: Prisma.NestedIntFilter<$PrismaModel>
   _min?: Prisma.NestedDateTimeFilter<$PrismaModel>
   _max?: Prisma.NestedDateTimeFilter<$PrismaModel>
+}
+
+export type EnumBuddyModeWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.BuddyMode | Prisma.EnumBuddyModeFieldRefInput<$PrismaModel>
+  in?: $Enums.BuddyMode[] | Prisma.ListEnumBuddyModeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.BuddyMode[] | Prisma.ListEnumBuddyModeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumBuddyModeWithAggregatesFilter<$PrismaModel> | $Enums.BuddyMode
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumBuddyModeFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumBuddyModeFilter<$PrismaModel>
 }
 
 export type IntFilter<$PrismaModel = never> = {
@@ -274,6 +291,13 @@ export type EnumLeakReasonNullableFilter<$PrismaModel = never> = {
   not?: Prisma.NestedEnumLeakReasonNullableFilter<$PrismaModel> | $Enums.LeakReason | null
 }
 
+export type EnumCommentSentimentNullableFilter<$PrismaModel = never> = {
+  equals?: $Enums.CommentSentiment | Prisma.EnumCommentSentimentFieldRefInput<$PrismaModel> | null
+  in?: $Enums.CommentSentiment[] | Prisma.ListEnumCommentSentimentFieldRefInput<$PrismaModel> | null
+  notIn?: $Enums.CommentSentiment[] | Prisma.ListEnumCommentSentimentFieldRefInput<$PrismaModel> | null
+  not?: Prisma.NestedEnumCommentSentimentNullableFilter<$PrismaModel> | $Enums.CommentSentiment | null
+}
+
 export type EnumTransactionTypeWithAggregatesFilter<$PrismaModel = never> = {
   equals?: $Enums.TransactionType | Prisma.EnumTransactionTypeFieldRefInput<$PrismaModel>
   in?: $Enums.TransactionType[] | Prisma.ListEnumTransactionTypeFieldRefInput<$PrismaModel>
@@ -302,6 +326,16 @@ export type EnumLeakReasonNullableWithAggregatesFilter<$PrismaModel = never> = {
   _count?: Prisma.NestedIntNullableFilter<$PrismaModel>
   _min?: Prisma.NestedEnumLeakReasonNullableFilter<$PrismaModel>
   _max?: Prisma.NestedEnumLeakReasonNullableFilter<$PrismaModel>
+}
+
+export type EnumCommentSentimentNullableWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.CommentSentiment | Prisma.EnumCommentSentimentFieldRefInput<$PrismaModel> | null
+  in?: $Enums.CommentSentiment[] | Prisma.ListEnumCommentSentimentFieldRefInput<$PrismaModel> | null
+  notIn?: $Enums.CommentSentiment[] | Prisma.ListEnumCommentSentimentFieldRefInput<$PrismaModel> | null
+  not?: Prisma.NestedEnumCommentSentimentNullableWithAggregatesFilter<$PrismaModel> | $Enums.CommentSentiment | null
+  _count?: Prisma.NestedIntNullableFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumCommentSentimentNullableFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumCommentSentimentNullableFilter<$PrismaModel>
 }
 
 export type EnumGoalContributionTypeFilter<$PrismaModel = never> = {
@@ -416,6 +450,23 @@ export type EnumSyncRunStatusWithAggregatesFilter<$PrismaModel = never> = {
   _max?: Prisma.NestedEnumSyncRunStatusFilter<$PrismaModel>
 }
 
+export type EnumAiCommentJobStatusFilter<$PrismaModel = never> = {
+  equals?: $Enums.AiCommentJobStatus | Prisma.EnumAiCommentJobStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.AiCommentJobStatus[] | Prisma.ListEnumAiCommentJobStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.AiCommentJobStatus[] | Prisma.ListEnumAiCommentJobStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumAiCommentJobStatusFilter<$PrismaModel> | $Enums.AiCommentJobStatus
+}
+
+export type EnumAiCommentJobStatusWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.AiCommentJobStatus | Prisma.EnumAiCommentJobStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.AiCommentJobStatus[] | Prisma.ListEnumAiCommentJobStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.AiCommentJobStatus[] | Prisma.ListEnumAiCommentJobStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumAiCommentJobStatusWithAggregatesFilter<$PrismaModel> | $Enums.AiCommentJobStatus
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumAiCommentJobStatusFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumAiCommentJobStatusFilter<$PrismaModel>
+}
+
 export type NestedStringFilter<$PrismaModel = never> = {
   equals?: string | Prisma.StringFieldRefInput<$PrismaModel>
   in?: string[] | Prisma.ListStringFieldRefInput<$PrismaModel>
@@ -453,6 +504,13 @@ export type NestedDateTimeFilter<$PrismaModel = never> = {
   gt?: Date | string | Prisma.DateTimeFieldRefInput<$PrismaModel>
   gte?: Date | string | Prisma.DateTimeFieldRefInput<$PrismaModel>
   not?: Prisma.NestedDateTimeFilter<$PrismaModel> | Date | string
+}
+
+export type NestedEnumBuddyModeFilter<$PrismaModel = never> = {
+  equals?: $Enums.BuddyMode | Prisma.EnumBuddyModeFieldRefInput<$PrismaModel>
+  in?: $Enums.BuddyMode[] | Prisma.ListEnumBuddyModeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.BuddyMode[] | Prisma.ListEnumBuddyModeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumBuddyModeFilter<$PrismaModel> | $Enums.BuddyMode
 }
 
 export type NestedStringWithAggregatesFilter<$PrismaModel = never> = {
@@ -523,6 +581,16 @@ export type NestedDateTimeWithAggregatesFilter<$PrismaModel = never> = {
   _count?: Prisma.NestedIntFilter<$PrismaModel>
   _min?: Prisma.NestedDateTimeFilter<$PrismaModel>
   _max?: Prisma.NestedDateTimeFilter<$PrismaModel>
+}
+
+export type NestedEnumBuddyModeWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.BuddyMode | Prisma.EnumBuddyModeFieldRefInput<$PrismaModel>
+  in?: $Enums.BuddyMode[] | Prisma.ListEnumBuddyModeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.BuddyMode[] | Prisma.ListEnumBuddyModeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumBuddyModeWithAggregatesFilter<$PrismaModel> | $Enums.BuddyMode
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumBuddyModeFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumBuddyModeFilter<$PrismaModel>
 }
 
 export type NestedBoolFilter<$PrismaModel = never> = {
@@ -689,6 +757,13 @@ export type NestedEnumLeakReasonNullableFilter<$PrismaModel = never> = {
   not?: Prisma.NestedEnumLeakReasonNullableFilter<$PrismaModel> | $Enums.LeakReason | null
 }
 
+export type NestedEnumCommentSentimentNullableFilter<$PrismaModel = never> = {
+  equals?: $Enums.CommentSentiment | Prisma.EnumCommentSentimentFieldRefInput<$PrismaModel> | null
+  in?: $Enums.CommentSentiment[] | Prisma.ListEnumCommentSentimentFieldRefInput<$PrismaModel> | null
+  notIn?: $Enums.CommentSentiment[] | Prisma.ListEnumCommentSentimentFieldRefInput<$PrismaModel> | null
+  not?: Prisma.NestedEnumCommentSentimentNullableFilter<$PrismaModel> | $Enums.CommentSentiment | null
+}
+
 export type NestedEnumTransactionTypeWithAggregatesFilter<$PrismaModel = never> = {
   equals?: $Enums.TransactionType | Prisma.EnumTransactionTypeFieldRefInput<$PrismaModel>
   in?: $Enums.TransactionType[] | Prisma.ListEnumTransactionTypeFieldRefInput<$PrismaModel>
@@ -717,6 +792,16 @@ export type NestedEnumLeakReasonNullableWithAggregatesFilter<$PrismaModel = neve
   _count?: Prisma.NestedIntNullableFilter<$PrismaModel>
   _min?: Prisma.NestedEnumLeakReasonNullableFilter<$PrismaModel>
   _max?: Prisma.NestedEnumLeakReasonNullableFilter<$PrismaModel>
+}
+
+export type NestedEnumCommentSentimentNullableWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.CommentSentiment | Prisma.EnumCommentSentimentFieldRefInput<$PrismaModel> | null
+  in?: $Enums.CommentSentiment[] | Prisma.ListEnumCommentSentimentFieldRefInput<$PrismaModel> | null
+  notIn?: $Enums.CommentSentiment[] | Prisma.ListEnumCommentSentimentFieldRefInput<$PrismaModel> | null
+  not?: Prisma.NestedEnumCommentSentimentNullableWithAggregatesFilter<$PrismaModel> | $Enums.CommentSentiment | null
+  _count?: Prisma.NestedIntNullableFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumCommentSentimentNullableFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumCommentSentimentNullableFilter<$PrismaModel>
 }
 
 export type NestedEnumGoalContributionTypeFilter<$PrismaModel = never> = {
@@ -829,6 +914,23 @@ export type NestedEnumSyncRunStatusWithAggregatesFilter<$PrismaModel = never> = 
   _count?: Prisma.NestedIntFilter<$PrismaModel>
   _min?: Prisma.NestedEnumSyncRunStatusFilter<$PrismaModel>
   _max?: Prisma.NestedEnumSyncRunStatusFilter<$PrismaModel>
+}
+
+export type NestedEnumAiCommentJobStatusFilter<$PrismaModel = never> = {
+  equals?: $Enums.AiCommentJobStatus | Prisma.EnumAiCommentJobStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.AiCommentJobStatus[] | Prisma.ListEnumAiCommentJobStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.AiCommentJobStatus[] | Prisma.ListEnumAiCommentJobStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumAiCommentJobStatusFilter<$PrismaModel> | $Enums.AiCommentJobStatus
+}
+
+export type NestedEnumAiCommentJobStatusWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.AiCommentJobStatus | Prisma.EnumAiCommentJobStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.AiCommentJobStatus[] | Prisma.ListEnumAiCommentJobStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.AiCommentJobStatus[] | Prisma.ListEnumAiCommentJobStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumAiCommentJobStatusWithAggregatesFilter<$PrismaModel> | $Enums.AiCommentJobStatus
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumAiCommentJobStatusFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumAiCommentJobStatusFilter<$PrismaModel>
 }
 
 

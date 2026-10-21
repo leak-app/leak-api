@@ -21,6 +21,7 @@ import { QuickLogModule } from './modules/quick-log/quick-log.module';
 import { ReclaimModule } from './modules/reclaim/reclaim.module';
 import { SyncModule } from './modules/sync/sync.module';
 import { TransfersModule } from './modules/transfers/transfers.module';
+import { AiCommentaryModule } from './modules/ai-commentary/ai-commentary.module';
 import { ValuationsModule } from './modules/valuations/valuations.module';
 
 @Module({
@@ -42,6 +43,7 @@ import { ValuationsModule } from './modules/valuations/valuations.module';
     SyncModule,
     ValuationsModule,
     TransfersModule,
+    AiCommentaryModule,
   ],
   controllers: [],
   providers: [

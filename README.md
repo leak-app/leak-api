@@ -97,6 +97,7 @@ flowchart TB
         Reclaim["reclaim<br/>leak to goal"]
         QuickLog["quick-log<br/>text parser + Gemini fallback"]
         Sync["sync<br/>Google Sheets export"]
+        AiCommentary["ai-commentary<br/>Buddy queue + worker"]
     end
 
     App --> Platform
@@ -115,6 +116,7 @@ flowchart TB
     QuickLog --> Categories
     QuickLog --> Wallets
     QuickLog --> Transactions
+    Transactions --> AiCommentary
     Auth --> Mail
 ```
 
@@ -178,6 +180,24 @@ flowchart LR
 
 The Gemini fallback is off unless `GEMINI_API_KEY` and `GEMINI_MODEL` are set.
 
+### AI Buddy
+
+After an expense is saved, a friendly "Buddy" may add a short Vietnamese comment (roast, praise or nudge) to it. Saving never waits on AI: it only inserts one job row after the commit. A worker does the rest in the background.
+
+```mermaid
+flowchart LR
+    S["Save an expense"] --> Q["Insert ai_comment_jobs row<br/>(after commit, never throws)"]
+    Q --> W["Worker, every 15 s<br/>5 due jobs per tick"]
+    W --> F{"Selector (free):<br/>over budget, late night,<br/>outlier or investment?<br/>under the daily cap?"}
+    F -->|no| K["SKIPPED"]
+    F -->|yes| G["Gemini<br/>(temperature 0.9)"]
+    G -->|ok| C["Comment stored on the transaction<br/>job DONE"]
+    G -->|error| R["Retry in 1 min, 5 min, 30 min, 2 h<br/>FAILED after 5 attempts"]
+    R --> W
+```
+
+Only some spends get a comment, at most 3 per user per day. Jobs older than 24 hours are dropped, a user who muted the Buddy since is skipped, and editing a transaction's amount, type, category or note clears its comment. The mode (`SAVAGE`, `GENTLE`, `MUTE`) is read when the job runs. The feature is off unless `AI_BUDDY_ENABLED=true` and the Gemini key and model are set. The worker assumes a single API instance, like sync.
+
 ---
 
 ## Project structure
@@ -207,10 +227,11 @@ api/
 │       ├── reclaim/           # plug-the-leak offers and transfers
 │       ├── overview/          # summary, daily/weekly/monthly reports
 │       ├── quick-log/         # text parser + Gemini fallback
+│       ├── ai-commentary/     # Buddy comments: selector, job queue, worker
 │       ├── sync/              # Google Sheets export, OAuth, encryption, scheduler
 │       └── mail/              # SMTP mailer + templates
 ├── test/                      # e2e setup + quick-log eval fixtures
-├── scripts/                   # eval-quick-log.ts, probe-gemini.ts
+├── scripts/                   # eval-quick-log.ts, probe-gemini.ts, probe-buddy.ts
 ├── .infras/                   # local PostgreSQL docker-compose
 ├── .ci/                       # build and version-bump scripts
 ├── .github/workflows/         # GHCR image publish
@@ -280,12 +301,14 @@ Status reflects the code in this repository.
 | **Plug the leak**           | Monthly offer to transfer saved leak money into a goal; accept or dismiss, with history                                                                                 | `/reclaim/*`                                                         |
 | **Overview and reports**    | Net worth summary, daily, weekly and monthly breakdowns in one hydrated call                                                                                            | `/overview/*`                                                        |
 | **Quick-log**               | Text to a transaction draft: deterministic Vietnamese parser plus optional Gemini fallback (per-user rate limit)                                                        | `POST /transactions/parse`                                           |
+| **AI Buddy**                | Optional short comments on a few picked expenses, written in the background with retries. Per-user mode: savage, gentle or mute                                         | `GET /ai-commentary/transactions/:id`, `/users/me/preferences`       |
 | **Google Sheets export**    | Per-user opt-in OAuth, nightly export at 00:00 ICT, manual run, run history                                                                                             | `/sync/google-sheets/*`                                              |
 | **Mail**                    | SMTP mailer with Handlebars templates (password reset)                                                                                                                  | internal                                                             |
 
 ### Status notes
 
 - **Quick-log**: built and evaluated; the Gemini layer stays off until a paid-tier key is configured in production.
+- **AI Buddy**: built behind `AI_BUDDY_ENABLED`; stays off until the privacy page describes it and a paid-tier key is set.
 - **Google Sheets sync**: built, acceptance testing pending.
 
 ---
@@ -394,6 +417,7 @@ The API listens on `http://localhost:3000/api` (override with `PORT`). Swagger i
 | `SYNC_TOKEN_ENCRYPTION_KEY`                                                    | for Sheets | 32 random bytes, base64 (`openssl rand -base64 32`)    |
 | `GEMINI_API_KEY`, `GEMINI_MODEL`                                               |  optional  | Quick-log fallback; empty keeps it off                 |
 | `GEMINI_TIMEOUT_MS`, `GEMINI_CALLS_PER_MINUTE`                                 |  optional  | Fallback timeout and per-user limit                    |
+| `AI_BUDDY_ENABLED`                                                             |  optional  | `true` turns the AI Buddy on (needs the Gemini key)    |
 
 Sheets sync stays unavailable until its variables are set.
 

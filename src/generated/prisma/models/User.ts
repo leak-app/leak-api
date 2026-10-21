@@ -31,6 +31,7 @@ export type UserMinAggregateOutputType = {
   name: string | null
   createdAt: Date | null
   updatedAt: Date | null
+  buddyMode: $Enums.BuddyMode | null
 }
 
 export type UserMaxAggregateOutputType = {
@@ -40,6 +41,7 @@ export type UserMaxAggregateOutputType = {
   name: string | null
   createdAt: Date | null
   updatedAt: Date | null
+  buddyMode: $Enums.BuddyMode | null
 }
 
 export type UserCountAggregateOutputType = {
@@ -49,6 +51,7 @@ export type UserCountAggregateOutputType = {
   name: number
   createdAt: number
   updatedAt: number
+  buddyMode: number
   _all: number
 }
 
@@ -60,6 +63,7 @@ export type UserMinAggregateInputType = {
   name?: true
   createdAt?: true
   updatedAt?: true
+  buddyMode?: true
 }
 
 export type UserMaxAggregateInputType = {
@@ -69,6 +73,7 @@ export type UserMaxAggregateInputType = {
   name?: true
   createdAt?: true
   updatedAt?: true
+  buddyMode?: true
 }
 
 export type UserCountAggregateInputType = {
@@ -78,6 +83,7 @@ export type UserCountAggregateInputType = {
   name?: true
   createdAt?: true
   updatedAt?: true
+  buddyMode?: true
   _all?: true
 }
 
@@ -160,6 +166,7 @@ export type UserGroupByOutputType = {
   name: string | null
   createdAt: Date
   updatedAt: Date
+  buddyMode: $Enums.BuddyMode
   _count: UserCountAggregateOutputType | null
   _min: UserMinAggregateOutputType | null
   _max: UserMaxAggregateOutputType | null
@@ -190,6 +197,7 @@ export type UserWhereInput = {
   name?: Prisma.StringNullableFilter<"User"> | string | null
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string
+  buddyMode?: Prisma.EnumBuddyModeFilter<"User"> | $Enums.BuddyMode
   sessions?: Prisma.SessionListRelationFilter
   accounts?: Prisma.AccountListRelationFilter
   categories?: Prisma.CategoryListRelationFilter
@@ -203,6 +211,7 @@ export type UserWhereInput = {
   transfers?: Prisma.TransferListRelationFilter
   googleSheetsConnection?: Prisma.XOR<Prisma.GoogleSheetsConnectionNullableScalarRelationFilter, Prisma.GoogleSheetsConnectionWhereInput> | null
   syncRuns?: Prisma.SyncRunListRelationFilter
+  aiCommentJobs?: Prisma.AiCommentJobListRelationFilter
 }
 
 export type UserOrderByWithRelationInput = {
@@ -212,6 +221,7 @@ export type UserOrderByWithRelationInput = {
   name?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  buddyMode?: Prisma.SortOrder
   sessions?: Prisma.SessionOrderByRelationAggregateInput
   accounts?: Prisma.AccountOrderByRelationAggregateInput
   categories?: Prisma.CategoryOrderByRelationAggregateInput
@@ -225,6 +235,7 @@ export type UserOrderByWithRelationInput = {
   transfers?: Prisma.TransferOrderByRelationAggregateInput
   googleSheetsConnection?: Prisma.GoogleSheetsConnectionOrderByWithRelationInput
   syncRuns?: Prisma.SyncRunOrderByRelationAggregateInput
+  aiCommentJobs?: Prisma.AiCommentJobOrderByRelationAggregateInput
 }
 
 export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -237,6 +248,7 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   name?: Prisma.StringNullableFilter<"User"> | string | null
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string
+  buddyMode?: Prisma.EnumBuddyModeFilter<"User"> | $Enums.BuddyMode
   sessions?: Prisma.SessionListRelationFilter
   accounts?: Prisma.AccountListRelationFilter
   categories?: Prisma.CategoryListRelationFilter
@@ -250,6 +262,7 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   transfers?: Prisma.TransferListRelationFilter
   googleSheetsConnection?: Prisma.XOR<Prisma.GoogleSheetsConnectionNullableScalarRelationFilter, Prisma.GoogleSheetsConnectionWhereInput> | null
   syncRuns?: Prisma.SyncRunListRelationFilter
+  aiCommentJobs?: Prisma.AiCommentJobListRelationFilter
 }, "id" | "email">
 
 export type UserOrderByWithAggregationInput = {
@@ -259,6 +272,7 @@ export type UserOrderByWithAggregationInput = {
   name?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  buddyMode?: Prisma.SortOrder
   _count?: Prisma.UserCountOrderByAggregateInput
   _max?: Prisma.UserMaxOrderByAggregateInput
   _min?: Prisma.UserMinOrderByAggregateInput
@@ -274,6 +288,7 @@ export type UserScalarWhereWithAggregatesInput = {
   name?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"User"> | Date | string
+  buddyMode?: Prisma.EnumBuddyModeWithAggregatesFilter<"User"> | $Enums.BuddyMode
 }
 
 export type UserCreateInput = {
@@ -283,6 +298,7 @@ export type UserCreateInput = {
   name?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  buddyMode?: $Enums.BuddyMode
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
   accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
   categories?: Prisma.CategoryCreateNestedManyWithoutUserInput
@@ -296,6 +312,7 @@ export type UserCreateInput = {
   transfers?: Prisma.TransferCreateNestedManyWithoutUserInput
   googleSheetsConnection?: Prisma.GoogleSheetsConnectionCreateNestedOneWithoutUserInput
   syncRuns?: Prisma.SyncRunCreateNestedManyWithoutUserInput
+  aiCommentJobs?: Prisma.AiCommentJobCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateInput = {
@@ -305,6 +322,7 @@ export type UserUncheckedCreateInput = {
   name?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  buddyMode?: $Enums.BuddyMode
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
   accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
   categories?: Prisma.CategoryUncheckedCreateNestedManyWithoutUserInput
@@ -318,6 +336,7 @@ export type UserUncheckedCreateInput = {
   transfers?: Prisma.TransferUncheckedCreateNestedManyWithoutUserInput
   googleSheetsConnection?: Prisma.GoogleSheetsConnectionUncheckedCreateNestedOneWithoutUserInput
   syncRuns?: Prisma.SyncRunUncheckedCreateNestedManyWithoutUserInput
+  aiCommentJobs?: Prisma.AiCommentJobUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserUpdateInput = {
@@ -327,6 +346,7 @@ export type UserUpdateInput = {
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  buddyMode?: Prisma.EnumBuddyModeFieldUpdateOperationsInput | $Enums.BuddyMode
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
   accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
   categories?: Prisma.CategoryUpdateManyWithoutUserNestedInput
@@ -340,6 +360,7 @@ export type UserUpdateInput = {
   transfers?: Prisma.TransferUpdateManyWithoutUserNestedInput
   googleSheetsConnection?: Prisma.GoogleSheetsConnectionUpdateOneWithoutUserNestedInput
   syncRuns?: Prisma.SyncRunUpdateManyWithoutUserNestedInput
+  aiCommentJobs?: Prisma.AiCommentJobUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateInput = {
@@ -349,6 +370,7 @@ export type UserUncheckedUpdateInput = {
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  buddyMode?: Prisma.EnumBuddyModeFieldUpdateOperationsInput | $Enums.BuddyMode
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
   accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
   categories?: Prisma.CategoryUncheckedUpdateManyWithoutUserNestedInput
@@ -362,6 +384,7 @@ export type UserUncheckedUpdateInput = {
   transfers?: Prisma.TransferUncheckedUpdateManyWithoutUserNestedInput
   googleSheetsConnection?: Prisma.GoogleSheetsConnectionUncheckedUpdateOneWithoutUserNestedInput
   syncRuns?: Prisma.SyncRunUncheckedUpdateManyWithoutUserNestedInput
+  aiCommentJobs?: Prisma.AiCommentJobUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateManyInput = {
@@ -371,6 +394,7 @@ export type UserCreateManyInput = {
   name?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  buddyMode?: $Enums.BuddyMode
 }
 
 export type UserUpdateManyMutationInput = {
@@ -380,6 +404,7 @@ export type UserUpdateManyMutationInput = {
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  buddyMode?: Prisma.EnumBuddyModeFieldUpdateOperationsInput | $Enums.BuddyMode
 }
 
 export type UserUncheckedUpdateManyInput = {
@@ -389,6 +414,7 @@ export type UserUncheckedUpdateManyInput = {
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  buddyMode?: Prisma.EnumBuddyModeFieldUpdateOperationsInput | $Enums.BuddyMode
 }
 
 export type UserCountOrderByAggregateInput = {
@@ -398,6 +424,7 @@ export type UserCountOrderByAggregateInput = {
   name?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  buddyMode?: Prisma.SortOrder
 }
 
 export type UserMaxOrderByAggregateInput = {
@@ -407,6 +434,7 @@ export type UserMaxOrderByAggregateInput = {
   name?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  buddyMode?: Prisma.SortOrder
 }
 
 export type UserMinOrderByAggregateInput = {
@@ -416,6 +444,7 @@ export type UserMinOrderByAggregateInput = {
   name?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  buddyMode?: Prisma.SortOrder
 }
 
 export type UserScalarRelationFilter = {
@@ -433,6 +462,10 @@ export type NullableStringFieldUpdateOperationsInput = {
 
 export type DateTimeFieldUpdateOperationsInput = {
   set?: Date | string
+}
+
+export type EnumBuddyModeFieldUpdateOperationsInput = {
+  set?: $Enums.BuddyMode
 }
 
 export type UserCreateNestedOneWithoutSessionsInput = {
@@ -617,6 +650,20 @@ export type UserUpdateOneRequiredWithoutSyncRunsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutSyncRunsInput, Prisma.UserUpdateWithoutSyncRunsInput>, Prisma.UserUncheckedUpdateWithoutSyncRunsInput>
 }
 
+export type UserCreateNestedOneWithoutAiCommentJobsInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutAiCommentJobsInput, Prisma.UserUncheckedCreateWithoutAiCommentJobsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutAiCommentJobsInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutAiCommentJobsNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutAiCommentJobsInput, Prisma.UserUncheckedCreateWithoutAiCommentJobsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutAiCommentJobsInput
+  upsert?: Prisma.UserUpsertWithoutAiCommentJobsInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutAiCommentJobsInput, Prisma.UserUpdateWithoutAiCommentJobsInput>, Prisma.UserUncheckedUpdateWithoutAiCommentJobsInput>
+}
+
 export type UserCreateWithoutSessionsInput = {
   id?: string
   email: string
@@ -624,6 +671,7 @@ export type UserCreateWithoutSessionsInput = {
   name?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  buddyMode?: $Enums.BuddyMode
   accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
   categories?: Prisma.CategoryCreateNestedManyWithoutUserInput
   transactions?: Prisma.TransactionCreateNestedManyWithoutUserInput
@@ -636,6 +684,7 @@ export type UserCreateWithoutSessionsInput = {
   transfers?: Prisma.TransferCreateNestedManyWithoutUserInput
   googleSheetsConnection?: Prisma.GoogleSheetsConnectionCreateNestedOneWithoutUserInput
   syncRuns?: Prisma.SyncRunCreateNestedManyWithoutUserInput
+  aiCommentJobs?: Prisma.AiCommentJobCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutSessionsInput = {
@@ -645,6 +694,7 @@ export type UserUncheckedCreateWithoutSessionsInput = {
   name?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  buddyMode?: $Enums.BuddyMode
   accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
   categories?: Prisma.CategoryUncheckedCreateNestedManyWithoutUserInput
   transactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUserInput
@@ -657,6 +707,7 @@ export type UserUncheckedCreateWithoutSessionsInput = {
   transfers?: Prisma.TransferUncheckedCreateNestedManyWithoutUserInput
   googleSheetsConnection?: Prisma.GoogleSheetsConnectionUncheckedCreateNestedOneWithoutUserInput
   syncRuns?: Prisma.SyncRunUncheckedCreateNestedManyWithoutUserInput
+  aiCommentJobs?: Prisma.AiCommentJobUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutSessionsInput = {
@@ -682,6 +733,7 @@ export type UserUpdateWithoutSessionsInput = {
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  buddyMode?: Prisma.EnumBuddyModeFieldUpdateOperationsInput | $Enums.BuddyMode
   accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
   categories?: Prisma.CategoryUpdateManyWithoutUserNestedInput
   transactions?: Prisma.TransactionUpdateManyWithoutUserNestedInput
@@ -694,6 +746,7 @@ export type UserUpdateWithoutSessionsInput = {
   transfers?: Prisma.TransferUpdateManyWithoutUserNestedInput
   googleSheetsConnection?: Prisma.GoogleSheetsConnectionUpdateOneWithoutUserNestedInput
   syncRuns?: Prisma.SyncRunUpdateManyWithoutUserNestedInput
+  aiCommentJobs?: Prisma.AiCommentJobUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutSessionsInput = {
@@ -703,6 +756,7 @@ export type UserUncheckedUpdateWithoutSessionsInput = {
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  buddyMode?: Prisma.EnumBuddyModeFieldUpdateOperationsInput | $Enums.BuddyMode
   accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
   categories?: Prisma.CategoryUncheckedUpdateManyWithoutUserNestedInput
   transactions?: Prisma.TransactionUncheckedUpdateManyWithoutUserNestedInput
@@ -715,6 +769,7 @@ export type UserUncheckedUpdateWithoutSessionsInput = {
   transfers?: Prisma.TransferUncheckedUpdateManyWithoutUserNestedInput
   googleSheetsConnection?: Prisma.GoogleSheetsConnectionUncheckedUpdateOneWithoutUserNestedInput
   syncRuns?: Prisma.SyncRunUncheckedUpdateManyWithoutUserNestedInput
+  aiCommentJobs?: Prisma.AiCommentJobUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutResetTokensInput = {
@@ -724,6 +779,7 @@ export type UserCreateWithoutResetTokensInput = {
   name?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  buddyMode?: $Enums.BuddyMode
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
   accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
   categories?: Prisma.CategoryCreateNestedManyWithoutUserInput
@@ -736,6 +792,7 @@ export type UserCreateWithoutResetTokensInput = {
   transfers?: Prisma.TransferCreateNestedManyWithoutUserInput
   googleSheetsConnection?: Prisma.GoogleSheetsConnectionCreateNestedOneWithoutUserInput
   syncRuns?: Prisma.SyncRunCreateNestedManyWithoutUserInput
+  aiCommentJobs?: Prisma.AiCommentJobCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutResetTokensInput = {
@@ -745,6 +802,7 @@ export type UserUncheckedCreateWithoutResetTokensInput = {
   name?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  buddyMode?: $Enums.BuddyMode
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
   accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
   categories?: Prisma.CategoryUncheckedCreateNestedManyWithoutUserInput
@@ -757,6 +815,7 @@ export type UserUncheckedCreateWithoutResetTokensInput = {
   transfers?: Prisma.TransferUncheckedCreateNestedManyWithoutUserInput
   googleSheetsConnection?: Prisma.GoogleSheetsConnectionUncheckedCreateNestedOneWithoutUserInput
   syncRuns?: Prisma.SyncRunUncheckedCreateNestedManyWithoutUserInput
+  aiCommentJobs?: Prisma.AiCommentJobUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutResetTokensInput = {
@@ -782,6 +841,7 @@ export type UserUpdateWithoutResetTokensInput = {
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  buddyMode?: Prisma.EnumBuddyModeFieldUpdateOperationsInput | $Enums.BuddyMode
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
   accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
   categories?: Prisma.CategoryUpdateManyWithoutUserNestedInput
@@ -794,6 +854,7 @@ export type UserUpdateWithoutResetTokensInput = {
   transfers?: Prisma.TransferUpdateManyWithoutUserNestedInput
   googleSheetsConnection?: Prisma.GoogleSheetsConnectionUpdateOneWithoutUserNestedInput
   syncRuns?: Prisma.SyncRunUpdateManyWithoutUserNestedInput
+  aiCommentJobs?: Prisma.AiCommentJobUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutResetTokensInput = {
@@ -803,6 +864,7 @@ export type UserUncheckedUpdateWithoutResetTokensInput = {
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  buddyMode?: Prisma.EnumBuddyModeFieldUpdateOperationsInput | $Enums.BuddyMode
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
   accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
   categories?: Prisma.CategoryUncheckedUpdateManyWithoutUserNestedInput
@@ -815,6 +877,7 @@ export type UserUncheckedUpdateWithoutResetTokensInput = {
   transfers?: Prisma.TransferUncheckedUpdateManyWithoutUserNestedInput
   googleSheetsConnection?: Prisma.GoogleSheetsConnectionUncheckedUpdateOneWithoutUserNestedInput
   syncRuns?: Prisma.SyncRunUncheckedUpdateManyWithoutUserNestedInput
+  aiCommentJobs?: Prisma.AiCommentJobUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutAccountsInput = {
@@ -824,6 +887,7 @@ export type UserCreateWithoutAccountsInput = {
   name?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  buddyMode?: $Enums.BuddyMode
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
   categories?: Prisma.CategoryCreateNestedManyWithoutUserInput
   transactions?: Prisma.TransactionCreateNestedManyWithoutUserInput
@@ -836,6 +900,7 @@ export type UserCreateWithoutAccountsInput = {
   transfers?: Prisma.TransferCreateNestedManyWithoutUserInput
   googleSheetsConnection?: Prisma.GoogleSheetsConnectionCreateNestedOneWithoutUserInput
   syncRuns?: Prisma.SyncRunCreateNestedManyWithoutUserInput
+  aiCommentJobs?: Prisma.AiCommentJobCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutAccountsInput = {
@@ -845,6 +910,7 @@ export type UserUncheckedCreateWithoutAccountsInput = {
   name?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  buddyMode?: $Enums.BuddyMode
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
   categories?: Prisma.CategoryUncheckedCreateNestedManyWithoutUserInput
   transactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUserInput
@@ -857,6 +923,7 @@ export type UserUncheckedCreateWithoutAccountsInput = {
   transfers?: Prisma.TransferUncheckedCreateNestedManyWithoutUserInput
   googleSheetsConnection?: Prisma.GoogleSheetsConnectionUncheckedCreateNestedOneWithoutUserInput
   syncRuns?: Prisma.SyncRunUncheckedCreateNestedManyWithoutUserInput
+  aiCommentJobs?: Prisma.AiCommentJobUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutAccountsInput = {
@@ -882,6 +949,7 @@ export type UserUpdateWithoutAccountsInput = {
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  buddyMode?: Prisma.EnumBuddyModeFieldUpdateOperationsInput | $Enums.BuddyMode
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
   categories?: Prisma.CategoryUpdateManyWithoutUserNestedInput
   transactions?: Prisma.TransactionUpdateManyWithoutUserNestedInput
@@ -894,6 +962,7 @@ export type UserUpdateWithoutAccountsInput = {
   transfers?: Prisma.TransferUpdateManyWithoutUserNestedInput
   googleSheetsConnection?: Prisma.GoogleSheetsConnectionUpdateOneWithoutUserNestedInput
   syncRuns?: Prisma.SyncRunUpdateManyWithoutUserNestedInput
+  aiCommentJobs?: Prisma.AiCommentJobUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutAccountsInput = {
@@ -903,6 +972,7 @@ export type UserUncheckedUpdateWithoutAccountsInput = {
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  buddyMode?: Prisma.EnumBuddyModeFieldUpdateOperationsInput | $Enums.BuddyMode
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
   categories?: Prisma.CategoryUncheckedUpdateManyWithoutUserNestedInput
   transactions?: Prisma.TransactionUncheckedUpdateManyWithoutUserNestedInput
@@ -915,6 +985,7 @@ export type UserUncheckedUpdateWithoutAccountsInput = {
   transfers?: Prisma.TransferUncheckedUpdateManyWithoutUserNestedInput
   googleSheetsConnection?: Prisma.GoogleSheetsConnectionUncheckedUpdateOneWithoutUserNestedInput
   syncRuns?: Prisma.SyncRunUncheckedUpdateManyWithoutUserNestedInput
+  aiCommentJobs?: Prisma.AiCommentJobUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutValuationsInput = {
@@ -924,6 +995,7 @@ export type UserCreateWithoutValuationsInput = {
   name?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  buddyMode?: $Enums.BuddyMode
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
   accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
   categories?: Prisma.CategoryCreateNestedManyWithoutUserInput
@@ -936,6 +1008,7 @@ export type UserCreateWithoutValuationsInput = {
   transfers?: Prisma.TransferCreateNestedManyWithoutUserInput
   googleSheetsConnection?: Prisma.GoogleSheetsConnectionCreateNestedOneWithoutUserInput
   syncRuns?: Prisma.SyncRunCreateNestedManyWithoutUserInput
+  aiCommentJobs?: Prisma.AiCommentJobCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutValuationsInput = {
@@ -945,6 +1018,7 @@ export type UserUncheckedCreateWithoutValuationsInput = {
   name?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  buddyMode?: $Enums.BuddyMode
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
   accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
   categories?: Prisma.CategoryUncheckedCreateNestedManyWithoutUserInput
@@ -957,6 +1031,7 @@ export type UserUncheckedCreateWithoutValuationsInput = {
   transfers?: Prisma.TransferUncheckedCreateNestedManyWithoutUserInput
   googleSheetsConnection?: Prisma.GoogleSheetsConnectionUncheckedCreateNestedOneWithoutUserInput
   syncRuns?: Prisma.SyncRunUncheckedCreateNestedManyWithoutUserInput
+  aiCommentJobs?: Prisma.AiCommentJobUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutValuationsInput = {
@@ -982,6 +1057,7 @@ export type UserUpdateWithoutValuationsInput = {
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  buddyMode?: Prisma.EnumBuddyModeFieldUpdateOperationsInput | $Enums.BuddyMode
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
   accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
   categories?: Prisma.CategoryUpdateManyWithoutUserNestedInput
@@ -994,6 +1070,7 @@ export type UserUpdateWithoutValuationsInput = {
   transfers?: Prisma.TransferUpdateManyWithoutUserNestedInput
   googleSheetsConnection?: Prisma.GoogleSheetsConnectionUpdateOneWithoutUserNestedInput
   syncRuns?: Prisma.SyncRunUpdateManyWithoutUserNestedInput
+  aiCommentJobs?: Prisma.AiCommentJobUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutValuationsInput = {
@@ -1003,6 +1080,7 @@ export type UserUncheckedUpdateWithoutValuationsInput = {
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  buddyMode?: Prisma.EnumBuddyModeFieldUpdateOperationsInput | $Enums.BuddyMode
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
   accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
   categories?: Prisma.CategoryUncheckedUpdateManyWithoutUserNestedInput
@@ -1015,6 +1093,7 @@ export type UserUncheckedUpdateWithoutValuationsInput = {
   transfers?: Prisma.TransferUncheckedUpdateManyWithoutUserNestedInput
   googleSheetsConnection?: Prisma.GoogleSheetsConnectionUncheckedUpdateOneWithoutUserNestedInput
   syncRuns?: Prisma.SyncRunUncheckedUpdateManyWithoutUserNestedInput
+  aiCommentJobs?: Prisma.AiCommentJobUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutTransfersInput = {
@@ -1024,6 +1103,7 @@ export type UserCreateWithoutTransfersInput = {
   name?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  buddyMode?: $Enums.BuddyMode
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
   accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
   categories?: Prisma.CategoryCreateNestedManyWithoutUserInput
@@ -1036,6 +1116,7 @@ export type UserCreateWithoutTransfersInput = {
   valuations?: Prisma.AccountValuationCreateNestedManyWithoutUserInput
   googleSheetsConnection?: Prisma.GoogleSheetsConnectionCreateNestedOneWithoutUserInput
   syncRuns?: Prisma.SyncRunCreateNestedManyWithoutUserInput
+  aiCommentJobs?: Prisma.AiCommentJobCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutTransfersInput = {
@@ -1045,6 +1126,7 @@ export type UserUncheckedCreateWithoutTransfersInput = {
   name?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  buddyMode?: $Enums.BuddyMode
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
   accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
   categories?: Prisma.CategoryUncheckedCreateNestedManyWithoutUserInput
@@ -1057,6 +1139,7 @@ export type UserUncheckedCreateWithoutTransfersInput = {
   valuations?: Prisma.AccountValuationUncheckedCreateNestedManyWithoutUserInput
   googleSheetsConnection?: Prisma.GoogleSheetsConnectionUncheckedCreateNestedOneWithoutUserInput
   syncRuns?: Prisma.SyncRunUncheckedCreateNestedManyWithoutUserInput
+  aiCommentJobs?: Prisma.AiCommentJobUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutTransfersInput = {
@@ -1082,6 +1165,7 @@ export type UserUpdateWithoutTransfersInput = {
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  buddyMode?: Prisma.EnumBuddyModeFieldUpdateOperationsInput | $Enums.BuddyMode
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
   accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
   categories?: Prisma.CategoryUpdateManyWithoutUserNestedInput
@@ -1094,6 +1178,7 @@ export type UserUpdateWithoutTransfersInput = {
   valuations?: Prisma.AccountValuationUpdateManyWithoutUserNestedInput
   googleSheetsConnection?: Prisma.GoogleSheetsConnectionUpdateOneWithoutUserNestedInput
   syncRuns?: Prisma.SyncRunUpdateManyWithoutUserNestedInput
+  aiCommentJobs?: Prisma.AiCommentJobUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutTransfersInput = {
@@ -1103,6 +1188,7 @@ export type UserUncheckedUpdateWithoutTransfersInput = {
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  buddyMode?: Prisma.EnumBuddyModeFieldUpdateOperationsInput | $Enums.BuddyMode
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
   accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
   categories?: Prisma.CategoryUncheckedUpdateManyWithoutUserNestedInput
@@ -1115,6 +1201,7 @@ export type UserUncheckedUpdateWithoutTransfersInput = {
   valuations?: Prisma.AccountValuationUncheckedUpdateManyWithoutUserNestedInput
   googleSheetsConnection?: Prisma.GoogleSheetsConnectionUncheckedUpdateOneWithoutUserNestedInput
   syncRuns?: Prisma.SyncRunUncheckedUpdateManyWithoutUserNestedInput
+  aiCommentJobs?: Prisma.AiCommentJobUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutCategoriesInput = {
@@ -1124,6 +1211,7 @@ export type UserCreateWithoutCategoriesInput = {
   name?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  buddyMode?: $Enums.BuddyMode
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
   accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
   transactions?: Prisma.TransactionCreateNestedManyWithoutUserInput
@@ -1136,6 +1224,7 @@ export type UserCreateWithoutCategoriesInput = {
   transfers?: Prisma.TransferCreateNestedManyWithoutUserInput
   googleSheetsConnection?: Prisma.GoogleSheetsConnectionCreateNestedOneWithoutUserInput
   syncRuns?: Prisma.SyncRunCreateNestedManyWithoutUserInput
+  aiCommentJobs?: Prisma.AiCommentJobCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutCategoriesInput = {
@@ -1145,6 +1234,7 @@ export type UserUncheckedCreateWithoutCategoriesInput = {
   name?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  buddyMode?: $Enums.BuddyMode
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
   accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
   transactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUserInput
@@ -1157,6 +1247,7 @@ export type UserUncheckedCreateWithoutCategoriesInput = {
   transfers?: Prisma.TransferUncheckedCreateNestedManyWithoutUserInput
   googleSheetsConnection?: Prisma.GoogleSheetsConnectionUncheckedCreateNestedOneWithoutUserInput
   syncRuns?: Prisma.SyncRunUncheckedCreateNestedManyWithoutUserInput
+  aiCommentJobs?: Prisma.AiCommentJobUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutCategoriesInput = {
@@ -1182,6 +1273,7 @@ export type UserUpdateWithoutCategoriesInput = {
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  buddyMode?: Prisma.EnumBuddyModeFieldUpdateOperationsInput | $Enums.BuddyMode
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
   accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
   transactions?: Prisma.TransactionUpdateManyWithoutUserNestedInput
@@ -1194,6 +1286,7 @@ export type UserUpdateWithoutCategoriesInput = {
   transfers?: Prisma.TransferUpdateManyWithoutUserNestedInput
   googleSheetsConnection?: Prisma.GoogleSheetsConnectionUpdateOneWithoutUserNestedInput
   syncRuns?: Prisma.SyncRunUpdateManyWithoutUserNestedInput
+  aiCommentJobs?: Prisma.AiCommentJobUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCategoriesInput = {
@@ -1203,6 +1296,7 @@ export type UserUncheckedUpdateWithoutCategoriesInput = {
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  buddyMode?: Prisma.EnumBuddyModeFieldUpdateOperationsInput | $Enums.BuddyMode
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
   accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
   transactions?: Prisma.TransactionUncheckedUpdateManyWithoutUserNestedInput
@@ -1215,6 +1309,7 @@ export type UserUncheckedUpdateWithoutCategoriesInput = {
   transfers?: Prisma.TransferUncheckedUpdateManyWithoutUserNestedInput
   googleSheetsConnection?: Prisma.GoogleSheetsConnectionUncheckedUpdateOneWithoutUserNestedInput
   syncRuns?: Prisma.SyncRunUncheckedUpdateManyWithoutUserNestedInput
+  aiCommentJobs?: Prisma.AiCommentJobUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutTransactionsInput = {
@@ -1224,6 +1319,7 @@ export type UserCreateWithoutTransactionsInput = {
   name?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  buddyMode?: $Enums.BuddyMode
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
   accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
   categories?: Prisma.CategoryCreateNestedManyWithoutUserInput
@@ -1236,6 +1332,7 @@ export type UserCreateWithoutTransactionsInput = {
   transfers?: Prisma.TransferCreateNestedManyWithoutUserInput
   googleSheetsConnection?: Prisma.GoogleSheetsConnectionCreateNestedOneWithoutUserInput
   syncRuns?: Prisma.SyncRunCreateNestedManyWithoutUserInput
+  aiCommentJobs?: Prisma.AiCommentJobCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutTransactionsInput = {
@@ -1245,6 +1342,7 @@ export type UserUncheckedCreateWithoutTransactionsInput = {
   name?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  buddyMode?: $Enums.BuddyMode
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
   accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
   categories?: Prisma.CategoryUncheckedCreateNestedManyWithoutUserInput
@@ -1257,6 +1355,7 @@ export type UserUncheckedCreateWithoutTransactionsInput = {
   transfers?: Prisma.TransferUncheckedCreateNestedManyWithoutUserInput
   googleSheetsConnection?: Prisma.GoogleSheetsConnectionUncheckedCreateNestedOneWithoutUserInput
   syncRuns?: Prisma.SyncRunUncheckedCreateNestedManyWithoutUserInput
+  aiCommentJobs?: Prisma.AiCommentJobUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutTransactionsInput = {
@@ -1282,6 +1381,7 @@ export type UserUpdateWithoutTransactionsInput = {
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  buddyMode?: Prisma.EnumBuddyModeFieldUpdateOperationsInput | $Enums.BuddyMode
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
   accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
   categories?: Prisma.CategoryUpdateManyWithoutUserNestedInput
@@ -1294,6 +1394,7 @@ export type UserUpdateWithoutTransactionsInput = {
   transfers?: Prisma.TransferUpdateManyWithoutUserNestedInput
   googleSheetsConnection?: Prisma.GoogleSheetsConnectionUpdateOneWithoutUserNestedInput
   syncRuns?: Prisma.SyncRunUpdateManyWithoutUserNestedInput
+  aiCommentJobs?: Prisma.AiCommentJobUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutTransactionsInput = {
@@ -1303,6 +1404,7 @@ export type UserUncheckedUpdateWithoutTransactionsInput = {
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  buddyMode?: Prisma.EnumBuddyModeFieldUpdateOperationsInput | $Enums.BuddyMode
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
   accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
   categories?: Prisma.CategoryUncheckedUpdateManyWithoutUserNestedInput
@@ -1315,6 +1417,7 @@ export type UserUncheckedUpdateWithoutTransactionsInput = {
   transfers?: Prisma.TransferUncheckedUpdateManyWithoutUserNestedInput
   googleSheetsConnection?: Prisma.GoogleSheetsConnectionUncheckedUpdateOneWithoutUserNestedInput
   syncRuns?: Prisma.SyncRunUncheckedUpdateManyWithoutUserNestedInput
+  aiCommentJobs?: Prisma.AiCommentJobUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutGoalsInput = {
@@ -1324,6 +1427,7 @@ export type UserCreateWithoutGoalsInput = {
   name?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  buddyMode?: $Enums.BuddyMode
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
   accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
   categories?: Prisma.CategoryCreateNestedManyWithoutUserInput
@@ -1336,6 +1440,7 @@ export type UserCreateWithoutGoalsInput = {
   transfers?: Prisma.TransferCreateNestedManyWithoutUserInput
   googleSheetsConnection?: Prisma.GoogleSheetsConnectionCreateNestedOneWithoutUserInput
   syncRuns?: Prisma.SyncRunCreateNestedManyWithoutUserInput
+  aiCommentJobs?: Prisma.AiCommentJobCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutGoalsInput = {
@@ -1345,6 +1450,7 @@ export type UserUncheckedCreateWithoutGoalsInput = {
   name?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  buddyMode?: $Enums.BuddyMode
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
   accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
   categories?: Prisma.CategoryUncheckedCreateNestedManyWithoutUserInput
@@ -1357,6 +1463,7 @@ export type UserUncheckedCreateWithoutGoalsInput = {
   transfers?: Prisma.TransferUncheckedCreateNestedManyWithoutUserInput
   googleSheetsConnection?: Prisma.GoogleSheetsConnectionUncheckedCreateNestedOneWithoutUserInput
   syncRuns?: Prisma.SyncRunUncheckedCreateNestedManyWithoutUserInput
+  aiCommentJobs?: Prisma.AiCommentJobUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutGoalsInput = {
@@ -1382,6 +1489,7 @@ export type UserUpdateWithoutGoalsInput = {
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  buddyMode?: Prisma.EnumBuddyModeFieldUpdateOperationsInput | $Enums.BuddyMode
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
   accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
   categories?: Prisma.CategoryUpdateManyWithoutUserNestedInput
@@ -1394,6 +1502,7 @@ export type UserUpdateWithoutGoalsInput = {
   transfers?: Prisma.TransferUpdateManyWithoutUserNestedInput
   googleSheetsConnection?: Prisma.GoogleSheetsConnectionUpdateOneWithoutUserNestedInput
   syncRuns?: Prisma.SyncRunUpdateManyWithoutUserNestedInput
+  aiCommentJobs?: Prisma.AiCommentJobUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutGoalsInput = {
@@ -1403,6 +1512,7 @@ export type UserUncheckedUpdateWithoutGoalsInput = {
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  buddyMode?: Prisma.EnumBuddyModeFieldUpdateOperationsInput | $Enums.BuddyMode
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
   accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
   categories?: Prisma.CategoryUncheckedUpdateManyWithoutUserNestedInput
@@ -1415,6 +1525,7 @@ export type UserUncheckedUpdateWithoutGoalsInput = {
   transfers?: Prisma.TransferUncheckedUpdateManyWithoutUserNestedInput
   googleSheetsConnection?: Prisma.GoogleSheetsConnectionUncheckedUpdateOneWithoutUserNestedInput
   syncRuns?: Prisma.SyncRunUncheckedUpdateManyWithoutUserNestedInput
+  aiCommentJobs?: Prisma.AiCommentJobUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutGoalContributionsInput = {
@@ -1424,6 +1535,7 @@ export type UserCreateWithoutGoalContributionsInput = {
   name?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  buddyMode?: $Enums.BuddyMode
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
   accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
   categories?: Prisma.CategoryCreateNestedManyWithoutUserInput
@@ -1436,6 +1548,7 @@ export type UserCreateWithoutGoalContributionsInput = {
   transfers?: Prisma.TransferCreateNestedManyWithoutUserInput
   googleSheetsConnection?: Prisma.GoogleSheetsConnectionCreateNestedOneWithoutUserInput
   syncRuns?: Prisma.SyncRunCreateNestedManyWithoutUserInput
+  aiCommentJobs?: Prisma.AiCommentJobCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutGoalContributionsInput = {
@@ -1445,6 +1558,7 @@ export type UserUncheckedCreateWithoutGoalContributionsInput = {
   name?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  buddyMode?: $Enums.BuddyMode
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
   accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
   categories?: Prisma.CategoryUncheckedCreateNestedManyWithoutUserInput
@@ -1457,6 +1571,7 @@ export type UserUncheckedCreateWithoutGoalContributionsInput = {
   transfers?: Prisma.TransferUncheckedCreateNestedManyWithoutUserInput
   googleSheetsConnection?: Prisma.GoogleSheetsConnectionUncheckedCreateNestedOneWithoutUserInput
   syncRuns?: Prisma.SyncRunUncheckedCreateNestedManyWithoutUserInput
+  aiCommentJobs?: Prisma.AiCommentJobUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutGoalContributionsInput = {
@@ -1482,6 +1597,7 @@ export type UserUpdateWithoutGoalContributionsInput = {
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  buddyMode?: Prisma.EnumBuddyModeFieldUpdateOperationsInput | $Enums.BuddyMode
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
   accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
   categories?: Prisma.CategoryUpdateManyWithoutUserNestedInput
@@ -1494,6 +1610,7 @@ export type UserUpdateWithoutGoalContributionsInput = {
   transfers?: Prisma.TransferUpdateManyWithoutUserNestedInput
   googleSheetsConnection?: Prisma.GoogleSheetsConnectionUpdateOneWithoutUserNestedInput
   syncRuns?: Prisma.SyncRunUpdateManyWithoutUserNestedInput
+  aiCommentJobs?: Prisma.AiCommentJobUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutGoalContributionsInput = {
@@ -1503,6 +1620,7 @@ export type UserUncheckedUpdateWithoutGoalContributionsInput = {
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  buddyMode?: Prisma.EnumBuddyModeFieldUpdateOperationsInput | $Enums.BuddyMode
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
   accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
   categories?: Prisma.CategoryUncheckedUpdateManyWithoutUserNestedInput
@@ -1515,6 +1633,7 @@ export type UserUncheckedUpdateWithoutGoalContributionsInput = {
   transfers?: Prisma.TransferUncheckedUpdateManyWithoutUserNestedInput
   googleSheetsConnection?: Prisma.GoogleSheetsConnectionUncheckedUpdateOneWithoutUserNestedInput
   syncRuns?: Prisma.SyncRunUncheckedUpdateManyWithoutUserNestedInput
+  aiCommentJobs?: Prisma.AiCommentJobUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutLeakReclaimsInput = {
@@ -1524,6 +1643,7 @@ export type UserCreateWithoutLeakReclaimsInput = {
   name?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  buddyMode?: $Enums.BuddyMode
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
   accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
   categories?: Prisma.CategoryCreateNestedManyWithoutUserInput
@@ -1536,6 +1656,7 @@ export type UserCreateWithoutLeakReclaimsInput = {
   transfers?: Prisma.TransferCreateNestedManyWithoutUserInput
   googleSheetsConnection?: Prisma.GoogleSheetsConnectionCreateNestedOneWithoutUserInput
   syncRuns?: Prisma.SyncRunCreateNestedManyWithoutUserInput
+  aiCommentJobs?: Prisma.AiCommentJobCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutLeakReclaimsInput = {
@@ -1545,6 +1666,7 @@ export type UserUncheckedCreateWithoutLeakReclaimsInput = {
   name?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  buddyMode?: $Enums.BuddyMode
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
   accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
   categories?: Prisma.CategoryUncheckedCreateNestedManyWithoutUserInput
@@ -1557,6 +1679,7 @@ export type UserUncheckedCreateWithoutLeakReclaimsInput = {
   transfers?: Prisma.TransferUncheckedCreateNestedManyWithoutUserInput
   googleSheetsConnection?: Prisma.GoogleSheetsConnectionUncheckedCreateNestedOneWithoutUserInput
   syncRuns?: Prisma.SyncRunUncheckedCreateNestedManyWithoutUserInput
+  aiCommentJobs?: Prisma.AiCommentJobUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutLeakReclaimsInput = {
@@ -1582,6 +1705,7 @@ export type UserUpdateWithoutLeakReclaimsInput = {
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  buddyMode?: Prisma.EnumBuddyModeFieldUpdateOperationsInput | $Enums.BuddyMode
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
   accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
   categories?: Prisma.CategoryUpdateManyWithoutUserNestedInput
@@ -1594,6 +1718,7 @@ export type UserUpdateWithoutLeakReclaimsInput = {
   transfers?: Prisma.TransferUpdateManyWithoutUserNestedInput
   googleSheetsConnection?: Prisma.GoogleSheetsConnectionUpdateOneWithoutUserNestedInput
   syncRuns?: Prisma.SyncRunUpdateManyWithoutUserNestedInput
+  aiCommentJobs?: Prisma.AiCommentJobUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutLeakReclaimsInput = {
@@ -1603,6 +1728,7 @@ export type UserUncheckedUpdateWithoutLeakReclaimsInput = {
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  buddyMode?: Prisma.EnumBuddyModeFieldUpdateOperationsInput | $Enums.BuddyMode
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
   accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
   categories?: Prisma.CategoryUncheckedUpdateManyWithoutUserNestedInput
@@ -1615,6 +1741,7 @@ export type UserUncheckedUpdateWithoutLeakReclaimsInput = {
   transfers?: Prisma.TransferUncheckedUpdateManyWithoutUserNestedInput
   googleSheetsConnection?: Prisma.GoogleSheetsConnectionUncheckedUpdateOneWithoutUserNestedInput
   syncRuns?: Prisma.SyncRunUncheckedUpdateManyWithoutUserNestedInput
+  aiCommentJobs?: Prisma.AiCommentJobUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutBudgetsInput = {
@@ -1624,6 +1751,7 @@ export type UserCreateWithoutBudgetsInput = {
   name?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  buddyMode?: $Enums.BuddyMode
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
   accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
   categories?: Prisma.CategoryCreateNestedManyWithoutUserInput
@@ -1636,6 +1764,7 @@ export type UserCreateWithoutBudgetsInput = {
   transfers?: Prisma.TransferCreateNestedManyWithoutUserInput
   googleSheetsConnection?: Prisma.GoogleSheetsConnectionCreateNestedOneWithoutUserInput
   syncRuns?: Prisma.SyncRunCreateNestedManyWithoutUserInput
+  aiCommentJobs?: Prisma.AiCommentJobCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutBudgetsInput = {
@@ -1645,6 +1774,7 @@ export type UserUncheckedCreateWithoutBudgetsInput = {
   name?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  buddyMode?: $Enums.BuddyMode
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
   accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
   categories?: Prisma.CategoryUncheckedCreateNestedManyWithoutUserInput
@@ -1657,6 +1787,7 @@ export type UserUncheckedCreateWithoutBudgetsInput = {
   transfers?: Prisma.TransferUncheckedCreateNestedManyWithoutUserInput
   googleSheetsConnection?: Prisma.GoogleSheetsConnectionUncheckedCreateNestedOneWithoutUserInput
   syncRuns?: Prisma.SyncRunUncheckedCreateNestedManyWithoutUserInput
+  aiCommentJobs?: Prisma.AiCommentJobUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutBudgetsInput = {
@@ -1682,6 +1813,7 @@ export type UserUpdateWithoutBudgetsInput = {
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  buddyMode?: Prisma.EnumBuddyModeFieldUpdateOperationsInput | $Enums.BuddyMode
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
   accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
   categories?: Prisma.CategoryUpdateManyWithoutUserNestedInput
@@ -1694,6 +1826,7 @@ export type UserUpdateWithoutBudgetsInput = {
   transfers?: Prisma.TransferUpdateManyWithoutUserNestedInput
   googleSheetsConnection?: Prisma.GoogleSheetsConnectionUpdateOneWithoutUserNestedInput
   syncRuns?: Prisma.SyncRunUpdateManyWithoutUserNestedInput
+  aiCommentJobs?: Prisma.AiCommentJobUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutBudgetsInput = {
@@ -1703,6 +1836,7 @@ export type UserUncheckedUpdateWithoutBudgetsInput = {
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  buddyMode?: Prisma.EnumBuddyModeFieldUpdateOperationsInput | $Enums.BuddyMode
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
   accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
   categories?: Prisma.CategoryUncheckedUpdateManyWithoutUserNestedInput
@@ -1715,6 +1849,7 @@ export type UserUncheckedUpdateWithoutBudgetsInput = {
   transfers?: Prisma.TransferUncheckedUpdateManyWithoutUserNestedInput
   googleSheetsConnection?: Prisma.GoogleSheetsConnectionUncheckedUpdateOneWithoutUserNestedInput
   syncRuns?: Prisma.SyncRunUncheckedUpdateManyWithoutUserNestedInput
+  aiCommentJobs?: Prisma.AiCommentJobUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutGoogleSheetsConnectionInput = {
@@ -1724,6 +1859,7 @@ export type UserCreateWithoutGoogleSheetsConnectionInput = {
   name?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  buddyMode?: $Enums.BuddyMode
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
   accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
   categories?: Prisma.CategoryCreateNestedManyWithoutUserInput
@@ -1736,6 +1872,7 @@ export type UserCreateWithoutGoogleSheetsConnectionInput = {
   valuations?: Prisma.AccountValuationCreateNestedManyWithoutUserInput
   transfers?: Prisma.TransferCreateNestedManyWithoutUserInput
   syncRuns?: Prisma.SyncRunCreateNestedManyWithoutUserInput
+  aiCommentJobs?: Prisma.AiCommentJobCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutGoogleSheetsConnectionInput = {
@@ -1745,6 +1882,7 @@ export type UserUncheckedCreateWithoutGoogleSheetsConnectionInput = {
   name?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  buddyMode?: $Enums.BuddyMode
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
   accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
   categories?: Prisma.CategoryUncheckedCreateNestedManyWithoutUserInput
@@ -1757,6 +1895,7 @@ export type UserUncheckedCreateWithoutGoogleSheetsConnectionInput = {
   valuations?: Prisma.AccountValuationUncheckedCreateNestedManyWithoutUserInput
   transfers?: Prisma.TransferUncheckedCreateNestedManyWithoutUserInput
   syncRuns?: Prisma.SyncRunUncheckedCreateNestedManyWithoutUserInput
+  aiCommentJobs?: Prisma.AiCommentJobUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutGoogleSheetsConnectionInput = {
@@ -1782,6 +1921,7 @@ export type UserUpdateWithoutGoogleSheetsConnectionInput = {
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  buddyMode?: Prisma.EnumBuddyModeFieldUpdateOperationsInput | $Enums.BuddyMode
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
   accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
   categories?: Prisma.CategoryUpdateManyWithoutUserNestedInput
@@ -1794,6 +1934,7 @@ export type UserUpdateWithoutGoogleSheetsConnectionInput = {
   valuations?: Prisma.AccountValuationUpdateManyWithoutUserNestedInput
   transfers?: Prisma.TransferUpdateManyWithoutUserNestedInput
   syncRuns?: Prisma.SyncRunUpdateManyWithoutUserNestedInput
+  aiCommentJobs?: Prisma.AiCommentJobUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutGoogleSheetsConnectionInput = {
@@ -1803,6 +1944,7 @@ export type UserUncheckedUpdateWithoutGoogleSheetsConnectionInput = {
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  buddyMode?: Prisma.EnumBuddyModeFieldUpdateOperationsInput | $Enums.BuddyMode
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
   accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
   categories?: Prisma.CategoryUncheckedUpdateManyWithoutUserNestedInput
@@ -1815,6 +1957,7 @@ export type UserUncheckedUpdateWithoutGoogleSheetsConnectionInput = {
   valuations?: Prisma.AccountValuationUncheckedUpdateManyWithoutUserNestedInput
   transfers?: Prisma.TransferUncheckedUpdateManyWithoutUserNestedInput
   syncRuns?: Prisma.SyncRunUncheckedUpdateManyWithoutUserNestedInput
+  aiCommentJobs?: Prisma.AiCommentJobUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutSyncRunsInput = {
@@ -1824,6 +1967,7 @@ export type UserCreateWithoutSyncRunsInput = {
   name?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  buddyMode?: $Enums.BuddyMode
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
   accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
   categories?: Prisma.CategoryCreateNestedManyWithoutUserInput
@@ -1836,6 +1980,7 @@ export type UserCreateWithoutSyncRunsInput = {
   valuations?: Prisma.AccountValuationCreateNestedManyWithoutUserInput
   transfers?: Prisma.TransferCreateNestedManyWithoutUserInput
   googleSheetsConnection?: Prisma.GoogleSheetsConnectionCreateNestedOneWithoutUserInput
+  aiCommentJobs?: Prisma.AiCommentJobCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutSyncRunsInput = {
@@ -1845,6 +1990,7 @@ export type UserUncheckedCreateWithoutSyncRunsInput = {
   name?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  buddyMode?: $Enums.BuddyMode
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
   accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
   categories?: Prisma.CategoryUncheckedCreateNestedManyWithoutUserInput
@@ -1857,6 +2003,7 @@ export type UserUncheckedCreateWithoutSyncRunsInput = {
   valuations?: Prisma.AccountValuationUncheckedCreateNestedManyWithoutUserInput
   transfers?: Prisma.TransferUncheckedCreateNestedManyWithoutUserInput
   googleSheetsConnection?: Prisma.GoogleSheetsConnectionUncheckedCreateNestedOneWithoutUserInput
+  aiCommentJobs?: Prisma.AiCommentJobUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutSyncRunsInput = {
@@ -1882,6 +2029,7 @@ export type UserUpdateWithoutSyncRunsInput = {
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  buddyMode?: Prisma.EnumBuddyModeFieldUpdateOperationsInput | $Enums.BuddyMode
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
   accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
   categories?: Prisma.CategoryUpdateManyWithoutUserNestedInput
@@ -1894,6 +2042,7 @@ export type UserUpdateWithoutSyncRunsInput = {
   valuations?: Prisma.AccountValuationUpdateManyWithoutUserNestedInput
   transfers?: Prisma.TransferUpdateManyWithoutUserNestedInput
   googleSheetsConnection?: Prisma.GoogleSheetsConnectionUpdateOneWithoutUserNestedInput
+  aiCommentJobs?: Prisma.AiCommentJobUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutSyncRunsInput = {
@@ -1903,6 +2052,7 @@ export type UserUncheckedUpdateWithoutSyncRunsInput = {
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  buddyMode?: Prisma.EnumBuddyModeFieldUpdateOperationsInput | $Enums.BuddyMode
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
   accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
   categories?: Prisma.CategoryUncheckedUpdateManyWithoutUserNestedInput
@@ -1915,6 +2065,115 @@ export type UserUncheckedUpdateWithoutSyncRunsInput = {
   valuations?: Prisma.AccountValuationUncheckedUpdateManyWithoutUserNestedInput
   transfers?: Prisma.TransferUncheckedUpdateManyWithoutUserNestedInput
   googleSheetsConnection?: Prisma.GoogleSheetsConnectionUncheckedUpdateOneWithoutUserNestedInput
+  aiCommentJobs?: Prisma.AiCommentJobUncheckedUpdateManyWithoutUserNestedInput
+}
+
+export type UserCreateWithoutAiCommentJobsInput = {
+  id?: string
+  email: string
+  password: string
+  name?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  buddyMode?: $Enums.BuddyMode
+  sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
+  accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
+  categories?: Prisma.CategoryCreateNestedManyWithoutUserInput
+  transactions?: Prisma.TransactionCreateNestedManyWithoutUserInput
+  goals?: Prisma.GoalCreateNestedManyWithoutUserInput
+  goalContributions?: Prisma.GoalContributionCreateNestedManyWithoutUserInput
+  budgets?: Prisma.BudgetCreateNestedManyWithoutUserInput
+  resetTokens?: Prisma.PasswordResetTokenCreateNestedManyWithoutUserInput
+  leakReclaims?: Prisma.LeakReclaimCreateNestedManyWithoutUserInput
+  valuations?: Prisma.AccountValuationCreateNestedManyWithoutUserInput
+  transfers?: Prisma.TransferCreateNestedManyWithoutUserInput
+  googleSheetsConnection?: Prisma.GoogleSheetsConnectionCreateNestedOneWithoutUserInput
+  syncRuns?: Prisma.SyncRunCreateNestedManyWithoutUserInput
+}
+
+export type UserUncheckedCreateWithoutAiCommentJobsInput = {
+  id?: string
+  email: string
+  password: string
+  name?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  buddyMode?: $Enums.BuddyMode
+  sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
+  accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
+  categories?: Prisma.CategoryUncheckedCreateNestedManyWithoutUserInput
+  transactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUserInput
+  goals?: Prisma.GoalUncheckedCreateNestedManyWithoutUserInput
+  goalContributions?: Prisma.GoalContributionUncheckedCreateNestedManyWithoutUserInput
+  budgets?: Prisma.BudgetUncheckedCreateNestedManyWithoutUserInput
+  resetTokens?: Prisma.PasswordResetTokenUncheckedCreateNestedManyWithoutUserInput
+  leakReclaims?: Prisma.LeakReclaimUncheckedCreateNestedManyWithoutUserInput
+  valuations?: Prisma.AccountValuationUncheckedCreateNestedManyWithoutUserInput
+  transfers?: Prisma.TransferUncheckedCreateNestedManyWithoutUserInput
+  googleSheetsConnection?: Prisma.GoogleSheetsConnectionUncheckedCreateNestedOneWithoutUserInput
+  syncRuns?: Prisma.SyncRunUncheckedCreateNestedManyWithoutUserInput
+}
+
+export type UserCreateOrConnectWithoutAiCommentJobsInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutAiCommentJobsInput, Prisma.UserUncheckedCreateWithoutAiCommentJobsInput>
+}
+
+export type UserUpsertWithoutAiCommentJobsInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutAiCommentJobsInput, Prisma.UserUncheckedUpdateWithoutAiCommentJobsInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutAiCommentJobsInput, Prisma.UserUncheckedCreateWithoutAiCommentJobsInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutAiCommentJobsInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutAiCommentJobsInput, Prisma.UserUncheckedUpdateWithoutAiCommentJobsInput>
+}
+
+export type UserUpdateWithoutAiCommentJobsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  buddyMode?: Prisma.EnumBuddyModeFieldUpdateOperationsInput | $Enums.BuddyMode
+  sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
+  accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
+  categories?: Prisma.CategoryUpdateManyWithoutUserNestedInput
+  transactions?: Prisma.TransactionUpdateManyWithoutUserNestedInput
+  goals?: Prisma.GoalUpdateManyWithoutUserNestedInput
+  goalContributions?: Prisma.GoalContributionUpdateManyWithoutUserNestedInput
+  budgets?: Prisma.BudgetUpdateManyWithoutUserNestedInput
+  resetTokens?: Prisma.PasswordResetTokenUpdateManyWithoutUserNestedInput
+  leakReclaims?: Prisma.LeakReclaimUpdateManyWithoutUserNestedInput
+  valuations?: Prisma.AccountValuationUpdateManyWithoutUserNestedInput
+  transfers?: Prisma.TransferUpdateManyWithoutUserNestedInput
+  googleSheetsConnection?: Prisma.GoogleSheetsConnectionUpdateOneWithoutUserNestedInput
+  syncRuns?: Prisma.SyncRunUpdateManyWithoutUserNestedInput
+}
+
+export type UserUncheckedUpdateWithoutAiCommentJobsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  buddyMode?: Prisma.EnumBuddyModeFieldUpdateOperationsInput | $Enums.BuddyMode
+  sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
+  accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
+  categories?: Prisma.CategoryUncheckedUpdateManyWithoutUserNestedInput
+  transactions?: Prisma.TransactionUncheckedUpdateManyWithoutUserNestedInput
+  goals?: Prisma.GoalUncheckedUpdateManyWithoutUserNestedInput
+  goalContributions?: Prisma.GoalContributionUncheckedUpdateManyWithoutUserNestedInput
+  budgets?: Prisma.BudgetUncheckedUpdateManyWithoutUserNestedInput
+  resetTokens?: Prisma.PasswordResetTokenUncheckedUpdateManyWithoutUserNestedInput
+  leakReclaims?: Prisma.LeakReclaimUncheckedUpdateManyWithoutUserNestedInput
+  valuations?: Prisma.AccountValuationUncheckedUpdateManyWithoutUserNestedInput
+  transfers?: Prisma.TransferUncheckedUpdateManyWithoutUserNestedInput
+  googleSheetsConnection?: Prisma.GoogleSheetsConnectionUncheckedUpdateOneWithoutUserNestedInput
+  syncRuns?: Prisma.SyncRunUncheckedUpdateManyWithoutUserNestedInput
 }
 
 
@@ -1935,6 +2194,7 @@ export type UserCountOutputType = {
   valuations: number
   transfers: number
   syncRuns: number
+  aiCommentJobs: number
 }
 
 export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1950,6 +2210,7 @@ export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.I
   valuations?: boolean | UserCountOutputTypeCountValuationsArgs
   transfers?: boolean | UserCountOutputTypeCountTransfersArgs
   syncRuns?: boolean | UserCountOutputTypeCountSyncRunsArgs
+  aiCommentJobs?: boolean | UserCountOutputTypeCountAiCommentJobsArgs
 }
 
 /**
@@ -2046,6 +2307,13 @@ export type UserCountOutputTypeCountSyncRunsArgs<ExtArgs extends runtime.Types.E
   where?: Prisma.SyncRunWhereInput
 }
 
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountAiCommentJobsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.AiCommentJobWhereInput
+}
+
 
 export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -2054,6 +2322,7 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   name?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  buddyMode?: boolean
   sessions?: boolean | Prisma.User$sessionsArgs<ExtArgs>
   accounts?: boolean | Prisma.User$accountsArgs<ExtArgs>
   categories?: boolean | Prisma.User$categoriesArgs<ExtArgs>
@@ -2067,6 +2336,7 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   transfers?: boolean | Prisma.User$transfersArgs<ExtArgs>
   googleSheetsConnection?: boolean | Prisma.User$googleSheetsConnectionArgs<ExtArgs>
   syncRuns?: boolean | Prisma.User$syncRunsArgs<ExtArgs>
+  aiCommentJobs?: boolean | Prisma.User$aiCommentJobsArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
 
@@ -2077,6 +2347,7 @@ export type UserSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   name?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  buddyMode?: boolean
 }, ExtArgs["result"]["user"]>
 
 export type UserSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -2086,6 +2357,7 @@ export type UserSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   name?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  buddyMode?: boolean
 }, ExtArgs["result"]["user"]>
 
 export type UserSelectScalar = {
@@ -2095,9 +2367,10 @@ export type UserSelectScalar = {
   name?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  buddyMode?: boolean
 }
 
-export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "email" | "password" | "name" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
+export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "email" | "password" | "name" | "createdAt" | "updatedAt" | "buddyMode", ExtArgs["result"]["user"]>
 export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   sessions?: boolean | Prisma.User$sessionsArgs<ExtArgs>
   accounts?: boolean | Prisma.User$accountsArgs<ExtArgs>
@@ -2112,6 +2385,7 @@ export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   transfers?: boolean | Prisma.User$transfersArgs<ExtArgs>
   googleSheetsConnection?: boolean | Prisma.User$googleSheetsConnectionArgs<ExtArgs>
   syncRuns?: boolean | Prisma.User$syncRunsArgs<ExtArgs>
+  aiCommentJobs?: boolean | Prisma.User$aiCommentJobsArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type UserIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -2133,6 +2407,7 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     transfers: Prisma.$TransferPayload<ExtArgs>[]
     googleSheetsConnection: Prisma.$GoogleSheetsConnectionPayload<ExtArgs> | null
     syncRuns: Prisma.$SyncRunPayload<ExtArgs>[]
+    aiCommentJobs: Prisma.$AiCommentJobPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -2141,6 +2416,7 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     name: string | null
     createdAt: Date
     updatedAt: Date
+    buddyMode: $Enums.BuddyMode
   }, ExtArgs["result"]["user"]>
   composites: {}
 }
@@ -2548,6 +2824,7 @@ export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Typ
   transfers<T extends Prisma.User$transfersArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$transfersArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TransferPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   googleSheetsConnection<T extends Prisma.User$googleSheetsConnectionArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$googleSheetsConnectionArgs<ExtArgs>>): Prisma.Prisma__GoogleSheetsConnectionClient<runtime.Types.Result.GetResult<Prisma.$GoogleSheetsConnectionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   syncRuns<T extends Prisma.User$syncRunsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$syncRunsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SyncRunPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  aiCommentJobs<T extends Prisma.User$aiCommentJobsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$aiCommentJobsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AiCommentJobPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2583,6 +2860,7 @@ export interface UserFieldRefs {
   readonly name: Prisma.FieldRef<"User", 'String'>
   readonly createdAt: Prisma.FieldRef<"User", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"User", 'DateTime'>
+  readonly buddyMode: Prisma.FieldRef<"User", 'BuddyMode'>
 }
     
 
@@ -3275,6 +3553,30 @@ export type User$syncRunsArgs<ExtArgs extends runtime.Types.Extensions.InternalA
   take?: number
   skip?: number
   distinct?: Prisma.SyncRunScalarFieldEnum | Prisma.SyncRunScalarFieldEnum[]
+}
+
+/**
+ * User.aiCommentJobs
+ */
+export type User$aiCommentJobsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the AiCommentJob
+   */
+  select?: Prisma.AiCommentJobSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the AiCommentJob
+   */
+  omit?: Prisma.AiCommentJobOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.AiCommentJobInclude<ExtArgs> | null
+  where?: Prisma.AiCommentJobWhereInput
+  orderBy?: Prisma.AiCommentJobOrderByWithRelationInput | Prisma.AiCommentJobOrderByWithRelationInput[]
+  cursor?: Prisma.AiCommentJobWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.AiCommentJobScalarFieldEnum | Prisma.AiCommentJobScalarFieldEnum[]
 }
 
 /**

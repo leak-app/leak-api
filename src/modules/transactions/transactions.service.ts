@@ -4,6 +4,7 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { PrismaService } from '@/common/prisma.service';
+import { AiCommentaryService } from '@/modules/ai-commentary/ai-commentary.service';
 import {
   CategoryType,
   Prisma,
@@ -31,6 +32,7 @@ export class TransactionService {
     private readonly _prisma: PrismaService,
     private readonly _ledger: LedgerService,
     private readonly _wallets: WalletResolver,
+    private readonly _commentary: AiCommentaryService,
   ) {}
 
   async findAll(
@@ -140,11 +142,11 @@ export class TransactionService {
   async create(userId: string, dto: CreateTransactionDto) {
     // Reports read `createdAt` as the day of the transaction, so a past day goes there.
     const occurredAt = resolveOccurredAt(dto.occurredOn);
-    return this._prisma.$transaction(async (tx) => {
+    const created = await this._prisma.$transaction(async (tx) => {
       await this._assertCategory(tx, userId, dto.categoryId, dto.type);
       const accountId = await this._wallets.resolve(tx, userId, dto.accountId);
 
-      const created = await tx.transaction.create({
+      const row = await tx.transaction.create({
         data: {
           amount: dto.amount,
           type: dto.type,
@@ -156,9 +158,13 @@ export class TransactionService {
         },
       });
 
-      await this._ledger.apply(tx, planBalanceChanges(null, created));
-      return created;
+      await this._ledger.apply(tx, planBalanceChanges(null, row));
+      return row;
     });
+
+    // After the commit and never awaited on AI: a plain insert that cannot fail a save.
+    await this._commentary.enqueue(created);
+    return created;
   }
 
   async update(userId: string, id: string, dto: UpdateTransactionDto) {
@@ -190,6 +196,16 @@ export class TransactionService {
             }
           : {};
 
+      // A comment written for the old amount, category or note would now be wrong.
+      const contentChanged =
+        dto.amount !== undefined ||
+        dto.type !== undefined ||
+        dto.categoryId !== undefined ||
+        dto.description !== undefined;
+      const staleComment = contentChanged
+        ? { aiComment: null, aiSentiment: null }
+        : {};
+
       const updated = await tx.transaction.update({
         where: {
           id,
@@ -210,6 +226,7 @@ export class TransactionService {
               ? undefined
               : moveToDay(existing.createdAt, dto.occurredOn),
           ...outcomeReset,
+          ...staleComment,
         },
       });
 

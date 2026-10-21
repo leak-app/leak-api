@@ -49,6 +49,8 @@ export type TransactionMinAggregateOutputType = {
   outcome: $Enums.SpendOutcome | null
   leakReason: $Enums.LeakReason | null
   reviewedAt: Date | null
+  aiComment: string | null
+  aiSentiment: $Enums.CommentSentiment | null
 }
 
 export type TransactionMaxAggregateOutputType = {
@@ -66,6 +68,8 @@ export type TransactionMaxAggregateOutputType = {
   outcome: $Enums.SpendOutcome | null
   leakReason: $Enums.LeakReason | null
   reviewedAt: Date | null
+  aiComment: string | null
+  aiSentiment: $Enums.CommentSentiment | null
 }
 
 export type TransactionCountAggregateOutputType = {
@@ -83,6 +87,8 @@ export type TransactionCountAggregateOutputType = {
   outcome: number
   leakReason: number
   reviewedAt: number
+  aiComment: number
+  aiSentiment: number
   _all: number
 }
 
@@ -110,6 +116,8 @@ export type TransactionMinAggregateInputType = {
   outcome?: true
   leakReason?: true
   reviewedAt?: true
+  aiComment?: true
+  aiSentiment?: true
 }
 
 export type TransactionMaxAggregateInputType = {
@@ -127,6 +135,8 @@ export type TransactionMaxAggregateInputType = {
   outcome?: true
   leakReason?: true
   reviewedAt?: true
+  aiComment?: true
+  aiSentiment?: true
 }
 
 export type TransactionCountAggregateInputType = {
@@ -144,6 +154,8 @@ export type TransactionCountAggregateInputType = {
   outcome?: true
   leakReason?: true
   reviewedAt?: true
+  aiComment?: true
+  aiSentiment?: true
   _all?: true
 }
 
@@ -248,6 +260,8 @@ export type TransactionGroupByOutputType = {
   outcome: $Enums.SpendOutcome
   leakReason: $Enums.LeakReason | null
   reviewedAt: Date | null
+  aiComment: string | null
+  aiSentiment: $Enums.CommentSentiment | null
   _count: TransactionCountAggregateOutputType | null
   _avg: TransactionAvgAggregateOutputType | null
   _sum: TransactionSumAggregateOutputType | null
@@ -288,9 +302,12 @@ export type TransactionWhereInput = {
   outcome?: Prisma.EnumSpendOutcomeFilter<"Transaction"> | $Enums.SpendOutcome
   leakReason?: Prisma.EnumLeakReasonNullableFilter<"Transaction"> | $Enums.LeakReason | null
   reviewedAt?: Prisma.DateTimeNullableFilter<"Transaction"> | Date | string | null
+  aiComment?: Prisma.StringNullableFilter<"Transaction"> | string | null
+  aiSentiment?: Prisma.EnumCommentSentimentNullableFilter<"Transaction"> | $Enums.CommentSentiment | null
   category?: Prisma.XOR<Prisma.CategoryScalarRelationFilter, Prisma.CategoryWhereInput>
   account?: Prisma.XOR<Prisma.AccountScalarRelationFilter, Prisma.AccountWhereInput>
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
+  aiCommentJob?: Prisma.XOR<Prisma.AiCommentJobNullableScalarRelationFilter, Prisma.AiCommentJobWhereInput> | null
 }
 
 export type TransactionOrderByWithRelationInput = {
@@ -308,9 +325,12 @@ export type TransactionOrderByWithRelationInput = {
   outcome?: Prisma.SortOrder
   leakReason?: Prisma.SortOrderInput | Prisma.SortOrder
   reviewedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  aiComment?: Prisma.SortOrderInput | Prisma.SortOrder
+  aiSentiment?: Prisma.SortOrderInput | Prisma.SortOrder
   category?: Prisma.CategoryOrderByWithRelationInput
   account?: Prisma.AccountOrderByWithRelationInput
   user?: Prisma.UserOrderByWithRelationInput
+  aiCommentJob?: Prisma.AiCommentJobOrderByWithRelationInput
 }
 
 export type TransactionWhereUniqueInput = Prisma.AtLeast<{
@@ -331,9 +351,12 @@ export type TransactionWhereUniqueInput = Prisma.AtLeast<{
   outcome?: Prisma.EnumSpendOutcomeFilter<"Transaction"> | $Enums.SpendOutcome
   leakReason?: Prisma.EnumLeakReasonNullableFilter<"Transaction"> | $Enums.LeakReason | null
   reviewedAt?: Prisma.DateTimeNullableFilter<"Transaction"> | Date | string | null
+  aiComment?: Prisma.StringNullableFilter<"Transaction"> | string | null
+  aiSentiment?: Prisma.EnumCommentSentimentNullableFilter<"Transaction"> | $Enums.CommentSentiment | null
   category?: Prisma.XOR<Prisma.CategoryScalarRelationFilter, Prisma.CategoryWhereInput>
   account?: Prisma.XOR<Prisma.AccountScalarRelationFilter, Prisma.AccountWhereInput>
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
+  aiCommentJob?: Prisma.XOR<Prisma.AiCommentJobNullableScalarRelationFilter, Prisma.AiCommentJobWhereInput> | null
 }, "id">
 
 export type TransactionOrderByWithAggregationInput = {
@@ -351,6 +374,8 @@ export type TransactionOrderByWithAggregationInput = {
   outcome?: Prisma.SortOrder
   leakReason?: Prisma.SortOrderInput | Prisma.SortOrder
   reviewedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  aiComment?: Prisma.SortOrderInput | Prisma.SortOrder
+  aiSentiment?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.TransactionCountOrderByAggregateInput
   _avg?: Prisma.TransactionAvgOrderByAggregateInput
   _max?: Prisma.TransactionMaxOrderByAggregateInput
@@ -376,6 +401,8 @@ export type TransactionScalarWhereWithAggregatesInput = {
   outcome?: Prisma.EnumSpendOutcomeWithAggregatesFilter<"Transaction"> | $Enums.SpendOutcome
   leakReason?: Prisma.EnumLeakReasonNullableWithAggregatesFilter<"Transaction"> | $Enums.LeakReason | null
   reviewedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Transaction"> | Date | string | null
+  aiComment?: Prisma.StringNullableWithAggregatesFilter<"Transaction"> | string | null
+  aiSentiment?: Prisma.EnumCommentSentimentNullableWithAggregatesFilter<"Transaction"> | $Enums.CommentSentiment | null
 }
 
 export type TransactionCreateInput = {
@@ -390,9 +417,12 @@ export type TransactionCreateInput = {
   outcome?: $Enums.SpendOutcome
   leakReason?: $Enums.LeakReason | null
   reviewedAt?: Date | string | null
+  aiComment?: string | null
+  aiSentiment?: $Enums.CommentSentiment | null
   category: Prisma.CategoryCreateNestedOneWithoutTransactionsInput
   account: Prisma.AccountCreateNestedOneWithoutTransactionsInput
   user: Prisma.UserCreateNestedOneWithoutTransactionsInput
+  aiCommentJob?: Prisma.AiCommentJobCreateNestedOneWithoutTransactionInput
 }
 
 export type TransactionUncheckedCreateInput = {
@@ -410,6 +440,9 @@ export type TransactionUncheckedCreateInput = {
   outcome?: $Enums.SpendOutcome
   leakReason?: $Enums.LeakReason | null
   reviewedAt?: Date | string | null
+  aiComment?: string | null
+  aiSentiment?: $Enums.CommentSentiment | null
+  aiCommentJob?: Prisma.AiCommentJobUncheckedCreateNestedOneWithoutTransactionInput
 }
 
 export type TransactionUpdateInput = {
@@ -424,9 +457,12 @@ export type TransactionUpdateInput = {
   outcome?: Prisma.EnumSpendOutcomeFieldUpdateOperationsInput | $Enums.SpendOutcome
   leakReason?: Prisma.NullableEnumLeakReasonFieldUpdateOperationsInput | $Enums.LeakReason | null
   reviewedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  aiComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  aiSentiment?: Prisma.NullableEnumCommentSentimentFieldUpdateOperationsInput | $Enums.CommentSentiment | null
   category?: Prisma.CategoryUpdateOneRequiredWithoutTransactionsNestedInput
   account?: Prisma.AccountUpdateOneRequiredWithoutTransactionsNestedInput
   user?: Prisma.UserUpdateOneRequiredWithoutTransactionsNestedInput
+  aiCommentJob?: Prisma.AiCommentJobUpdateOneWithoutTransactionNestedInput
 }
 
 export type TransactionUncheckedUpdateInput = {
@@ -444,6 +480,9 @@ export type TransactionUncheckedUpdateInput = {
   outcome?: Prisma.EnumSpendOutcomeFieldUpdateOperationsInput | $Enums.SpendOutcome
   leakReason?: Prisma.NullableEnumLeakReasonFieldUpdateOperationsInput | $Enums.LeakReason | null
   reviewedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  aiComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  aiSentiment?: Prisma.NullableEnumCommentSentimentFieldUpdateOperationsInput | $Enums.CommentSentiment | null
+  aiCommentJob?: Prisma.AiCommentJobUncheckedUpdateOneWithoutTransactionNestedInput
 }
 
 export type TransactionCreateManyInput = {
@@ -461,6 +500,8 @@ export type TransactionCreateManyInput = {
   outcome?: $Enums.SpendOutcome
   leakReason?: $Enums.LeakReason | null
   reviewedAt?: Date | string | null
+  aiComment?: string | null
+  aiSentiment?: $Enums.CommentSentiment | null
 }
 
 export type TransactionUpdateManyMutationInput = {
@@ -475,6 +516,8 @@ export type TransactionUpdateManyMutationInput = {
   outcome?: Prisma.EnumSpendOutcomeFieldUpdateOperationsInput | $Enums.SpendOutcome
   leakReason?: Prisma.NullableEnumLeakReasonFieldUpdateOperationsInput | $Enums.LeakReason | null
   reviewedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  aiComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  aiSentiment?: Prisma.NullableEnumCommentSentimentFieldUpdateOperationsInput | $Enums.CommentSentiment | null
 }
 
 export type TransactionUncheckedUpdateManyInput = {
@@ -492,6 +535,8 @@ export type TransactionUncheckedUpdateManyInput = {
   outcome?: Prisma.EnumSpendOutcomeFieldUpdateOperationsInput | $Enums.SpendOutcome
   leakReason?: Prisma.NullableEnumLeakReasonFieldUpdateOperationsInput | $Enums.LeakReason | null
   reviewedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  aiComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  aiSentiment?: Prisma.NullableEnumCommentSentimentFieldUpdateOperationsInput | $Enums.CommentSentiment | null
 }
 
 export type TransactionListRelationFilter = {
@@ -519,6 +564,8 @@ export type TransactionCountOrderByAggregateInput = {
   outcome?: Prisma.SortOrder
   leakReason?: Prisma.SortOrder
   reviewedAt?: Prisma.SortOrder
+  aiComment?: Prisma.SortOrder
+  aiSentiment?: Prisma.SortOrder
 }
 
 export type TransactionAvgOrderByAggregateInput = {
@@ -540,6 +587,8 @@ export type TransactionMaxOrderByAggregateInput = {
   outcome?: Prisma.SortOrder
   leakReason?: Prisma.SortOrder
   reviewedAt?: Prisma.SortOrder
+  aiComment?: Prisma.SortOrder
+  aiSentiment?: Prisma.SortOrder
 }
 
 export type TransactionMinOrderByAggregateInput = {
@@ -557,10 +606,17 @@ export type TransactionMinOrderByAggregateInput = {
   outcome?: Prisma.SortOrder
   leakReason?: Prisma.SortOrder
   reviewedAt?: Prisma.SortOrder
+  aiComment?: Prisma.SortOrder
+  aiSentiment?: Prisma.SortOrder
 }
 
 export type TransactionSumOrderByAggregateInput = {
   amount?: Prisma.SortOrder
+}
+
+export type TransactionScalarRelationFilter = {
+  is?: Prisma.TransactionWhereInput
+  isNot?: Prisma.TransactionWhereInput
 }
 
 export type TransactionCreateNestedManyWithoutUserInput = {
@@ -701,6 +757,24 @@ export type NullableEnumLeakReasonFieldUpdateOperationsInput = {
   set?: $Enums.LeakReason | null
 }
 
+export type NullableEnumCommentSentimentFieldUpdateOperationsInput = {
+  set?: $Enums.CommentSentiment | null
+}
+
+export type TransactionCreateNestedOneWithoutAiCommentJobInput = {
+  create?: Prisma.XOR<Prisma.TransactionCreateWithoutAiCommentJobInput, Prisma.TransactionUncheckedCreateWithoutAiCommentJobInput>
+  connectOrCreate?: Prisma.TransactionCreateOrConnectWithoutAiCommentJobInput
+  connect?: Prisma.TransactionWhereUniqueInput
+}
+
+export type TransactionUpdateOneRequiredWithoutAiCommentJobNestedInput = {
+  create?: Prisma.XOR<Prisma.TransactionCreateWithoutAiCommentJobInput, Prisma.TransactionUncheckedCreateWithoutAiCommentJobInput>
+  connectOrCreate?: Prisma.TransactionCreateOrConnectWithoutAiCommentJobInput
+  upsert?: Prisma.TransactionUpsertWithoutAiCommentJobInput
+  connect?: Prisma.TransactionWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.TransactionUpdateToOneWithWhereWithoutAiCommentJobInput, Prisma.TransactionUpdateWithoutAiCommentJobInput>, Prisma.TransactionUncheckedUpdateWithoutAiCommentJobInput>
+}
+
 export type TransactionCreateWithoutUserInput = {
   id?: string
   amount: runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -713,8 +787,11 @@ export type TransactionCreateWithoutUserInput = {
   outcome?: $Enums.SpendOutcome
   leakReason?: $Enums.LeakReason | null
   reviewedAt?: Date | string | null
+  aiComment?: string | null
+  aiSentiment?: $Enums.CommentSentiment | null
   category: Prisma.CategoryCreateNestedOneWithoutTransactionsInput
   account: Prisma.AccountCreateNestedOneWithoutTransactionsInput
+  aiCommentJob?: Prisma.AiCommentJobCreateNestedOneWithoutTransactionInput
 }
 
 export type TransactionUncheckedCreateWithoutUserInput = {
@@ -731,6 +808,9 @@ export type TransactionUncheckedCreateWithoutUserInput = {
   outcome?: $Enums.SpendOutcome
   leakReason?: $Enums.LeakReason | null
   reviewedAt?: Date | string | null
+  aiComment?: string | null
+  aiSentiment?: $Enums.CommentSentiment | null
+  aiCommentJob?: Prisma.AiCommentJobUncheckedCreateNestedOneWithoutTransactionInput
 }
 
 export type TransactionCreateOrConnectWithoutUserInput = {
@@ -777,6 +857,8 @@ export type TransactionScalarWhereInput = {
   outcome?: Prisma.EnumSpendOutcomeFilter<"Transaction"> | $Enums.SpendOutcome
   leakReason?: Prisma.EnumLeakReasonNullableFilter<"Transaction"> | $Enums.LeakReason | null
   reviewedAt?: Prisma.DateTimeNullableFilter<"Transaction"> | Date | string | null
+  aiComment?: Prisma.StringNullableFilter<"Transaction"> | string | null
+  aiSentiment?: Prisma.EnumCommentSentimentNullableFilter<"Transaction"> | $Enums.CommentSentiment | null
 }
 
 export type TransactionCreateWithoutAccountInput = {
@@ -791,8 +873,11 @@ export type TransactionCreateWithoutAccountInput = {
   outcome?: $Enums.SpendOutcome
   leakReason?: $Enums.LeakReason | null
   reviewedAt?: Date | string | null
+  aiComment?: string | null
+  aiSentiment?: $Enums.CommentSentiment | null
   category: Prisma.CategoryCreateNestedOneWithoutTransactionsInput
   user: Prisma.UserCreateNestedOneWithoutTransactionsInput
+  aiCommentJob?: Prisma.AiCommentJobCreateNestedOneWithoutTransactionInput
 }
 
 export type TransactionUncheckedCreateWithoutAccountInput = {
@@ -809,6 +894,9 @@ export type TransactionUncheckedCreateWithoutAccountInput = {
   outcome?: $Enums.SpendOutcome
   leakReason?: $Enums.LeakReason | null
   reviewedAt?: Date | string | null
+  aiComment?: string | null
+  aiSentiment?: $Enums.CommentSentiment | null
+  aiCommentJob?: Prisma.AiCommentJobUncheckedCreateNestedOneWithoutTransactionInput
 }
 
 export type TransactionCreateOrConnectWithoutAccountInput = {
@@ -849,8 +937,11 @@ export type TransactionCreateWithoutCategoryInput = {
   outcome?: $Enums.SpendOutcome
   leakReason?: $Enums.LeakReason | null
   reviewedAt?: Date | string | null
+  aiComment?: string | null
+  aiSentiment?: $Enums.CommentSentiment | null
   account: Prisma.AccountCreateNestedOneWithoutTransactionsInput
   user: Prisma.UserCreateNestedOneWithoutTransactionsInput
+  aiCommentJob?: Prisma.AiCommentJobCreateNestedOneWithoutTransactionInput
 }
 
 export type TransactionUncheckedCreateWithoutCategoryInput = {
@@ -867,6 +958,9 @@ export type TransactionUncheckedCreateWithoutCategoryInput = {
   outcome?: $Enums.SpendOutcome
   leakReason?: $Enums.LeakReason | null
   reviewedAt?: Date | string | null
+  aiComment?: string | null
+  aiSentiment?: $Enums.CommentSentiment | null
+  aiCommentJob?: Prisma.AiCommentJobUncheckedCreateNestedOneWithoutTransactionInput
 }
 
 export type TransactionCreateOrConnectWithoutCategoryInput = {
@@ -895,6 +989,98 @@ export type TransactionUpdateManyWithWhereWithoutCategoryInput = {
   data: Prisma.XOR<Prisma.TransactionUpdateManyMutationInput, Prisma.TransactionUncheckedUpdateManyWithoutCategoryInput>
 }
 
+export type TransactionCreateWithoutAiCommentJobInput = {
+  id?: string
+  amount: runtime.Decimal | runtime.DecimalJsLike | number | string
+  type: $Enums.TransactionType
+  description?: string | null
+  isDeleted?: boolean
+  deletedAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  outcome?: $Enums.SpendOutcome
+  leakReason?: $Enums.LeakReason | null
+  reviewedAt?: Date | string | null
+  aiComment?: string | null
+  aiSentiment?: $Enums.CommentSentiment | null
+  category: Prisma.CategoryCreateNestedOneWithoutTransactionsInput
+  account: Prisma.AccountCreateNestedOneWithoutTransactionsInput
+  user: Prisma.UserCreateNestedOneWithoutTransactionsInput
+}
+
+export type TransactionUncheckedCreateWithoutAiCommentJobInput = {
+  id?: string
+  amount: runtime.Decimal | runtime.DecimalJsLike | number | string
+  type: $Enums.TransactionType
+  description?: string | null
+  categoryId: string
+  accountId: string
+  userId: string
+  isDeleted?: boolean
+  deletedAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  outcome?: $Enums.SpendOutcome
+  leakReason?: $Enums.LeakReason | null
+  reviewedAt?: Date | string | null
+  aiComment?: string | null
+  aiSentiment?: $Enums.CommentSentiment | null
+}
+
+export type TransactionCreateOrConnectWithoutAiCommentJobInput = {
+  where: Prisma.TransactionWhereUniqueInput
+  create: Prisma.XOR<Prisma.TransactionCreateWithoutAiCommentJobInput, Prisma.TransactionUncheckedCreateWithoutAiCommentJobInput>
+}
+
+export type TransactionUpsertWithoutAiCommentJobInput = {
+  update: Prisma.XOR<Prisma.TransactionUpdateWithoutAiCommentJobInput, Prisma.TransactionUncheckedUpdateWithoutAiCommentJobInput>
+  create: Prisma.XOR<Prisma.TransactionCreateWithoutAiCommentJobInput, Prisma.TransactionUncheckedCreateWithoutAiCommentJobInput>
+  where?: Prisma.TransactionWhereInput
+}
+
+export type TransactionUpdateToOneWithWhereWithoutAiCommentJobInput = {
+  where?: Prisma.TransactionWhereInput
+  data: Prisma.XOR<Prisma.TransactionUpdateWithoutAiCommentJobInput, Prisma.TransactionUncheckedUpdateWithoutAiCommentJobInput>
+}
+
+export type TransactionUpdateWithoutAiCommentJobInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  type?: Prisma.EnumTransactionTypeFieldUpdateOperationsInput | $Enums.TransactionType
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  outcome?: Prisma.EnumSpendOutcomeFieldUpdateOperationsInput | $Enums.SpendOutcome
+  leakReason?: Prisma.NullableEnumLeakReasonFieldUpdateOperationsInput | $Enums.LeakReason | null
+  reviewedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  aiComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  aiSentiment?: Prisma.NullableEnumCommentSentimentFieldUpdateOperationsInput | $Enums.CommentSentiment | null
+  category?: Prisma.CategoryUpdateOneRequiredWithoutTransactionsNestedInput
+  account?: Prisma.AccountUpdateOneRequiredWithoutTransactionsNestedInput
+  user?: Prisma.UserUpdateOneRequiredWithoutTransactionsNestedInput
+}
+
+export type TransactionUncheckedUpdateWithoutAiCommentJobInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  type?: Prisma.EnumTransactionTypeFieldUpdateOperationsInput | $Enums.TransactionType
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  categoryId?: Prisma.StringFieldUpdateOperationsInput | string
+  accountId?: Prisma.StringFieldUpdateOperationsInput | string
+  userId?: Prisma.StringFieldUpdateOperationsInput | string
+  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  outcome?: Prisma.EnumSpendOutcomeFieldUpdateOperationsInput | $Enums.SpendOutcome
+  leakReason?: Prisma.NullableEnumLeakReasonFieldUpdateOperationsInput | $Enums.LeakReason | null
+  reviewedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  aiComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  aiSentiment?: Prisma.NullableEnumCommentSentimentFieldUpdateOperationsInput | $Enums.CommentSentiment | null
+}
+
 export type TransactionCreateManyUserInput = {
   id?: string
   amount: runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -909,6 +1095,8 @@ export type TransactionCreateManyUserInput = {
   outcome?: $Enums.SpendOutcome
   leakReason?: $Enums.LeakReason | null
   reviewedAt?: Date | string | null
+  aiComment?: string | null
+  aiSentiment?: $Enums.CommentSentiment | null
 }
 
 export type TransactionUpdateWithoutUserInput = {
@@ -923,8 +1111,11 @@ export type TransactionUpdateWithoutUserInput = {
   outcome?: Prisma.EnumSpendOutcomeFieldUpdateOperationsInput | $Enums.SpendOutcome
   leakReason?: Prisma.NullableEnumLeakReasonFieldUpdateOperationsInput | $Enums.LeakReason | null
   reviewedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  aiComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  aiSentiment?: Prisma.NullableEnumCommentSentimentFieldUpdateOperationsInput | $Enums.CommentSentiment | null
   category?: Prisma.CategoryUpdateOneRequiredWithoutTransactionsNestedInput
   account?: Prisma.AccountUpdateOneRequiredWithoutTransactionsNestedInput
+  aiCommentJob?: Prisma.AiCommentJobUpdateOneWithoutTransactionNestedInput
 }
 
 export type TransactionUncheckedUpdateWithoutUserInput = {
@@ -941,6 +1132,9 @@ export type TransactionUncheckedUpdateWithoutUserInput = {
   outcome?: Prisma.EnumSpendOutcomeFieldUpdateOperationsInput | $Enums.SpendOutcome
   leakReason?: Prisma.NullableEnumLeakReasonFieldUpdateOperationsInput | $Enums.LeakReason | null
   reviewedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  aiComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  aiSentiment?: Prisma.NullableEnumCommentSentimentFieldUpdateOperationsInput | $Enums.CommentSentiment | null
+  aiCommentJob?: Prisma.AiCommentJobUncheckedUpdateOneWithoutTransactionNestedInput
 }
 
 export type TransactionUncheckedUpdateManyWithoutUserInput = {
@@ -957,6 +1151,8 @@ export type TransactionUncheckedUpdateManyWithoutUserInput = {
   outcome?: Prisma.EnumSpendOutcomeFieldUpdateOperationsInput | $Enums.SpendOutcome
   leakReason?: Prisma.NullableEnumLeakReasonFieldUpdateOperationsInput | $Enums.LeakReason | null
   reviewedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  aiComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  aiSentiment?: Prisma.NullableEnumCommentSentimentFieldUpdateOperationsInput | $Enums.CommentSentiment | null
 }
 
 export type TransactionCreateManyAccountInput = {
@@ -973,6 +1169,8 @@ export type TransactionCreateManyAccountInput = {
   outcome?: $Enums.SpendOutcome
   leakReason?: $Enums.LeakReason | null
   reviewedAt?: Date | string | null
+  aiComment?: string | null
+  aiSentiment?: $Enums.CommentSentiment | null
 }
 
 export type TransactionUpdateWithoutAccountInput = {
@@ -987,8 +1185,11 @@ export type TransactionUpdateWithoutAccountInput = {
   outcome?: Prisma.EnumSpendOutcomeFieldUpdateOperationsInput | $Enums.SpendOutcome
   leakReason?: Prisma.NullableEnumLeakReasonFieldUpdateOperationsInput | $Enums.LeakReason | null
   reviewedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  aiComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  aiSentiment?: Prisma.NullableEnumCommentSentimentFieldUpdateOperationsInput | $Enums.CommentSentiment | null
   category?: Prisma.CategoryUpdateOneRequiredWithoutTransactionsNestedInput
   user?: Prisma.UserUpdateOneRequiredWithoutTransactionsNestedInput
+  aiCommentJob?: Prisma.AiCommentJobUpdateOneWithoutTransactionNestedInput
 }
 
 export type TransactionUncheckedUpdateWithoutAccountInput = {
@@ -1005,6 +1206,9 @@ export type TransactionUncheckedUpdateWithoutAccountInput = {
   outcome?: Prisma.EnumSpendOutcomeFieldUpdateOperationsInput | $Enums.SpendOutcome
   leakReason?: Prisma.NullableEnumLeakReasonFieldUpdateOperationsInput | $Enums.LeakReason | null
   reviewedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  aiComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  aiSentiment?: Prisma.NullableEnumCommentSentimentFieldUpdateOperationsInput | $Enums.CommentSentiment | null
+  aiCommentJob?: Prisma.AiCommentJobUncheckedUpdateOneWithoutTransactionNestedInput
 }
 
 export type TransactionUncheckedUpdateManyWithoutAccountInput = {
@@ -1021,6 +1225,8 @@ export type TransactionUncheckedUpdateManyWithoutAccountInput = {
   outcome?: Prisma.EnumSpendOutcomeFieldUpdateOperationsInput | $Enums.SpendOutcome
   leakReason?: Prisma.NullableEnumLeakReasonFieldUpdateOperationsInput | $Enums.LeakReason | null
   reviewedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  aiComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  aiSentiment?: Prisma.NullableEnumCommentSentimentFieldUpdateOperationsInput | $Enums.CommentSentiment | null
 }
 
 export type TransactionCreateManyCategoryInput = {
@@ -1037,6 +1243,8 @@ export type TransactionCreateManyCategoryInput = {
   outcome?: $Enums.SpendOutcome
   leakReason?: $Enums.LeakReason | null
   reviewedAt?: Date | string | null
+  aiComment?: string | null
+  aiSentiment?: $Enums.CommentSentiment | null
 }
 
 export type TransactionUpdateWithoutCategoryInput = {
@@ -1051,8 +1259,11 @@ export type TransactionUpdateWithoutCategoryInput = {
   outcome?: Prisma.EnumSpendOutcomeFieldUpdateOperationsInput | $Enums.SpendOutcome
   leakReason?: Prisma.NullableEnumLeakReasonFieldUpdateOperationsInput | $Enums.LeakReason | null
   reviewedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  aiComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  aiSentiment?: Prisma.NullableEnumCommentSentimentFieldUpdateOperationsInput | $Enums.CommentSentiment | null
   account?: Prisma.AccountUpdateOneRequiredWithoutTransactionsNestedInput
   user?: Prisma.UserUpdateOneRequiredWithoutTransactionsNestedInput
+  aiCommentJob?: Prisma.AiCommentJobUpdateOneWithoutTransactionNestedInput
 }
 
 export type TransactionUncheckedUpdateWithoutCategoryInput = {
@@ -1069,6 +1280,9 @@ export type TransactionUncheckedUpdateWithoutCategoryInput = {
   outcome?: Prisma.EnumSpendOutcomeFieldUpdateOperationsInput | $Enums.SpendOutcome
   leakReason?: Prisma.NullableEnumLeakReasonFieldUpdateOperationsInput | $Enums.LeakReason | null
   reviewedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  aiComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  aiSentiment?: Prisma.NullableEnumCommentSentimentFieldUpdateOperationsInput | $Enums.CommentSentiment | null
+  aiCommentJob?: Prisma.AiCommentJobUncheckedUpdateOneWithoutTransactionNestedInput
 }
 
 export type TransactionUncheckedUpdateManyWithoutCategoryInput = {
@@ -1085,6 +1299,8 @@ export type TransactionUncheckedUpdateManyWithoutCategoryInput = {
   outcome?: Prisma.EnumSpendOutcomeFieldUpdateOperationsInput | $Enums.SpendOutcome
   leakReason?: Prisma.NullableEnumLeakReasonFieldUpdateOperationsInput | $Enums.LeakReason | null
   reviewedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  aiComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  aiSentiment?: Prisma.NullableEnumCommentSentimentFieldUpdateOperationsInput | $Enums.CommentSentiment | null
 }
 
 
@@ -1104,9 +1320,12 @@ export type TransactionSelect<ExtArgs extends runtime.Types.Extensions.InternalA
   outcome?: boolean
   leakReason?: boolean
   reviewedAt?: boolean
+  aiComment?: boolean
+  aiSentiment?: boolean
   category?: boolean | Prisma.CategoryDefaultArgs<ExtArgs>
   account?: boolean | Prisma.AccountDefaultArgs<ExtArgs>
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  aiCommentJob?: boolean | Prisma.Transaction$aiCommentJobArgs<ExtArgs>
 }, ExtArgs["result"]["transaction"]>
 
 export type TransactionSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -1124,6 +1343,8 @@ export type TransactionSelectCreateManyAndReturn<ExtArgs extends runtime.Types.E
   outcome?: boolean
   leakReason?: boolean
   reviewedAt?: boolean
+  aiComment?: boolean
+  aiSentiment?: boolean
   category?: boolean | Prisma.CategoryDefaultArgs<ExtArgs>
   account?: boolean | Prisma.AccountDefaultArgs<ExtArgs>
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -1144,6 +1365,8 @@ export type TransactionSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.E
   outcome?: boolean
   leakReason?: boolean
   reviewedAt?: boolean
+  aiComment?: boolean
+  aiSentiment?: boolean
   category?: boolean | Prisma.CategoryDefaultArgs<ExtArgs>
   account?: boolean | Prisma.AccountDefaultArgs<ExtArgs>
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -1164,13 +1387,16 @@ export type TransactionSelectScalar = {
   outcome?: boolean
   leakReason?: boolean
   reviewedAt?: boolean
+  aiComment?: boolean
+  aiSentiment?: boolean
 }
 
-export type TransactionOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "amount" | "type" | "description" | "categoryId" | "accountId" | "userId" | "isDeleted" | "deletedAt" | "createdAt" | "updatedAt" | "outcome" | "leakReason" | "reviewedAt", ExtArgs["result"]["transaction"]>
+export type TransactionOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "amount" | "type" | "description" | "categoryId" | "accountId" | "userId" | "isDeleted" | "deletedAt" | "createdAt" | "updatedAt" | "outcome" | "leakReason" | "reviewedAt" | "aiComment" | "aiSentiment", ExtArgs["result"]["transaction"]>
 export type TransactionInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   category?: boolean | Prisma.CategoryDefaultArgs<ExtArgs>
   account?: boolean | Prisma.AccountDefaultArgs<ExtArgs>
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  aiCommentJob?: boolean | Prisma.Transaction$aiCommentJobArgs<ExtArgs>
 }
 export type TransactionIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   category?: boolean | Prisma.CategoryDefaultArgs<ExtArgs>
@@ -1189,6 +1415,7 @@ export type $TransactionPayload<ExtArgs extends runtime.Types.Extensions.Interna
     category: Prisma.$CategoryPayload<ExtArgs>
     account: Prisma.$AccountPayload<ExtArgs>
     user: Prisma.$UserPayload<ExtArgs>
+    aiCommentJob: Prisma.$AiCommentJobPayload<ExtArgs> | null
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1205,6 +1432,8 @@ export type $TransactionPayload<ExtArgs extends runtime.Types.Extensions.Interna
     outcome: $Enums.SpendOutcome
     leakReason: $Enums.LeakReason | null
     reviewedAt: Date | null
+    aiComment: string | null
+    aiSentiment: $Enums.CommentSentiment | null
   }, ExtArgs["result"]["transaction"]>
   composites: {}
 }
@@ -1602,6 +1831,7 @@ export interface Prisma__TransactionClient<T, Null = never, ExtArgs extends runt
   category<T extends Prisma.CategoryDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.CategoryDefaultArgs<ExtArgs>>): Prisma.Prisma__CategoryClient<runtime.Types.Result.GetResult<Prisma.$CategoryPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   account<T extends Prisma.AccountDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.AccountDefaultArgs<ExtArgs>>): Prisma.Prisma__AccountClient<runtime.Types.Result.GetResult<Prisma.$AccountPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   user<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  aiCommentJob<T extends Prisma.Transaction$aiCommentJobArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Transaction$aiCommentJobArgs<ExtArgs>>): Prisma.Prisma__AiCommentJobClient<runtime.Types.Result.GetResult<Prisma.$AiCommentJobPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1645,6 +1875,8 @@ export interface TransactionFieldRefs {
   readonly outcome: Prisma.FieldRef<"Transaction", 'SpendOutcome'>
   readonly leakReason: Prisma.FieldRef<"Transaction", 'LeakReason'>
   readonly reviewedAt: Prisma.FieldRef<"Transaction", 'DateTime'>
+  readonly aiComment: Prisma.FieldRef<"Transaction", 'String'>
+  readonly aiSentiment: Prisma.FieldRef<"Transaction", 'CommentSentiment'>
 }
     
 
@@ -2038,6 +2270,25 @@ export type TransactionDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.I
    * Limit how many Transactions to delete.
    */
   limit?: number
+}
+
+/**
+ * Transaction.aiCommentJob
+ */
+export type Transaction$aiCommentJobArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the AiCommentJob
+   */
+  select?: Prisma.AiCommentJobSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the AiCommentJob
+   */
+  omit?: Prisma.AiCommentJobOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.AiCommentJobInclude<ExtArgs> | null
+  where?: Prisma.AiCommentJobWhereInput
 }
 
 /**

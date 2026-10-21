@@ -32,8 +32,8 @@ src/
 ├── main.ts               # Bootstrap: /api prefix, cookie parser, CORS, Swagger (non-production)
 ├── app.module.ts         # Module wiring + global JwtAuthGuard, ResponseInterceptor, HttpExceptionFilter
 ├── auth/                 # JWT strategy, sessions, password reset, @GetUser(), JwtAuthGuard
-├── user/                 # User repository + service
-├── common/               # Global PrismaService, decorators (@Public), filters, interceptors,
+├── user/                 # User repository + service; GET/PATCH /users/me/preferences (buddy mode)
+├── common/               # Global PrismaService, gemini/ (shared Gemini client), decorators (@Public), filters, interceptors,
 │                         #   interfaces (response envelope), pipes (ZodValidationPipe), zod helpers
 ├── utils/                # Cookie helper
 ├── generated/prisma/     # Generated Prisma client (never edit)
@@ -49,6 +49,7 @@ src/
     ├── reclaim/          # Plug-the-leak offers → savings goals
     ├── overview/         # Dashboard analytics & leak reporting
     ├── quick-log/        # Text → transaction draft (parser + optional Gemini fallback)
+    ├── ai-commentary/    # AI Buddy: comment selector, job queue, 15 s worker (off unless AI_BUDDY_ENABLED)
     ├── sync/             # Google Sheets non-blocking background export
     └── mail/             # SMTP mailer + Handlebars templates
 ```
@@ -103,6 +104,10 @@ src/
 - External API calls must always be wrapped in isolated `try/catch` with structured logging. Sync failures must **never** crash request threads.
 - Daily snapshots must be idempotent by date.
 
-### 6. Codebase Language Standard
+### 6. AI Calls
+
+- AI calls never run on a request path: queue a job and let the worker call the model. Never log prompts, notes or generated text.
+
+### 7. Codebase Language Standard
 
 - **100% English**: All code, database schemas, API routes, DTOs, variable names, logs, and comments must be in English.

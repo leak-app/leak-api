@@ -64,7 +64,8 @@ export const ModelName = {
   LeakReclaim: 'LeakReclaim',
   Budget: 'Budget',
   GoogleSheetsConnection: 'GoogleSheetsConnection',
-  SyncRun: 'SyncRun'
+  SyncRun: 'SyncRun',
+  AiCommentJob: 'AiCommentJob'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -89,7 +90,8 @@ export const UserScalarFieldEnum = {
   password: 'password',
   name: 'name',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  updatedAt: 'updatedAt',
+  buddyMode: 'buddyMode'
 } as const
 
 export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
@@ -201,7 +203,9 @@ export const TransactionScalarFieldEnum = {
   updatedAt: 'updatedAt',
   outcome: 'outcome',
   leakReason: 'leakReason',
-  reviewedAt: 'reviewedAt'
+  reviewedAt: 'reviewedAt',
+  aiComment: 'aiComment',
+  aiSentiment: 'aiSentiment'
 } as const
 
 export type TransactionScalarFieldEnum = (typeof TransactionScalarFieldEnum)[keyof typeof TransactionScalarFieldEnum]
@@ -295,6 +299,20 @@ export const SyncRunScalarFieldEnum = {
 } as const
 
 export type SyncRunScalarFieldEnum = (typeof SyncRunScalarFieldEnum)[keyof typeof SyncRunScalarFieldEnum]
+
+
+export const AiCommentJobScalarFieldEnum = {
+  id: 'id',
+  transactionId: 'transactionId',
+  userId: 'userId',
+  status: 'status',
+  attempts: 'attempts',
+  nextAttemptAt: 'nextAttemptAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type AiCommentJobScalarFieldEnum = (typeof AiCommentJobScalarFieldEnum)[keyof typeof AiCommentJobScalarFieldEnum]
 
 
 export const SortOrder = {

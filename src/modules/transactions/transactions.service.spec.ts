@@ -12,6 +12,7 @@ import { WalletResolver } from './wallet-resolver.service';
 import type { LedgerService } from './ledger.service';
 import type { BalanceChange } from './ledger.calculator';
 import { outcomeFilterSchema } from './dto/transactions.dto';
+import type { AiCommentaryService } from '../ai-commentary/ai-commentary.service';
 
 /* eslint-disable @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access */
 
@@ -77,13 +78,17 @@ describe('TransactionService', () => {
       delta: c.delta.toString(),
     }));
 
+  let commentary: { enqueue: jest.Mock };
+
   beforeEach(() => {
     prisma = createPrismaMock();
     ledger = { apply: jest.fn().mockResolvedValue(undefined) };
+    commentary = { enqueue: jest.fn().mockResolvedValue(undefined) };
     service = new TransactionService(
       prisma as unknown as PrismaService,
       ledger as unknown as LedgerService,
       new WalletResolver(),
+      commentary as unknown as AiCommentaryService,
     );
   });
 
@@ -159,6 +164,22 @@ describe('TransactionService', () => {
       type: TransactionType.EXPENSE,
       categoryId: 'c1',
     };
+
+    it('queues a buddy comment after the transaction is saved', async () => {
+      await service.create(userId, dto);
+
+      expect(commentary.enqueue).toHaveBeenCalledWith(
+        expect.objectContaining({
+          id: 'new',
+          userId,
+          type: TransactionType.EXPENSE,
+        }),
+      );
+      // After the database transaction, so a slow or failing queue can never roll a save back.
+      expect(prisma.$transaction.mock.invocationCallOrder[0]).toBeLessThan(
+        commentary.enqueue.mock.invocationCallOrder[0],
+      );
+    });
 
     it('uses the oldest active LIQUID wallet when accountId is omitted', async () => {
       await service.create(userId, dto);
@@ -351,6 +372,33 @@ describe('TransactionService', () => {
   });
 
   describe('update', () => {
+    it.each([
+      ['amount', { amount: 70000 }],
+      ['note', { description: 'Bún chả' }],
+      ['category', { categoryId: 'c1' }],
+    ])('clears the buddy comment when the %s changes', async (_name, dto) => {
+      await service.update(userId, 't1', dto);
+
+      const { data } = prisma.transaction.update.mock.calls[0][0];
+      expect(data).toEqual(
+        expect.objectContaining({ aiComment: null, aiSentiment: null }),
+      );
+    });
+
+    it.each([
+      ['day', { occurredOn: '2026-10-12' }],
+      ['wallet', { accountId: 'cash' }],
+    ])(
+      'keeps the buddy comment when only the %s changes',
+      async (_name, dto) => {
+        await service.update(userId, 't1', dto);
+
+        const { data } = prisma.transaction.update.mock.calls[0][0];
+        expect(data).not.toHaveProperty('aiComment');
+        expect(data).not.toHaveProperty('aiSentiment');
+      },
+    );
+
     it('locks the row before reading it', async () => {
       await service.update(userId, 't1', { amount: 80000 });
 

@@ -109,3 +109,8 @@ export type GoogleSheetsConnection = Prisma.GoogleSheetsConnectionModel
  * 
  */
 export type SyncRun = Prisma.SyncRunModel
+/**
+ * Model AiCommentJob
+ * One queued "should the Buddy comment on this expense" decision. Not a ledger row.
+ */
+export type AiCommentJob = Prisma.AiCommentJobModel
